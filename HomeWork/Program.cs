@@ -10,7 +10,7 @@ namespace HomeWork
     {
         static void Main(string[] args)
         {
-            Task8();
+            Task9();
             Console.ReadKey();
         }
         static void Task1()
@@ -74,6 +74,21 @@ namespace HomeWork
             long num2 = 2;
             byte product = (byte)(num1 * num2);
             Console.WriteLine(product);
+        }
+        static void Task9()
+        {
+            int a = Int32.Parse(Console.ReadLine());
+            int b = Int32.Parse(Console.ReadLine());
+            //способ 1
+            //a += b;
+            //b = a - b;
+            //a = a - b;
+            //Console.WriteLine(a.ToString() + b.ToString());
+            //способ 2
+            int temp = a;
+            a = b;
+            b = temp;
+            Console.WriteLine(a.ToString() + b.ToString());
         }
     }
 }
