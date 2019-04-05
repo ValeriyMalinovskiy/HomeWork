@@ -10,7 +10,7 @@ namespace HomeWork
     {
         static void Main(string[] args)
         {
-            Task6();
+            Task7();
             Console.ReadKey();
         }
         static void Task1()
@@ -61,6 +61,12 @@ namespace HomeWork
             int hundredth = input % 10;
             Console.WriteLine(hundredth.ToString() + tihe.ToString());
         }
-
+        static void Task7()
+        {
+            int num1 = int.MaxValue;
+            int num2 = int.MaxValue;
+            long sum = (long)num1 + num2;
+            Console.WriteLine(sum);
+        }
     }
 }
