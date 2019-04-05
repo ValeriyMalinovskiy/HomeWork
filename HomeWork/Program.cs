@@ -10,7 +10,7 @@ namespace HomeWork
     {
         static void Main(string[] args)
         {
-            Task7();
+            Task8();
             Console.ReadKey();
         }
         static void Task1()
@@ -67,6 +67,13 @@ namespace HomeWork
             int num2 = int.MaxValue;
             long sum = (long)num1 + num2;
             Console.WriteLine(sum);
+        }
+        static void Task8()
+        {
+            long num1 = 1;
+            long num2 = 2;
+            byte product = (byte)(num1 * num2);
+            Console.WriteLine(product);
         }
     }
 }
