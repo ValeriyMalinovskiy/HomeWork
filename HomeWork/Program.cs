@@ -10,7 +10,7 @@ namespace HomeWork
     {
         static void Main(string[] args)
         {
-            Task2();
+            Task3();
             Console.ReadKey();
         }
         static void Task1()
@@ -24,6 +24,12 @@ namespace HomeWork
             string str1 = Console.ReadLine();
             string str2 = "Привет, " + str1;
             Console.WriteLine(str2);
+        }
+        static void Task3()
+        {
+            var v1 = 'v';
+            v1 = 'a';
+            Console.WriteLine(v1);
         }
     }
 }
