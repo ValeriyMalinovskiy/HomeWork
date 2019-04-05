@@ -10,7 +10,7 @@ namespace HomeWork
     {
         static void Main(string[] args)
         {
-            Task5();
+            Task6();
             Console.ReadKey();
         }
         static void Task1()
@@ -53,5 +53,14 @@ namespace HomeWork
                 $"Площадь маленького круга {s2}\n" +
                 $"Разность площадей {s3}");
         }
+        static void Task6()
+        {
+            Console.WriteLine("введите двузначное число");
+            int input = Int32.Parse(Console.ReadLine());
+            int tihe = input / 10;
+            int hundredth = input % 10;
+            Console.WriteLine(hundredth.ToString() + tihe.ToString());
+        }
+
     }
 }
