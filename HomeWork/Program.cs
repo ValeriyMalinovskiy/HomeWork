@@ -10,7 +10,7 @@ namespace HomeWork
     {
         static void Main(string[] args)
         {
-            Task3();
+            Task4();
             Console.ReadKey();
         }
         static void Task1()
@@ -30,6 +30,14 @@ namespace HomeWork
             var v1 = 'v';
             v1 = 'a';
             Console.WriteLine(v1);
+        }
+        static void Task4()
+        {
+            Console.WriteLine("Введите длину стороны квадрата");
+            string str = Console.ReadLine();
+            int x1 = Int32.Parse(str);
+            int perimetr = 4 * x1;
+            Console.WriteLine(perimetr);
         }
     }
 }
