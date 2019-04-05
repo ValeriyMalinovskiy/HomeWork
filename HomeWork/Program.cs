@@ -10,7 +10,7 @@ namespace HomeWork
     {
         static void Main(string[] args)
         {
-            Task4();
+            Task5();
             Console.ReadKey();
         }
         static void Task1()
@@ -38,6 +38,20 @@ namespace HomeWork
             int x1 = Int32.Parse(str);
             int perimetr = 4 * x1;
             Console.WriteLine(perimetr);
+        }
+        static void Task5()
+        {
+            Console.WriteLine("Введите радиус большого круга");
+            double r1 = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Введите радиус маленького круга");
+            double r2 = Int32.Parse(Console.ReadLine());
+            const double Pi = 3.14;
+            double s1 = Pi * r1 * r1;
+            double s2 = Pi * r2 * r2;
+            double s3 = s1 - s2;
+            Console.WriteLine($"Площаль большого круга {s1}\n" +
+                $"Площадь маленького круга {s2}\n" +
+                $"Разность площадей {s3}");
         }
     }
 }
