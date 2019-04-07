@@ -109,19 +109,19 @@ namespace HomeWork
                             for (int j = 0; j <= i; j++)
                             {
                                 Console.SetCursorPosition(size + j, i);
-                                if ((isFilled) || (j == 0) || (i == size) || (i == j))
+                                if ((isFilled)|| (i == j))
                                     Console.Write("*");
                                 else Console.Write(" ");
                                 Console.SetCursorPosition(size - j, i);
-                                if ((isFilled) || (i == size) || (i == j))
+                                if ((isFilled) || (i == j))
                                     Console.Write("*");
                                 else Console.Write(" ");
                                 Console.SetCursorPosition(size - j, 2*size - i-2);
-                                if ((isFilled) || (i == size) || (i == j))
+                                if ((isFilled) || (i == j))
                                     Console.Write("*");
                                 else Console.Write(" ");
                                 Console.SetCursorPosition(size + j, 2*size - i-2);
-                                if ((isFilled) || (i == size) || (i == j))
+                                if ((isFilled) || (i == j))
                                     Console.Write("*");
                                 else Console.Write(" ");
                             }
