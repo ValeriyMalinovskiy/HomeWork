@@ -31,8 +31,8 @@ namespace HomeWork
 
         static void Task2()
         {
-            Console.WriteLine("1-line\n2-rectangle\n3-right equilateral triangle" +
-                "\n4-isosceles triangle\n5-rhombus");
+            Console.WriteLine("1-line\n2-rectangle\n3-right triangle" +
+                "\n4-equilateral triangle\n5-rhombus");
             string figureNumber = Console.ReadLine();
             Console.WriteLine("Enter the size");
             int size = Int32.Parse(Console.ReadLine());
@@ -80,9 +80,6 @@ namespace HomeWork
                         }
                     }
                     break;
-                //
-                //As the previous figure meet the task 3 and 4 conditions, here is isosceles triangle.
-                //
                 case "4":
                     {
                         for (int i = 0; i < size; i++)
@@ -90,13 +87,21 @@ namespace HomeWork
                             for (int j = 0; j <= i; j++)
                             {
                                 Console.SetCursorPosition(size + j, i);
-                                if ((isFilled) || (j == 0) || (i == size - 1) || (i == j))
+                                if ((isFilled) || (i == j))
                                     Console.Write("*");
                                 else Console.Write(" ");
                                 Console.SetCursorPosition(size - j, i);
-                                if ((isFilled) || (i == size - 1) || (i == j))
+                                if ((isFilled) || (i == j))
                                     Console.Write("*");
                                 else Console.Write(" ");
+                                if((!isFilled) && (i == size - 1))
+                                {
+                                    for (int k = 1; k < 2*size-2; k++)
+                                    {
+                                        if (k % 2 == 0) Console.Write("*");
+                                        else Console.Write(" ");
+                                    }
+                                }
                             }
                             Console.Write("\n");
                         }
