@@ -20,7 +20,9 @@ namespace HomeWork
 
             //Task5();
 
-            Task6();
+            //Task6();
+
+            Task7();
 
             Console.ReadKey();
         }
@@ -206,6 +208,27 @@ namespace HomeWork
             }
             while(inputNum!=0);
             Console.WriteLine($"The number contains {evenDigCounter} even digits");
+        }
+
+        static void Task7()
+        {
+            double numA = Double.Parse(Console.ReadLine());
+            double numB = Double.Parse(Console.ReadLine());
+            double sum = 0;
+            int counter = 0;
+            if (numA > numB)
+            {
+                double tempNum = numA;
+                numA = numB;
+                numB = tempNum;
+            }
+            for (double i = numA; i <= numB; i++)
+            {
+                sum += i;
+                counter++;
+            }
+            Console.WriteLine($"The average of the entered number range is {sum / counter}");
+
         }
     }
 }
