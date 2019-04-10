@@ -22,7 +22,9 @@ namespace HomeWork
 
             //Task6();
 
-            Task7();
+            //Task7();
+
+            Task8();
 
             Console.ReadKey();
         }
@@ -229,6 +231,22 @@ namespace HomeWork
             }
             Console.WriteLine($"The average of the entered number range is {sum / counter}");
 
+        }
+
+        static void Task8()
+        {
+            double distancePerDay = 10;
+            double totalDistance = 0;
+            int day = 1;
+            do
+            {
+                distancePerDay *= 1.1;
+                totalDistance += distancePerDay;
+                day++;
+            }
+            while (totalDistance < 100);
+
+            Console.WriteLine("By the {0} day skier covers {1} kms", day, totalDistance);
         }
     }
 }
