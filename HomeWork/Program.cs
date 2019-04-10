@@ -12,7 +12,9 @@ namespace HomeWork
         {
             //Task1();
 
-            Task2();
+            //Task2();
+
+            Task3();
 
             Console.ReadKey();
         }
@@ -135,6 +137,23 @@ namespace HomeWork
                     }
                     break;
             }
+        }
+
+        static void Task3()
+        {
+            int inputNum = Int32.Parse(Console.ReadLine());
+            Console.WriteLine((inputNum > 0) ? "The number is positive":
+                "The number is negative");
+            int divCounter=0;
+            for (int i = inputNum; i >0; i--)
+            {
+                if(inputNum%i==0)
+                {
+                    Console.WriteLine("Can be divided by " + i);
+                    divCounter++;
+                }
+            }
+            Console.WriteLine((divCounter > 2) ? "Entered number is not simple" : "Entered number is simple");
         }
     }
 }
