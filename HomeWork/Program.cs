@@ -18,7 +18,9 @@ namespace HomeWork
 
             //Task4();
 
-            Task5();
+            //Task5();
+
+            Task6();
 
             Console.ReadKey();
         }
@@ -191,6 +193,19 @@ namespace HomeWork
                 if (i % 2 == 0) Console.WriteLine($"Even intermediate number: {i}");
             }
             Console.WriteLine($"Sum: {sum}");
+        }
+
+        static void Task6()
+        {
+            int inputNum = Int32.Parse(Console.ReadLine());
+            int evenDigCounter = 0;
+            do
+            {
+                if (inputNum % 2 == 0) evenDigCounter++;
+                inputNum /= 10;
+            }
+            while(inputNum!=0);
+            Console.WriteLine($"The number contains {evenDigCounter} even digits");
         }
     }
 }
