@@ -26,7 +26,9 @@ namespace HomeWork
 
             //Task8();
 
-            Task9();
+            //Task9();
+
+            Task10();
 
             Console.ReadKey();
         }
@@ -262,6 +264,7 @@ namespace HomeWork
             else product = -Multiply(num1, -num2);
             Console.WriteLine(product);
         }
+
         static int Multiply(int x, int y)
         {
             int result = y;
@@ -270,6 +273,15 @@ namespace HomeWork
                 result += y;
             }
             return result;
+        }
+
+        static void Task10()
+        {
+            int inputNum = Int32.Parse(Console.ReadLine());
+            for(double i = 1; i <= inputNum; i++)
+            {
+                if (Math.Pow(i, 2) <= inputNum) Console.WriteLine(Math.Pow(i, 2)); 
+            }
         }
     }
 }
