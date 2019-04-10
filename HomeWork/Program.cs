@@ -14,7 +14,9 @@ namespace HomeWork
 
             //Task2();
 
-            Task3();
+            //Task3();
+
+            Task4();
 
             Console.ReadKey();
         }
@@ -154,6 +156,20 @@ namespace HomeWork
                 }
             }
             Console.WriteLine((divCounter > 2) ? "Entered number is not simple" : "Entered number is simple");
+        }
+
+        static void Task4()
+        {
+            Console.WriteLine("Enter the number of clients");
+            int clientsNum = Int32.Parse(Console.ReadLine());
+            int possibleRoutes = 1;
+            do
+            {
+                possibleRoutes *= clientsNum;
+                clientsNum--;
+            }
+            while (clientsNum > 1);
+            Console.WriteLine($"Goods can be delivered in {possibleRoutes} way(s)");
         }
     }
 }
