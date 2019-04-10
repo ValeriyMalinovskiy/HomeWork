@@ -24,7 +24,9 @@ namespace HomeWork
 
             //Task7();
 
-            Task8();
+            //Task8();
+
+            Task9();
 
             Console.ReadKey();
         }
@@ -247,6 +249,27 @@ namespace HomeWork
             while (totalDistance < 100);
 
             Console.WriteLine("By the {0} day skier covers {1} kms", day, totalDistance);
+        }
+
+        static void Task9()
+        {
+            int num1 = Int32.Parse(Console.ReadLine());
+            int num2 = Int32.Parse(Console.ReadLine());
+            int product = 0;
+            if ((num1 > 0) && (num2 > 0)) product = Multiply(num1, num2);
+            else if ((num1 < 0) && (num2 < 0)) product = Multiply(-num1, -num2);
+            else if ((num1 < 0) && (num2 > 0)) product = -Multiply(-num1, num2);
+            else product = -Multiply(num1, -num2);
+            Console.WriteLine(product);
+        }
+        static int Multiply(int x, int y)
+        {
+            int result = y;
+            for (int i = x; i > 1; i--)
+            {
+                result += y;
+            }
+            return result;
         }
     }
 }
