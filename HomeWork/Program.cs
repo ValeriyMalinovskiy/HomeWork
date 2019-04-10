@@ -16,7 +16,9 @@ namespace HomeWork
 
             //Task3();
 
-            Task4();
+            //Task4();
+
+            Task5();
 
             Console.ReadKey();
         }
@@ -170,6 +172,25 @@ namespace HomeWork
             }
             while (clientsNum > 1);
             Console.WriteLine($"Goods can be delivered in {possibleRoutes} way(s)");
+        }
+
+        static void Task5()
+        {
+            int numA = Int32.Parse(Console.ReadLine());
+            int numB = Int32.Parse(Console.ReadLine());
+            int sum = 0;
+            if (numA > numB)
+            {
+                int tempNum = numA;
+                numA = numB;
+                numB = tempNum;
+            }
+            for (int i = numA+1; i < numB; i++)
+            {
+                sum += i;
+                if (i % 2 == 0) Console.WriteLine($"Even intermediate number: {i}");
+            }
+            Console.WriteLine($"Sum: {sum}");
         }
     }
 }
