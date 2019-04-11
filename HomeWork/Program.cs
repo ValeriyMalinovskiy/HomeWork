@@ -28,7 +28,9 @@ namespace HomeWork
 
             //Task9();
 
-            Task10();
+            //Task10();
+
+            Task11();
 
             Console.ReadKey();
         }
@@ -281,6 +283,20 @@ namespace HomeWork
             for(double i = 1; i <= inputNum; i++)
             {
                 if (Math.Pow(i, 2) <= inputNum) Console.WriteLine(Math.Pow(i, 2)); 
+            }
+        }
+
+        static void Task11()
+        {
+            int inputNum = Int32.Parse(Console.ReadLine());
+            int nMinus1 = 1;
+            int nMinus2 = 0;
+            for (int i = 1; i <= inputNum; )
+            {
+                i=nMinus1+nMinus2;
+                Console.WriteLine(nMinus2);
+                nMinus2 = nMinus1;
+                nMinus1 = i;
             }
         }
     }
