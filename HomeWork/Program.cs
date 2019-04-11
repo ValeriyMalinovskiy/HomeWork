@@ -289,15 +289,16 @@ namespace HomeWork
         static void Task11()
         {
             int inputNum = Int32.Parse(Console.ReadLine());
-            int nMinus1 = 1;
-            int nMinus2 = 0;
-            for (int i = 1; i <= inputNum; )
+            int prevNum = 1;
+            int tempVal;
+            for (int currentNum = 0; ;)
             {
-                i=nMinus1+nMinus2;
-                Console.WriteLine(nMinus2);
-                nMinus2 = nMinus1;
-                nMinus1 = i;
-            }
+                if (currentNum <= inputNum) Console.WriteLine(currentNum);
+                else break;
+                tempVal = currentNum;
+                currentNum = currentNum + prevNum;
+                prevNum = tempVal;
+        }
         }
     }
 }
