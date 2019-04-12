@@ -30,7 +30,9 @@ namespace HomeWork
 
             //Task10();
 
-            Task11();
+            //Task11();
+
+            PrintRhombus();
 
             Console.ReadKey();
         }
@@ -301,5 +303,35 @@ namespace HomeWork
             }
         }
 
+        static void PrintRhombus()
+        {
+            int size = Int32.Parse(Console.ReadLine())-1;
+            Console.Clear();
+            int currentRow = 0;
+            int auxPointer = 0;
+            (int, int,int) tuple = (size, currentRow, auxPointer);
+            RhombusRecursion(tuple);
+        }
+
+        static (int,int,int) RhombusRecursion ( (int,int,int) tuple)
+        {
+            Console.SetCursorPosition(tuple.Item1 - tuple.Item3, tuple.Item2);
+            Console.Write("*");
+            Console.SetCursorPosition(tuple.Item1 + tuple.Item3, tuple.Item2);
+            Console.Write("*");
+            if (tuple.Item1 > tuple.Item2)
+            {
+                tuple.Item2 += 1;
+                tuple.Item3 = tuple.Item2;
+                RhombusRecursion((tuple.Item1, tuple.Item2, tuple.Item3));
+            }
+            else if ((tuple.Item1 <= tuple.Item2)&&(tuple.Item3!=0))
+            {
+                tuple.Item3-=1;
+                tuple.Item2 += 1;
+                RhombusRecursion((tuple.Item1, tuple.Item2, tuple.Item3));
+            }
+            return (0,0,0);
+        }
     }
 }
