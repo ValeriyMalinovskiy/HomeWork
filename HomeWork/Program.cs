@@ -54,7 +54,7 @@ namespace HomeWork
             string figureNumber = Console.ReadLine();
             Console.WriteLine("Enter the size");
             int size = Int32.Parse(Console.ReadLine());
-            bool isFilled=false;
+            bool isFilled = false;
             if (figureNumber != "1")
             {
                 Console.WriteLine("Filling - y/n");
@@ -75,7 +75,7 @@ namespace HomeWork
                         {
                             for (int j = 0; j < size; j++)
                             {
-                                if ((isFilled) || ((i == 0) || (i == size - 1)) 
+                                if ((isFilled) || ((i == 0) || (i == size - 1))
                                     || (j == 0) || (j == size - 1))
                                     Console.Write('*');
                                 else Console.Write(' ');
@@ -90,7 +90,7 @@ namespace HomeWork
                         {
                             for (int j = 0; j <= i; j++)
                             {
-                                if ((isFilled) || (j == 0) || (i == size-1) || (i == j))
+                                if ((isFilled) || (j == 0) || (i == size - 1) || (i == j))
                                     Console.Write("* ");
                                 else Console.Write("  ");
                             }
@@ -112,9 +112,9 @@ namespace HomeWork
                                 if ((isFilled) || (i == j))
                                     Console.Write("*");
                                 else Console.Write(" ");
-                                if((!isFilled) && (i == size - 1))
+                                if ((!isFilled) && (i == size - 1))
                                 {
-                                    for (int k = 1; k < 2*size-2; k++)
+                                    for (int k = 1; k < 2 * size - 2; k++)
                                     {
                                         if (k % 2 == 0) Console.Write("*");
                                         else Console.Write(" ");
@@ -132,18 +132,18 @@ namespace HomeWork
                             for (int j = 0; j <= i; j++)
                             {
                                 Console.SetCursorPosition(size + j, i);
-                                if ((isFilled)|| (i == j))
+                                if ((isFilled) || (i == j))
                                     Console.Write("*");
                                 else Console.Write(" ");
                                 Console.SetCursorPosition(size - j, i);
                                 if ((isFilled) || (i == j))
                                     Console.Write("*");
                                 else Console.Write(" ");
-                                Console.SetCursorPosition(size - j, 2*size - i-2);
+                                Console.SetCursorPosition(size - j, 2 * size - i - 2);
                                 if ((isFilled) || (i == j))
                                     Console.Write("*");
                                 else Console.Write(" ");
-                                Console.SetCursorPosition(size + j, 2*size - i-2);
+                                Console.SetCursorPosition(size + j, 2 * size - i - 2);
                                 if ((isFilled) || (i == j))
                                     Console.Write("*");
                                 else Console.Write(" ");
@@ -158,12 +158,12 @@ namespace HomeWork
         static void Task3()
         {
             int inputNum = Int32.Parse(Console.ReadLine());
-            Console.WriteLine((inputNum > 0) ? "The number is positive":
+            Console.WriteLine((inputNum > 0) ? "The number is positive" :
                 "The number is negative");
-            int divCounter=0;
-            for (int i = inputNum; i >0; i--)
+            int divCounter = 0;
+            for (int i = inputNum; i > 0; i--)
             {
-                if(inputNum%i==0)
+                if (inputNum % i == 0)
                 {
                     Console.WriteLine("Can be divided by " + i);
                     divCounter++;
@@ -197,7 +197,7 @@ namespace HomeWork
                 numA = numB;
                 numB = tempNum;
             }
-            for (int i = numA+1; i < numB; i++)
+            for (int i = numA + 1; i < numB; i++)
             {
                 sum += i;
                 if (i % 2 == 0) Console.WriteLine($"Even intermediate number: {i}");
@@ -214,7 +214,7 @@ namespace HomeWork
                 if (inputNum % 2 == 0) evenDigCounter++;
                 inputNum /= 10;
             }
-            while(inputNum!=0);
+            while (inputNum != 0);
             Console.WriteLine($"The number contains {evenDigCounter} even digits");
         }
 
@@ -280,9 +280,9 @@ namespace HomeWork
         static void Task10()
         {
             int inputNum = Int32.Parse(Console.ReadLine());
-            for(double i = 1; i <= inputNum; i++)
+            for (double i = 1; i <= inputNum; i++)
             {
-                if (Math.Pow(i, 2) <= inputNum) Console.WriteLine(Math.Pow(i, 2)); 
+                if (Math.Pow(i, 2) <= inputNum) Console.WriteLine(Math.Pow(i, 2));
             }
         }
 
@@ -298,7 +298,8 @@ namespace HomeWork
                 tempVal = currentNum;
                 currentNum = currentNum + prevNum;
                 prevNum = tempVal;
+            }
         }
-        }
+
     }
 }
