@@ -14,7 +14,9 @@ namespace HomeWork
 
             //Task2();
 
-            Task3();
+            //Task3();
+
+            Task4();
 
             Console.ReadKey();
         }
@@ -181,6 +183,49 @@ namespace HomeWork
                     Console.WriteLine(divisorsSum);
                 }
             }
+        }
+
+        static void Task4()
+        {
+            char[] encryptChars = new char[10] { '0', '1', '2', '3', '4',
+                                            '5', '6', '7', '8', '9' };
+            char[] cipher = new char[11] { ';', '+', '/', '.', '^', '@',
+                                            '"', '!', '%', '#', '$' };
+            char[] messageToEncrypt = GetRandomMessage();
+            char[] encryptResult = new char[messageToEncrypt.Length];
+            int cipherIndex = -1;
+            for (int i = 0; i < messageToEncrypt.Length; i++)
+            {
+                for (int j = 0; j < encryptChars.Length; j++)
+                {
+                    if (messageToEncrypt[i].Equals(encryptChars[j]))
+                    {
+                        cipherIndex = j;
+                    }
+                }
+                if (cipherIndex!=-1)
+                {
+                    encryptResult[i] = cipher[cipherIndex];
+                }
+                else
+                        encryptResult[i] = cipher[10];
+                cipherIndex = -1;
+            }
+            Console.Write("Message to encrypt:\t");
+            Console.WriteLine(messageToEncrypt);
+            Console.Write("Encrypted message:\t");
+            Console.WriteLine(encryptResult);
+        }
+
+        static char[] GetRandomMessage()
+        {
+            Random rnd = new Random();
+            char[] arr = new char[30];
+                for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = (char)rnd.Next(48,68);
+            }
+            return arr;
         }
     }
 }
