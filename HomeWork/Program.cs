@@ -12,7 +12,9 @@ namespace HomeWork
         {
             //Task1();
 
-            Task2();
+            //Task2();
+
+            Task3();
 
             Console.ReadKey();
         }
@@ -147,6 +149,38 @@ namespace HomeWork
                 }
             }
             Console.WriteLine($"Please pay {currentSum} UAH");
+        }
+
+        static void Task3()
+        {
+            Dictionary <int, List<int>> divisors = new Dictionary<int, List<int>>();
+            int counter = 0;
+            int divisorsSum = 0;
+            for (int i = 1; i < 1000; i++)
+            {
+                for (int j = 1; j < i; j++)
+                {
+                    if (i % j == 0)
+                    {
+                        if (divisors.ContainsKey(i))
+                        {
+                            divisors[i].Add(j);
+                        }
+                        else
+                        {
+                            divisors.Add(i, new List<int>());
+                            divisors[i].Add(j);
+                            counter++;
+                        }
+                    }
+                }
+                if (divisors.ContainsKey(i))
+                {
+                    divisorsSum = divisors[i].Sum();
+                    if (divisorsSum == divisors.ElementAt(counter-1).Key)
+                    Console.WriteLine(divisorsSum);
+                }
+            }
         }
     }
 }
