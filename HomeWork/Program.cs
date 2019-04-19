@@ -183,7 +183,7 @@ namespace HomeWork
                     Console.WriteLine(divisorsSum);
                 }
             }
-        }
+        }// The solution without the Dictionary<> is on the way.
 
         static void Task4()
         {
@@ -215,6 +215,11 @@ namespace HomeWork
             Console.WriteLine(messageToEncrypt);
             Console.Write("Encrypted message:\t");
             Console.WriteLine(encryptResult);
+            //
+            //Task5 is invoked here to check both tasks working in pair.
+            //
+            Console.Write("Deciphered message:\t");
+            Console.WriteLine(Task5(encryptResult));
         }
 
         static char[] GetRandomMessage()
@@ -226,6 +231,32 @@ namespace HomeWork
                 arr[i] = (char)rnd.Next(48,68);
             }
             return arr;
+        }
+
+        static char[] Task5(char[] encryptedMessage)
+        {
+            char[] encryptChars = new char[10] { '0', '1', '2', '3', '4',
+                                            '5', '6', '7', '8', '9' };
+            char[] cipher = new char[11] { ';', '+', '/', '.', '^', '@',
+                                            '"', '!', '%', '#', '$' };
+            StringBuilder sb = new StringBuilder();
+            int encryptCharIndex = 10;
+            for (int i = 0; i < encryptedMessage.Length; i++)
+            {
+                for (int j = 0; j < cipher.Length; j++)
+                {
+                    if (encryptedMessage[i].Equals(cipher[j]))
+                    {
+                        encryptCharIndex = j;
+                    }
+                }
+                if (encryptCharIndex!=10)
+                {
+                    sb.Append(encryptChars[encryptCharIndex]);
+                }
+                encryptCharIndex = 10;
+            }
+            return sb.ToString().ToCharArray();
         }
     }
 }
