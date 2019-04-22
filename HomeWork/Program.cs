@@ -26,8 +26,10 @@ namespace HomeWork
             string inputStr = Console.ReadLine();
             string[] inputArrStr= inputStr.Split(' ');
             bool toZero = true;
-
-            int[] arr = new int[inputArrStr.Length]; // Array to store entered numbers
+            //
+            // Array to store entered numbers
+            //
+            int[] arr = new int[inputArrStr.Length];
             for (int i = 0; i < arr.Length; i++)
             {
                 arr[i] = int.Parse(inputArrStr[i]);
@@ -48,15 +50,21 @@ namespace HomeWork
                 toZero = !toZero;
             }
             Console.WriteLine(convertedVal);
-            string result = convertedVal.ToString().Substring(1); // exclude the first digit to represent multiple zeros first.
+            //
+            // exclude the first digit to represent multiple zeros first.
+            //
+            string result = convertedVal.ToString().Substring(1); 
             Console.WriteLine(result);
         }
 
-        static (int,int) ToOnesAndZeros(int value) // Takes single number, returns ONEs (111...) and ZEROs (100...)
+        //
+        // Takes single number, returns ONEs (111...) and ZEROs (100...)
+        //
+        static (int,int) ToOnesAndZeros(int value) 
         {
             int zeros = 1;
             decimal ones = 0.11111111111111111m;
-            for(int i=value; i>0;i--)
+            for (int i = value; i > 0; i--)
             {
                 zeros *= 10;
                 ones *= 10;
@@ -183,7 +191,7 @@ namespace HomeWork
                     Console.WriteLine(divisorsSum);
                 }
             }
-        }// The solution without the Dictionary<> is on the way.
+        }
 
         static void Task4()
         {
