@@ -12,7 +12,9 @@ namespace HomeWork
         {
             //Task1();
 
-            Task2();
+            //Task2();
+
+            Task3();
 
             Console.ReadKey();
         }
@@ -62,6 +64,24 @@ namespace HomeWork
                 isMatched = false;
             }
             return (errorCount.ToString() + "/" + str.Length.ToString());
+        }
+
+        static void Task3()
+        {
+            string str = "abracadabra";
+            string vowels = "aeiou";
+            int vowel = 0;
+            for (int i = 0; i < str.Length; i++)
+            {
+                for (int j = 0; j < vowels.Length; j++)
+                {
+                    if (str[i]==vowels[j])
+                    {
+                        vowel++;
+                    }
+                }
+            }
+            Console.WriteLine(vowel);
         }
     }
 }
