@@ -10,7 +10,9 @@ namespace HomeWork
     {
         static void Main(string[] args)
         {
-            Task1();
+            //Task1();
+
+            Task2();
 
             Console.ReadKey();
         }
@@ -29,6 +31,37 @@ namespace HomeWork
                 sb.Append(str[i]);
             }
             Console.WriteLine(sb);
+        }
+
+        static void Task2()
+        {
+            string str1 = "aaaaaaaaaaaaaabbbbbbbbbbbbbmmmmmmmmmmmmmmmmmmmxyz";
+            string str2 = "aaaxbbbbyyhwawiwjjjwwm";
+            Console.WriteLine(PrinterError(str2));
+
+        }
+
+        static string PrinterError(string str)
+        {
+            int errorCount = 0;
+            bool isMatched = false;
+            for (int i = 0; i < str.Length; i++)
+            {
+
+                for (int j= 110; j < 123; j++)
+                {
+                    if (str[i] == (char)j)
+                    {
+                        isMatched = true;
+                    }
+                }
+                if (isMatched)
+                {
+                    errorCount++;
+                }
+                isMatched = false;
+            }
+            return (errorCount.ToString() + "/" + str.Length.ToString());
         }
     }
 }
