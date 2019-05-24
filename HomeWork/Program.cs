@@ -29,17 +29,8 @@ namespace HomeWork
 
         static void Task2()
         {
-            Calculator.Operation[] someOperations =
-                {
-                new Calculator.SumOperation(1.5, 2.6),
-                new Calculator.DivideOperation(6, 3),
-                new Calculator.MultiplyOperation(2, 2),
-                new Calculator.SubtractOperation(5, 3.8)
-        };
-            foreach (var operation in someOperations)
-            {
-                Console.WriteLine(operation.ToString());
-            }
+            Calculator.Calc calc = new Calculator.Calc();
+            calc.ShowResults();
         }
     }
 }
