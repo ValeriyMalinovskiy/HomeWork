@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeWork
+namespace SayHello
 {
     class Russian : Human
     {
-        public Russian(string name) : base (name)
+        public Russian(string name) : base(name)
         {
 
         }
