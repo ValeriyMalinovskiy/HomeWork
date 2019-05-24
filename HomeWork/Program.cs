@@ -10,6 +10,16 @@ namespace HomeWork
     {
         static void Main(string[] args)
         {
+            Human[] crowd =
+            {
+                new Russian("Петя"),
+                new Ukrainian("Петро"),
+                new American("Peter")
+            };
+            foreach (var person in crowd)
+            {
+                person.SayHello();
+            }
         }
     }
 }
