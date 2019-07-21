@@ -10,6 +10,8 @@ namespace HomeWork
     {
         static void Main(string[] args)
         {
+            Gallery myGallery = new Gallery();
+            myGallery.HireWorker(myGallery.CreateGallery());
         }
     }
 }
