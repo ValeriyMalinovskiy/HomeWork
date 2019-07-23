@@ -18,14 +18,13 @@ namespace HomeWork
             matrixStrings = new List<MatrixString>();
             Thread stringCreationThread = new Thread(new ThreadStart(CreateString));
             stringCreationThread.Start();
-
             Thread.Sleep(1000);
 
             while (true)
             {
-                lock (matrixStrings)
+                for (int i = 0; i < matrixStrings.Count; i++)
                 {
-                    for (int i = 0; i < matrixStrings.Count; i++)
+                    lock (matrixStrings)
                     {
                         if (!matrixStrings[i].CompletelyPrinted)
                         {
@@ -44,10 +43,10 @@ namespace HomeWork
         {
             while (true)
             {
-                if (matrixStrings.Count < 20)
+                if (matrixStrings.Count < 30)
                 {
                     matrixStrings.Add(new MatrixString(Console.LargestWindowWidth / 2, Console.LargestWindowHeight / 3));
-                    Thread.Sleep(400);
+                    Thread.Sleep(10);
                 }
             }
         }

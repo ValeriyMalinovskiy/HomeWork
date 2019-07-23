@@ -16,13 +16,14 @@ namespace HomeWork
         public MatrixString(int consoleWidth, int consoleHeight)
         {
             Random rnd = new Random();
+            int tempInt = rnd.Next(0, 20);
             int verticalPosition = rnd.Next(0, consoleWidth);
             this.CompletelyPrinted = false;
             this.Locations = new (int, int)[rnd.Next(3, consoleHeight)];
             for (int i = 0; i < this.Locations.Length; i++)
             {
                 this.Locations[i].Item1 = verticalPosition;
-                this.Locations[i].Item2 = -i - 1;
+                this.Locations[i].Item2 = -i - 1 - tempInt;
             }
         }
 
@@ -58,14 +59,13 @@ namespace HomeWork
             }
             if ((this.Locations[this.Locations.Length - 1].Item2 > 0) && (this.Locations[this.Locations.Length - 1].Item2 <= Console.LargestWindowHeight / 2))
             {
-                Console.SetCursorPosition(this.Locations[this.Locations.Length - 1].Item1, this.Locations[this.Locations.Length - 1].Item2-1);
+                Console.SetCursorPosition(this.Locations[this.Locations.Length - 1].Item1, this.Locations[this.Locations.Length - 1].Item2 - 1);
                 Console.Write(" ");
             }
             if (this.Locations[Locations.Length - 1].Item2 == Console.LargestWindowHeight / 2)
             {
                 this.CompletelyPrinted = true;
             }
-            Thread.Sleep(10);
         }
     }
 }
