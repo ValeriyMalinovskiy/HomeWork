@@ -9,20 +9,20 @@ namespace HomeWork
 {
     class GameLogic
     {
-        RoadBoundary roadBoundary = new RoadBoundary();
+        Curb curb = new Curb();
 
-        public void TestPrint()
+        Printer printer = new Printer();
+        
+        public void StartGame()
         {
-            while (true)
+            Task print = new Task(() => printer.PrintEverything());
+            print.Start();
+
+            for (int i = 0; i < 10; i++)
             {
-                Console.Clear();
-                roadBoundary.MoveBoundary();
-                foreach (var block in roadBoundary.BoundaryCoordinate)
-                {
-                    Console.SetCursorPosition(block.Item1, block.Item2);
-                    Console.Write("#");
-                }
-                Thread.Sleep(100);
+                curb.Move();
+                printer.UpdateCurb(curb);
+                Thread.Sleep(1000);
             }
         }
     }
