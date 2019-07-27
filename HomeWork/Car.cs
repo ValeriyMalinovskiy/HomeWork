@@ -8,5 +8,61 @@ namespace HomeWork
 {
     class Car
     {
+        public (int, int)[] Coordinates { get; private set; }
+
+        public Car()
+        {
+            this.Coordinates = new (int, int)[7];
+            this.Coordinates[0].Item1 = 2;
+            this.Coordinates[0].Item2 = 19;
+            this.Coordinates[1].Item1 = 4;
+            this.Coordinates[1].Item2 = 19;
+            this.Coordinates[2].Item1 = 3;
+            this.Coordinates[2].Item2 = 18;
+            this.Coordinates[3].Item1 = 2;
+            this.Coordinates[3].Item2 = 17;
+            this.Coordinates[4].Item1 = 3;
+            this.Coordinates[4].Item2 = 17;
+            this.Coordinates[5].Item1 = 4;
+            this.Coordinates[5].Item2 = 17;
+            this.Coordinates[6].Item1 = 3;
+            this.Coordinates[6].Item2 = 16;
+        }
+
+        public void ShiftLeft()
+        {
+            this.Coordinates[0].Item1 = 2;
+            this.Coordinates[0].Item2 = 19;
+            this.Coordinates[1].Item1 = 4;
+            this.Coordinates[1].Item2 = 19;
+            this.Coordinates[2].Item1 = 3;
+            this.Coordinates[2].Item2 = 18;
+            this.Coordinates[3].Item1 = 2;
+            this.Coordinates[3].Item2 = 17;
+            this.Coordinates[4].Item1 = 3;
+            this.Coordinates[4].Item2 = 17;
+            this.Coordinates[5].Item1 = 4;
+            this.Coordinates[5].Item2 = 17;
+            this.Coordinates[6].Item1 = 3;
+            this.Coordinates[6].Item2 = 16;
+        }
+
+        public void ShiftRight()
+        {
+            this.Coordinates[0].Item1 = 5;
+            this.Coordinates[0].Item2 = 19;
+            this.Coordinates[1].Item1 = 7;
+            this.Coordinates[1].Item2 = 19;
+            this.Coordinates[2].Item1 = 6;
+            this.Coordinates[2].Item2 = 18;
+            this.Coordinates[3].Item1 = 5;
+            this.Coordinates[3].Item2 = 17;
+            this.Coordinates[4].Item1 = 6;
+            this.Coordinates[4].Item2 = 17;
+            this.Coordinates[5].Item1 = 7;
+            this.Coordinates[5].Item2 = 17;
+            this.Coordinates[6].Item1 = 6;
+            this.Coordinates[6].Item2 = 16;
+        }
     }
 }

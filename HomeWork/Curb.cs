@@ -12,35 +12,35 @@ namespace HomeWork
 
         public Curb()
         {
-            Coordinates = new (int, int, bool)[40];
-            for (int i = 0, j = 0; i < Coordinates.Length; i++)
+            this.Coordinates = new (int, int, bool)[40];
+            for (int i = 0, j = 0; i < this.Coordinates.Length; i++)
             {
                 if (i < 20)
                 {
-                    Coordinates[i].Item1 = 0;
-                    Coordinates[i].Item2 = i;
+                    this.Coordinates[i].Item1 = 0;
+                    this.Coordinates[i].Item2 = i;
                 }
                 else
                 {
-                    Coordinates[i].Item1 = 9;
-                    Coordinates[i].Item2 = j;
+                    this.Coordinates[i].Item1 = 9;
+                    this.Coordinates[i].Item2 = j;
                     j++;
                 }
-                Coordinates[i].Item3 = (i % 4 == 0)? (false) : (true);
+                this.Coordinates[i].Item3 = (i % 4 == 0)? (false) : (true);
             }
         }
 
         public void Move()
         {
-            for (int i = 0; i < Coordinates.Length; i++)
+            for (int i = 0; i < this.Coordinates.Length; i++)
             {
-                if (Coordinates[i].Item2 == 19)
+                if (this.Coordinates[i].Item2 == 19)
                 {
-                    Coordinates[i].Item2 = 0;
+                    this.Coordinates[i].Item2 = 0;
                 }
                 else
                 {
-                    Coordinates[i].Item2++;
+                    this.Coordinates[i].Item2++;
                 }
             }
         }
