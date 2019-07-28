@@ -11,9 +11,16 @@ namespace HomeWork
     {
         private Curb curb;
 
+        private Car car;
+
         public void UpdateCurb(Curb curb)
         {
             this.curb = curb;
+        }
+
+        public void UpdateCar(Car car)
+        {
+            this.car = car;
         }
 
         public void PrintEverything()
@@ -35,6 +42,14 @@ namespace HomeWork
                     {
                         Console.Write(" ");
                     }
+                }
+                //
+                //Car
+                //
+                foreach (var item in this.car.Coordinates)
+                {
+                    Console.SetCursorPosition(item.Item1, item.Item2);
+                    Console.Write("#");
                 }
             }
         }

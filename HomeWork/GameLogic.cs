@@ -29,10 +29,17 @@ namespace HomeWork
             }
         }
         
-        public void 
+        public void ProcessButtonPressed(Object sender, CarControlEventArgs e)
+            {
+                if (Console.ReadKey(false).Key == ConsoleKey.LeftArrow)
+	            {
+                    car.ShiftLeft();
+	            }
+            }
 
         public void StartGame()
         {
+            printer.UpdateCar(this.car);
             Task print = new Task(() => printer.PrintEverything());
             print.Start();
 
