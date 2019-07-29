@@ -7,51 +7,66 @@ using System.Threading;
 
 namespace HomeWork
 {
+    //public delegate void CarControlDelegate(Object sender, CarControlEventArgs args);
+
     class GameLogic
     {
+
         Curb curb = new Curb();
 
         Car car = new Car();
 
+        Printer printer = new Printer(new Car(), new Curb());
+
         CarPosition carPosition = CarPosition.Left;
 
-        public delegate void CarControlDelegate(Object sender, CarControlEventArgs args);
+        //public event CarControlDelegate ChangePosition;
 
-        public event CarControlDelegate ChangePosition;
-
-        Printer printer = new Printer();
-
-        protected virtual void OnChangePosition(CarControlEventArgs e)
-        {
-            if (ChangePosition!=null)
-            {
-                ChangePosition(this, e);
-            }
-        }
+        //protected virtual void OnChangePosition(CarControlEventArgs e)
+        //{
+        //    if (ChangePosition!=null)
+        //    {
+        //        ChangePosition(this, e);
+        //    }
+        //}
         
-        public void ProcessButtonPressed()
-            {
-                if (Console.ReadKey(false).Key == ConsoleKey.LeftArrow)
-	            {
-                    car.ShiftLeft();
-                    printer.UpdateCar(this.car);
-	            }
-            }
+        //public void ProcessButtonPressed()
+        //    {
+        //    if (Console.ReadKey(false).Key == ConsoleKey.LeftArrow && carPosition == CarPosition.Right)
+        //    {
+        //        car.ShiftLeft();
+        //    }
+        //    if (Console.ReadKey(false).Key == ConsoleKey.RightArrow && carPosition == CarPosition.Left)
+        //    {
+        //        car.ShiftRight();
+        //    }
+        //    CarControlEventArgs args = new CarControlEventArgs(this.car.Coordinates);
+        //    OnChangePosition(args);
+        //}
 
         public void StartGame()
         {
-            printer.UpdateCar(this.car);
             Task print = new Task(() => printer.PrintEverything());
             print.Start();
 
-            Task shiftCar = new Task(() => ProcessButtonPressed());
-            shiftCar.Start();
+            Task curb = new Task(() => this.MoveCurb());
+            curb.Start();
 
-            for (int i = 0; i < 10; i++)
+            //Task shiftCar = new Task(() => ProcessButtonPressed());
+            //shiftCar.Start();
+
+            while (true)
+            {
+            }
+        }
+
+        public void MoveCurb()
+        {
+            while (true)
             {
                 curb.Move();
                 printer.UpdateCurb(curb);
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
             }
         }
     }
