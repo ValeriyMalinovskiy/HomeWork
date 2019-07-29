@@ -8,11 +8,11 @@ namespace HomeWork
 {
     public class CarControlEventArgs : EventArgs
     {
-        public (int, int)[] CarCoord { get; private set; }
+        public ConsoleKey keyPressed { get; private set; }
 
-        public CarControlEventArgs((int,int)[] carCoord)
+        public CarControlEventArgs()
         {
-            this.CarCoord = carCoord;
+            this.keyPressed = Console.ReadKey().Key;
         }
     }
 }

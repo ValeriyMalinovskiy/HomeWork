@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace HomeWork
 {
-    //public delegate void CarControlDelegate(Object sender, CarControlEventArgs args);
+    public delegate void CarControlDelegate(CarControlEventArgs args);
 
     class GameLogic
     {
