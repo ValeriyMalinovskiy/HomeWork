@@ -29,26 +29,29 @@ namespace HomeWork
             this.Coordinates[6].Item2 = 16;
         }
 
-        public void ShiftLeft()
+        public void Shift(CarPosition carPosition)
         {
-            this.Coordinates[0].Item1 -= 3;
-            this.Coordinates[1].Item1 -= 3;
-            this.Coordinates[2].Item1 -= 3;
-            this.Coordinates[3].Item1 -= 3;
-            this.Coordinates[4].Item1 -= 3;
-            this.Coordinates[5].Item1 -= 3;
-            this.Coordinates[6].Item1 -= 3;
-        }
-
-        public void ShiftRight()
-        {
-            this.Coordinates[0].Item1 += 3;
-            this.Coordinates[1].Item1 += 3;
-            this.Coordinates[2].Item1 += 3;
-            this.Coordinates[3].Item1 += 3;
-            this.Coordinates[4].Item1 += 3;
-            this.Coordinates[5].Item1 += 3;
-            this.Coordinates[6].Item1 += 3;
+            switch (carPosition)
+            {
+                case CarPosition.Left:
+                    this.Coordinates[0].Item1 -= 3;
+                    this.Coordinates[1].Item1 -= 3;
+                    this.Coordinates[2].Item1 -= 3;
+                    this.Coordinates[3].Item1 -= 3;
+                    this.Coordinates[4].Item1 -= 3;
+                    this.Coordinates[5].Item1 -= 3;
+                    this.Coordinates[6].Item1 -= 3;
+                    break;
+                case CarPosition.Right:
+                    this.Coordinates[0].Item1 += 3;
+                    this.Coordinates[1].Item1 += 3;
+                    this.Coordinates[2].Item1 += 3;
+                    this.Coordinates[3].Item1 += 3;
+                    this.Coordinates[4].Item1 += 3;
+                    this.Coordinates[5].Item1 += 3;
+                    this.Coordinates[6].Item1 += 3;
+                    break;
+            }
         }
     }
 }

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace HomeWork
 {
-    public class CarControlEventArgs : EventArgs
+    internal class CarControlEventArgs : EventArgs
     {
-        public ConsoleKey keyPressed { get; private set; }
+        public CarPosition _CarPosition { get; set; }
 
-        public CarControlEventArgs()
+        public CarControlEventArgs(CarPosition carPosition)
         {
-            this.keyPressed = Console.ReadKey().Key;
+            this._CarPosition = carPosition;
         }
     }
 }

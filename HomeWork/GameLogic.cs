@@ -7,11 +7,9 @@ using System.Threading;
 
 namespace HomeWork
 {
-    public delegate void CarControlDelegate(CarControlEventArgs args);
 
     class GameLogic
     {
-
         Curb curb = new Curb();
 
         Car car = new Car();
@@ -20,40 +18,41 @@ namespace HomeWork
 
         CarPosition carPosition = CarPosition.Left;
 
-        //public event CarControlDelegate ChangePosition;
+        public delegate void CarControlDelegate();
 
-        //protected virtual void OnChangePosition(CarControlEventArgs e)
-        //{
-        //    if (ChangePosition!=null)
-        //    {
-        //        ChangePosition(this, e);
-        //    }
-        //}
-        
-        //public void ProcessButtonPressed()
-        //    {
-        //    if (Console.ReadKey(false).Key == ConsoleKey.LeftArrow && carPosition == CarPosition.Right)
-        //    {
-        //        car.ShiftLeft();
-        //    }
-        //    if (Console.ReadKey(false).Key == ConsoleKey.RightArrow && carPosition == CarPosition.Left)
-        //    {
-        //        car.ShiftRight();
-        //    }
-        //    CarControlEventArgs args = new CarControlEventArgs(this.car.Coordinates);
-        //    OnChangePosition(args);
-        //}
+        public event CarControlDelegate ButtonPressed;
+
+        protected virtual void OnButtonPressed()
+        {
+            ButtonPressed?.Invoke();
+        }
+
+        public void ProcessButtonPressed()
+        {
+            if (Console.ReadKey(false).Key == ConsoleKey.LeftArrow && carPosition == CarPosition.Right)
+            {
+                this.car.Shift(CarPosition.Left);
+            }
+            if (Console.ReadKey(false).Key == ConsoleKey.RightArrow && carPosition == CarPosition.Left)
+            {
+                this.car.Shift(CarPosition.Right);
+            }
+        }
 
         public void StartGame()
         {
             Task print = new Task(() => printer.PrintEverything());
             print.Start();
 
+            Task control = new Task(() => ProcessButtonPressed());
+            control.Start();
+
             Task curb = new Task(() => this.MoveCurb());
             curb.Start();
 
-            //Task shiftCar = new Task(() => ProcessButtonPressed());
-            //shiftCar.Start();
+            OnButtonPressed();
+            ButtonPressed += ProcessButtonPressed;
+
 
             while (true)
             {
