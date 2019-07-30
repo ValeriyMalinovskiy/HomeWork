@@ -48,7 +48,6 @@ namespace HomeWork
 
         public void PrintEverything()
         {
-            Console.Clear();
             Console.CursorVisible = false;
             while (true)
             {

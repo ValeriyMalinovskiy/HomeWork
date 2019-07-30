@@ -18,10 +18,6 @@ namespace HomeWork
 
         CarPosition carPosition = CarPosition.Left;
 
-        public delegate void CarControlDelegate();
-
-        public event CarControlDelegate ButtonPressed;
-
         public void ProcessButtonPressed()
         {
             while (true)
@@ -51,8 +47,6 @@ namespace HomeWork
 
             Task curb = new Task(() => this.MoveCurb());
             curb.Start();
-
-            ButtonPressed += ProcessButtonPressed;
 
             while (true)
             {
