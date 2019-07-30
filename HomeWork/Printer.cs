@@ -9,35 +9,46 @@ namespace HomeWork
 {
     class Printer
     {
-        private Curb curb;
-
         private Car car;
 
         private Car tempCar;
 
+        private Curb curb;
+
         private bool carPositionChanged;
 
-        public Printer(Car car, Curb curb)
+        public Printer()
         {
-            this.tempCar = car;
-            this.car = car;
-            this.curb = curb;
+            this.car = new Car();
+            this.tempCar = new Car();
+            this.curb = new Curb();
         }
 
-        public void UpdateCar(Car car)
+        public void UpdateCar((int, int)[] car)
         {
-            this.tempCar = this.car;
-            this.car = car;
+            for (int i = 0; i < this.car.Coordinates.Length; i++)
+            {
+                this.tempCar.Coordinates[i].Item1 = this.car.Coordinates[i].Item1;
+                this.tempCar.Coordinates[i].Item2 = this.car.Coordinates[i].Item2;
+                this.car.Coordinates[i].Item1 = car[i].Item1;
+                this.car.Coordinates[i].Item2 = car[i].Item2;
+            }
             this.carPositionChanged = true;
         }
 
-        public void UpdateCurb(Curb curb)
+        public void UpdateCurb((int, int, bool)[] curb)
         {
-            this.curb = curb;
+            for (int i = 0; i < this.curb.Coordinates.Length; i++)
+            {
+                this.curb.Coordinates[i].Item1 = curb[i].Item1;
+                this.curb.Coordinates[i].Item2 = curb[i].Item2;
+                this.curb.Coordinates[i].Item3 = curb[i].Item3;
+            }
         }
 
         public void PrintEverything()
         {
+            Console.Clear();
             Console.CursorVisible = false;
             while (true)
             {

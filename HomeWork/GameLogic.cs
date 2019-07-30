@@ -14,7 +14,7 @@ namespace HomeWork
 
         Car car = new Car();
 
-        Printer printer = new Printer(new Car(), new Curb());
+        Printer printer = new Printer();
 
         CarPosition carPosition = CarPosition.Left;
 
@@ -22,20 +22,22 @@ namespace HomeWork
 
         public event CarControlDelegate ButtonPressed;
 
-        protected virtual void OnButtonPressed()
-        {
-            ButtonPressed?.Invoke();
-        }
-
         public void ProcessButtonPressed()
         {
-            if (Console.ReadKey(false).Key == ConsoleKey.LeftArrow && carPosition == CarPosition.Right)
+            while (true)
             {
-                this.car.Shift(CarPosition.Left);
-            }
-            if (Console.ReadKey(false).Key == ConsoleKey.RightArrow && carPosition == CarPosition.Left)
-            {
-                this.car.Shift(CarPosition.Right);
+                ConsoleKeyInfo pressed = Console.ReadKey(true);
+                if (pressed.Key == ConsoleKey.LeftArrow && this.carPosition == CarPosition.Right)
+                {
+                    this.car.Shift(CarPosition.Left);
+                    this.carPosition = CarPosition.Left;
+                }
+                else if (pressed.Key == ConsoleKey.RightArrow && this.carPosition == CarPosition.Left)
+                {
+                    this.car.Shift(CarPosition.Right);
+                    this.carPosition = CarPosition.Right;
+                }
+                this.printer.UpdateCar(this.car.Coordinates);
             }
         }
 
@@ -44,15 +46,13 @@ namespace HomeWork
             Task print = new Task(() => printer.PrintEverything());
             print.Start();
 
-            Task control = new Task(() => ProcessButtonPressed());
+            Task control = new Task(() => this.ProcessButtonPressed());
             control.Start();
 
             Task curb = new Task(() => this.MoveCurb());
             curb.Start();
 
-            OnButtonPressed();
             ButtonPressed += ProcessButtonPressed;
-
 
             while (true)
             {
@@ -64,7 +64,7 @@ namespace HomeWork
             while (true)
             {
                 curb.Move();
-                printer.UpdateCurb(curb);
+                printer.UpdateCurb(curb.Coordinates);
                 Thread.Sleep(100);
             }
         }

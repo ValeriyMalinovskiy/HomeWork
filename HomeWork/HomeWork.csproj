@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Car.cs" />
     <Compile Include="CarPosition.cs" />
-    <Compile Include="CarControlEventArgs.cs" />
     <Compile Include="Printer.cs" />
     <Compile Include="GameLogic.cs" />
     <Compile Include="OncomingCar.cs" />
