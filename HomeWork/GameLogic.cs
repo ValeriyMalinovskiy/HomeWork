@@ -21,13 +21,17 @@ namespace HomeWork
 
         CarPosition carPosition = CarPosition.Left;
 
+        bool gameRunning = true;
+
+        bool gameOver = false;
+
         public void Process(GamepadHandlerEventArgs args)
         {
             switch (args.myProperty)
             {
                 case GameControl.ShiftCarLeft:
                     {
-                        if (this.carPosition == CarPosition.Right)
+                        if (this.carPosition == CarPosition.Right && gameRunning)
                         {
                             this.car.Shift(CarPosition.Left);
                             this.carPosition = CarPosition.Left;
@@ -37,7 +41,7 @@ namespace HomeWork
                     break;
                 case GameControl.ShiftCarRight:
                     {
-                        if (this.carPosition == CarPosition.Left)
+                        if (this.carPosition == CarPosition.Left && gameRunning)
                         {
                             this.car.Shift(CarPosition.Right);
                             this.carPosition = CarPosition.Right;
@@ -48,6 +52,9 @@ namespace HomeWork
                 case GameControl.GainSpeed:
                     break;
                 case GameControl.Pause:
+                    {
+                        this.gameRunning = !gameRunning;
+                    }
                     break;
                 case GameControl.Quit:
                     break;
@@ -58,17 +65,16 @@ namespace HomeWork
 
         public void StartGame()
         {
-            Task print = new Task(() => printer.PrintEverything());
-            print.Start();
+            Task printTask = new Task(() => printer.PrintEverything());
+            printTask.Start();
 
-            Task control = new Task(() => gamepad.ProcessButtonPressed());
-            control.Start();
+            Task controlTask = new Task(() => gamepad.ProcessButtonPressed());
+            controlTask.Start();
 
-            Task curb = new Task(() => this.MoveCurb());
-            curb.Start();
+            Task curbTask = new Task(() => this.MoveCurb());
+            curbTask.Start();
 
             gamepad.ControlPressed += Process;
-
 
             while (true)
             {
@@ -77,11 +83,14 @@ namespace HomeWork
 
         public void MoveCurb()
         {
-            while (true)
+            while (!this.gameOver)
             {
-                curb.Move();
-                printer.UpdateCurb(curb.Coordinates);
-                Thread.Sleep(100);
+                if (this.gameRunning)
+                {
+                    curb.Move();
+                    printer.UpdateCurb(curb.Coordinates);
+                    Thread.Sleep(150);
+                }
             }
         }
     }

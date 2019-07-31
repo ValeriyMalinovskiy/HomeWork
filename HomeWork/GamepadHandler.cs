@@ -39,6 +39,11 @@ namespace HomeWork
                             this.OnControlPressed(GameControl.Quit);
                         }
                         break;
+                    case ConsoleKey.Spacebar:
+                        {
+                            this.OnControlPressed(GameControl.Pause);
+                        }
+                        break;
                 }
             }
         }
