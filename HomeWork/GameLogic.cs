@@ -19,13 +19,15 @@ namespace HomeWork
 
         GamepadHandlerEventArgs gamepad = new GamepadHandlerEventArgs();
 
+        Queue<OncomingCar> rivals = new Queue<OncomingCar>();
+
         CarPosition carPosition = CarPosition.Left;
 
         bool gameRunning = true;
 
         bool gameOver = false;
 
-        public void Process(GamepadHandlerEventArgs args)
+        private void ProcessControl(GamepadHandlerEventArgs args)
         {
             switch (args.myProperty)
             {
@@ -63,6 +65,20 @@ namespace HomeWork
             }
         }
 
+        //private void GenerateOncomingCar()
+        //{
+        //    Random rnd = new Random();
+        //    while (!this.gameOver)
+        //    {
+        //        if (this.gameRunning && rivals.Count<4)
+        //        {
+        //            //Thread.Sleep(rnd.Next(500, 1500));
+        //            rivals.Enqueue(new OncomingCar((CarPosition)rnd.Next(0,2)));
+        //            this.printer.rivals = this.rivals;
+        //        }
+        //    }
+        //}
+
         public void StartGame()
         {
             Task printTask = new Task(() => printer.PrintEverything());
@@ -74,14 +90,20 @@ namespace HomeWork
             Task curbTask = new Task(() => this.MoveCurb());
             curbTask.Start();
 
-            gamepad.ControlPressed += Process;
+            //Task rivalsTask = new Task(() => this.MoveRivals());
+            //rivalsTask.Start();
+
+            //Task generateRivals = new Task(() => GenerateOncomingCar());
+            //generateRivals.Start();
+
+            gamepad.ControlPressed += ProcessControl;
 
             while (true)
             {
             }
         }
 
-        public void MoveCurb()
+        private void MoveCurb()
         {
             while (!this.gameOver)
             {
@@ -89,7 +111,7 @@ namespace HomeWork
                 {
                     curb.Move();
                     printer.UpdateCurb(curb.Coordinates);
-                    Thread.Sleep(150);
+                    Thread.Sleep(50);
                 }
             }
         }
