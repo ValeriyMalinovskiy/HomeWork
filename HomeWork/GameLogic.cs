@@ -7,6 +7,7 @@ using System.Threading;
 
 namespace HomeWork
 {
+    internal delegate void ControlDelegate(GamepadHandlerEventArgs args);
 
     class GameLogic
     {
@@ -16,24 +17,42 @@ namespace HomeWork
 
         Printer printer = new Printer();
 
+        GamepadHandlerEventArgs gamepad = new GamepadHandlerEventArgs();
+
         CarPosition carPosition = CarPosition.Left;
 
-        public void ProcessButtonPressed()
+        public void Process(GamepadHandlerEventArgs args)
         {
-            while (true)
+            switch (args.myProperty)
             {
-                ConsoleKeyInfo pressed = Console.ReadKey(true);
-                if (pressed.Key == ConsoleKey.LeftArrow && this.carPosition == CarPosition.Right)
-                {
-                    this.car.Shift(CarPosition.Left);
-                    this.carPosition = CarPosition.Left;
-                }
-                else if (pressed.Key == ConsoleKey.RightArrow && this.carPosition == CarPosition.Left)
-                {
-                    this.car.Shift(CarPosition.Right);
-                    this.carPosition = CarPosition.Right;
-                }
-                this.printer.UpdateCar(this.car.Coordinates);
+                case GameControl.ShiftCarLeft:
+                    {
+                        if (this.carPosition == CarPosition.Right)
+                        {
+                            this.car.Shift(CarPosition.Left);
+                            this.carPosition = CarPosition.Left;
+                            this.printer.UpdateCar(this.car.Coordinates);
+                        }
+                    }
+                    break;
+                case GameControl.ShiftCarRight:
+                    {
+                        if (this.carPosition == CarPosition.Left)
+                        {
+                            this.car.Shift(CarPosition.Right);
+                            this.carPosition = CarPosition.Right;
+                            this.printer.UpdateCar(this.car.Coordinates);
+                        }
+                    }
+                    break;
+                case GameControl.GainSpeed:
+                    break;
+                case GameControl.Pause:
+                    break;
+                case GameControl.Quit:
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -42,11 +61,14 @@ namespace HomeWork
             Task print = new Task(() => printer.PrintEverything());
             print.Start();
 
-            Task control = new Task(() => this.ProcessButtonPressed());
+            Task control = new Task(() => gamepad.ProcessButtonPressed());
             control.Start();
 
             Task curb = new Task(() => this.MoveCurb());
             curb.Start();
+
+            gamepad.ControlPressed += Process;
+
 
             while (true)
             {
