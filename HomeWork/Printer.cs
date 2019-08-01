@@ -15,13 +15,20 @@ namespace HomeWork
 
         private (int, int, bool)[] curb;
 
+        private (int, int)[] rivals;
+
+        private (int, int)[] tempRivals;
+
         private bool carPositionChanged;
+
+        private bool rivalsPositionChanged;
 
         public Printer()
         {
             this.car = new Car();
             this.tempCar = new Car();
-            this.curb = new (int,int,bool)[40];
+            this.curb = new (int, int, bool)[40];
+            this.rivals = new (int, int)[21];
         }
 
         public void UpdateCar((int, int)[] car)
@@ -36,6 +43,18 @@ namespace HomeWork
             this.carPositionChanged = true;
         }
 
+        public void UpdateRivals((int, int)[] rivals)
+        {
+            for (int i = 0; i < this.car.Coordinates.Length; i++)
+            {
+                this.tempRivals[i].Item1 = this.rivals[i].Item1;
+                this.tempRivals[i].Item2 = this.rivals[i].Item2;
+                this.rivals[i].Item1 = rivals[i].Item1;
+                this.rivals[i].Item2 = rivals[i].Item2;
+            }
+            this.rivalsPositionChanged = true;
+        }
+
         public void UpdateCurb((int, int, bool)[] curb)
         {
             for (int i = 0; i < this.curb.Length; i++)
@@ -45,12 +64,6 @@ namespace HomeWork
                 this.curb[i].Item3 = curb[i].Item3;
             }
         }
-
-        //public void UpdateRivals(ref Queue<OncomingCar> rivals)
-        //{
-        //    this.tempRivals = this.rivals;
-        //    this.rivals = rivals;
-        //}
 
         public void PrintEverything()
         {
@@ -92,28 +105,20 @@ namespace HomeWork
                 //
                 //Rivals
                 //
-                //foreach (var car in this.tempRivals)
-                //{
-                //    foreach (var point in car.Coordinates)
-                //    {
-                //        if (point.Item2 >= 0 && point.Item2 < 20)
-                //        {
-                //            Console.SetCursorPosition(point.Item1, point.Item2);
-                //            Console.Write(" ");
-                //        }
-                //    }
-                //}
-                //foreach (var car in this.rivals)
-                //{
-                //    foreach (var point in car.Coordinates)
-                //    {
-                //        if (point.Item2 >= 0 && point.Item2 < 20)
-                //        {
-                //            Console.SetCursorPosition(point.Item1, point.Item2);
-                //            Console.Write("#");
-                //        }
-                //    }
-                //}
+                if (this.rivalsPositionChanged)
+                {
+                    foreach (var point in this.rivals)
+                    {
+                        Console.SetCursorPosition(point.Item1, point.Item2);
+                        Console.Write(" ");
+                    }
+                    this.rivalsPositionChanged = false;
+                }
+                foreach (var point in this.rivals)
+                {
+                    Console.SetCursorPosition(point.Item1, point.Item2);
+                    Console.Write("#");
+                }
             }
         }
     }

@@ -17,6 +17,8 @@ namespace HomeWork
 
         Printer printer = new Printer();
 
+        GameField field = new GameField();
+
         GamepadHandlerEventArgs gamepad = new GamepadHandlerEventArgs();
 
         Queue<OncomingCar> rivals = new Queue<OncomingCar>();
@@ -65,19 +67,7 @@ namespace HomeWork
             }
         }
 
-        //private void GenerateOncomingCar()
-        //{
-        //    Random rnd = new Random();
-        //    while (!this.gameOver)
-        //    {
-        //        if (this.gameRunning && rivals.Count<4)
-        //        {
-        //            //Thread.Sleep(rnd.Next(500, 1500));
-        //            rivals.Enqueue(new OncomingCar((CarPosition)rnd.Next(0,2)));
-        //            this.printer.rivals = this.rivals;
-        //        }
-        //    }
-        //}
+        
 
         public void StartGame()
         {
