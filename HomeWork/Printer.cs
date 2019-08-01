@@ -29,6 +29,7 @@ namespace HomeWork
             this.tempCar = new Car();
             this.curb = new (int, int, bool)[40];
             this.rivals = new (int, int)[21];
+            this.tempRivals = new (int, int)[21];
         }
 
         public void UpdateCar((int, int)[] car)
@@ -45,7 +46,7 @@ namespace HomeWork
 
         public void UpdateRivals((int, int)[] rivals)
         {
-            for (int i = 0; i < this.car.Coordinates.Length; i++)
+            for (int i = 0; i < rivals.Length; i++)
             {
                 this.tempRivals[i].Item1 = this.rivals[i].Item1;
                 this.tempRivals[i].Item2 = this.rivals[i].Item2;
@@ -105,19 +106,25 @@ namespace HomeWork
                 //
                 //Rivals
                 //
-                if (this.rivalsPositionChanged)
-                {
-                    foreach (var point in this.rivals)
-                    {
-                        Console.SetCursorPosition(point.Item1, point.Item2);
-                        Console.Write(" ");
-                    }
-                    this.rivalsPositionChanged = false;
-                }
                 foreach (var point in this.rivals)
                 {
-                    Console.SetCursorPosition(point.Item1, point.Item2);
-                    Console.Write("#");
+                    if (point.Item2 >= 0 && point.Item2 < 20)
+                    {
+                        Console.SetCursorPosition(point.Item1, point.Item2);
+                        Console.Write("#");
+                    }
+                }
+                if (this.rivalsPositionChanged)
+                {
+                    foreach (var point in this.tempRivals)
+                    {
+                        if (point.Item2 >= 0 && point.Item2 < 20)
+                        {
+                            Console.SetCursorPosition(point.Item1, point.Item2);
+                            Console.Write(" ");
+                        }
+                    }
+                    this.rivalsPositionChanged = false;
                 }
             }
         }

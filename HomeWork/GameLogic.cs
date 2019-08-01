@@ -67,7 +67,46 @@ namespace HomeWork
             }
         }
 
-        
+        private void GenerateOncomingCar()
+        { Random rnd = new Random();
+            while (!this.gameOver)
+            {
+                if (this.rivals.Count < 3)
+                {
+                    Thread.Sleep(rnd.Next(3000, 5000));
+                    OncomingCar temp = new OncomingCar((CarPosition)rnd.Next(0, 2));
+                    this.rivals.Enqueue(temp);
+                    //this.printer.UpdateRivals(temp.Coordinates);
+                }
+            }
+        }
+
+        public void MoveRivals()
+        {
+            while (!this.gameOver)
+            {
+                if (this.gameRunning)
+                {
+                    Thread.Sleep(200);
+                    foreach (var rival in this.rivals)
+                    {
+                        rival.Move();
+                    }
+                    (int, int)[] temp = new (int, int)[21];
+                    for (int i = 0, k=0; i < this.rivals.Count; i++)
+                    {
+                        for (int j = 0; j < this.rivals.ElementAt(i).Coordinates.Length; j++)
+                        {
+                            temp[k].Item1 = this.rivals.ElementAt(i).Coordinates[j].Item1;
+                            temp[k].Item2 = this.rivals.ElementAt(i).Coordinates[j].Item2;
+                            k++;
+                        }
+                    }
+                    this.printer.UpdateRivals(temp);
+                }
+
+            }
+        }
 
         public void StartGame()
         {
@@ -80,11 +119,11 @@ namespace HomeWork
             Task curbTask = new Task(() => this.MoveCurb());
             curbTask.Start();
 
-            //Task rivalsTask = new Task(() => this.MoveRivals());
-            //rivalsTask.Start();
+            Task rivalsTask = new Task(() => this.MoveRivals());
+            rivalsTask.Start();
 
-            //Task generateRivals = new Task(() => GenerateOncomingCar());
-            //generateRivals.Start();
+            Task generateRivals = new Task(() => GenerateOncomingCar());
+            generateRivals.Start();
 
             gamepad.ControlPressed += ProcessControl;
 
@@ -101,7 +140,7 @@ namespace HomeWork
                 {
                     curb.Move();
                     printer.UpdateCurb(curb.Coordinates);
-                    Thread.Sleep(50);
+                    Thread.Sleep(100);
                 }
             }
         }
