@@ -28,8 +28,8 @@ namespace HomeWork
             this.car = new Car();
             this.tempCar = new Car();
             this.curb = new (int, int, bool)[40];
-            this.rivals = new (int, int)[21];
-            this.tempRivals = new (int, int)[21];
+            this.rivals = new (int, int)[28];
+            this.tempRivals = new (int, int)[28];
         }
 
         public void UpdateCar((int, int)[] car)

@@ -71,18 +71,18 @@ namespace HomeWork
         { Random rnd = new Random();
             while (!this.gameOver)
             {
-                if (this.rivals.Count < 3)
+                if (this.rivals.Count < 4)
                 {
-                    Thread.Sleep(rnd.Next(3000, 5000));
+                    Thread.Sleep(2000);
                     OncomingCar temp = new OncomingCar((CarPosition)rnd.Next(0, 2));
                     this.rivals.Enqueue(temp);
-                    //this.printer.UpdateRivals(temp.Coordinates);
                 }
             }
         }
 
         public void MoveRivals()
         {
+            bool dequeue = false;
             while (!this.gameOver)
             {
                 if (this.gameRunning)
@@ -91,8 +91,17 @@ namespace HomeWork
                     foreach (var rival in this.rivals)
                     {
                         rival.Move();
+                        if (!this.field.CheckIsOnField(rival.Coordinates))
+                            {
+                            dequeue = true;
+                            }
                     }
-                    (int, int)[] temp = new (int, int)[21];
+                    if (dequeue)
+                    {
+                        this.rivals.Dequeue();
+                        dequeue = false;
+                    }
+                    (int, int)[] temp = new (int, int)[28];
                     for (int i = 0, k=0; i < this.rivals.Count; i++)
                     {
                         for (int j = 0; j < this.rivals.ElementAt(i).Coordinates.Length; j++)

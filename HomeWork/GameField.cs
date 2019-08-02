@@ -18,9 +18,17 @@ namespace HomeWork
             this.Height = height;
         }
 
-        public bool CheckIsOnField(int widthValue, int heightValue)
+        public bool CheckIsOnField((int, int)[] car)
         {
-            return (widthValue <= this.Width && heightValue <= this.Height) ? true : false;
+            foreach (var point in car)
+	        {
+                    if (point.Item1 <= this.Width && point.Item1>=0 && point.Item2 <= this.Height && point.Item2 >=0)
+	                {
+                        return true;
+	                }
+            }
+            return false;
         }
     }
 }
+
