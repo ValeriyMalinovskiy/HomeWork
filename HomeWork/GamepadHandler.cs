@@ -44,6 +44,11 @@ namespace HomeWork
                             this.OnControlPressed(GameControl.Pause);
                         }
                         break;
+                    case ConsoleKey.UpArrow:
+                        {
+                            this.OnControlPressed(GameControl.GainSpeed);
+                            break;
+                        }
                 }
             }
         }

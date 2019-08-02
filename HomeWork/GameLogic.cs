@@ -9,25 +9,25 @@ namespace HomeWork
 {
     internal delegate void ControlDelegate(GamepadHandlerEventArgs args);
 
-    class GameLogic
+    internal class GameLogic
     {
-        Curb curb = new Curb();
+        private Curb curb = new Curb();
 
-        Car car = new Car();
+        private Car car = new Car();
 
-        Printer printer = new Printer();
+        private Printer printer = new Printer();
 
-        GameField field = new GameField();
+        private GameField field = new GameField();
 
-        GamepadHandlerEventArgs gamepad = new GamepadHandlerEventArgs();
+        private GamepadHandlerEventArgs gamepad = new GamepadHandlerEventArgs();
 
-        Queue<OncomingCar> rivals = new Queue<OncomingCar>();
+        private Queue<OncomingCar> rivals = new Queue<OncomingCar>();
 
-        CarPosition carPosition = CarPosition.Left;
+        private CarPosition carPosition = CarPosition.Left;
 
-        bool gameRunning = true;
+        private bool gameRunning = true;
 
-        bool gameOver = false;
+        private bool gameOver = false;
 
         private void ProcessControl(GamepadHandlerEventArgs args)
         {
@@ -54,6 +54,9 @@ namespace HomeWork
                     }
                     break;
                 case GameControl.GainSpeed:
+                    {
+
+                    }
                     break;
                 case GameControl.Pause:
                     {
@@ -68,33 +71,33 @@ namespace HomeWork
         }
 
         private void GenerateOncomingCar()
-        { Random rnd = new Random();
+        {
+            Random rnd = new Random();
             while (!this.gameOver)
             {
-                if (this.rivals.Count < 4)
+                if (this.rivals.Count <4)
                 {
-                    Thread.Sleep(2000);
-                    OncomingCar temp = new OncomingCar((CarPosition)rnd.Next(0, 2));
-                    this.rivals.Enqueue(temp);
+                    Thread.Sleep(rnd.Next(1500, 2000));
+                    this.rivals.Enqueue(new OncomingCar((CarPosition)rnd.Next(0, 2)));
                 }
             }
         }
 
-        public void MoveRivals()
+        private void MoveRivals()
         {
             bool dequeue = false;
             while (!this.gameOver)
             {
+                Thread.Sleep(200);
                 if (this.gameRunning)
                 {
-                    Thread.Sleep(200);
                     foreach (var rival in this.rivals)
                     {
                         rival.Move();
                         if (!this.field.CheckIsOnField(rival.Coordinates))
-                            {
+                        {
                             dequeue = true;
-                            }
+                        }
                     }
                     if (dequeue)
                     {
@@ -102,7 +105,7 @@ namespace HomeWork
                         dequeue = false;
                     }
                     (int, int)[] temp = new (int, int)[28];
-                    for (int i = 0, k=0; i < this.rivals.Count; i++)
+                    for (int i = 0, k = 0; i < this.rivals.Count; i++)
                     {
                         for (int j = 0; j < this.rivals.ElementAt(i).Coordinates.Length; j++)
                         {
@@ -117,7 +120,7 @@ namespace HomeWork
             }
         }
 
-        public void StartGame()
+        internal void StartGame()
         {
             Task printTask = new Task(() => printer.PrintEverything());
             printTask.Start();
@@ -131,10 +134,10 @@ namespace HomeWork
             Task rivalsTask = new Task(() => this.MoveRivals());
             rivalsTask.Start();
 
-            Task generateRivals = new Task(() => GenerateOncomingCar());
+            Task generateRivals = new Task(() => this.GenerateOncomingCar());
             generateRivals.Start();
 
-            gamepad.ControlPressed += ProcessControl;
+            gamepad.ControlPressed += this.ProcessControl;
 
             while (true)
             {
