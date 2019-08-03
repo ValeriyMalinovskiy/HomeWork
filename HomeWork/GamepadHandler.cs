@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
 
 namespace HomeWork
 {
     class GamepadHandlerEventArgs : EventArgs
     {
         public GameControl myProperty { get; set; }
+
+        public bool IsKeyPressed { get; set; }
 
         public event ControlDelegate ControlPressed;
 
@@ -46,9 +50,10 @@ namespace HomeWork
                         break;
                     case ConsoleKey.UpArrow:
                         {
+                            this.IsKeyPressed = !this.IsKeyPressed;
                             this.OnControlPressed(GameControl.GainSpeed);
-                            break;
                         }
+                        break;
                 }
             }
         }

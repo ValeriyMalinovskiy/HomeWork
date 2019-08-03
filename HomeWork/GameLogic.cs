@@ -32,6 +32,8 @@ namespace HomeWork
 
         private bool gameOver = false;
 
+        private bool speedIncreased = false;
+
         private void ProcessControl(GamepadHandlerEventArgs args)
         {
             if (!this.gameOver)
@@ -60,7 +62,7 @@ namespace HomeWork
                         break;
                     case GameControl.GainSpeed:
                         {
-
+                            this.speedIncreased = args.IsKeyPressed;
                         }
                         break;
                     case GameControl.Pause:
@@ -71,6 +73,9 @@ namespace HomeWork
                     case GameControl.Quit:
                         break;
                     default:
+                        {
+                            this.speedIncreased = false;
+                        }
                         break;
                 }
             }
@@ -165,7 +170,7 @@ namespace HomeWork
                 {
                     curb.Move();
                     printer.UpdateCurb(curb.Coordinates);
-                    Thread.Sleep(100);
+                    Thread.Sleep(speedIncreased? 10:100);
                 }
             }
         }
