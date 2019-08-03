@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Concurrent;
 
 namespace HomeWork
 {
@@ -23,7 +24,7 @@ namespace HomeWork
 
         private GamepadHandlerEventArgs gamepad = new GamepadHandlerEventArgs();
 
-        private Queue<OncomingCar> rivals = new Queue<OncomingCar>();
+        private ConcurrentQueue<OncomingCar> rivals = new ConcurrentQueue<OncomingCar>();
 
         private CarPosition carPosition = CarPosition.Left;
 
@@ -105,7 +106,7 @@ namespace HomeWork
                     }
                     if (dequeue)
                     {
-                        this.rivals.Dequeue();
+                        this.rivals.TryDequeue(out OncomingCar result);
                         dequeue = false;
                     }
                     (int, int)[] temp = new (int, int)[28];
@@ -147,7 +148,8 @@ namespace HomeWork
             {
                 if (this.rivals?.Count > 0)
                 {
-                    if(this.carCrash.Check(this.car, this.rivals))
+                    OncomingCar[] tempArr = this.rivals.ToArray();
+                    if (this.carCrash.Check(this.car, tempArr))
                     {
                         this.gameOver = true;
                     }
