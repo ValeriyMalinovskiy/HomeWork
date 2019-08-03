@@ -19,6 +19,8 @@ namespace HomeWork
 
         private GameField field = new GameField();
 
+        private CarCrash carCrash = new CarCrash();
+
         private GamepadHandlerEventArgs gamepad = new GamepadHandlerEventArgs();
 
         private Queue<OncomingCar> rivals = new Queue<OncomingCar>();
@@ -31,42 +33,45 @@ namespace HomeWork
 
         private void ProcessControl(GamepadHandlerEventArgs args)
         {
-            switch (args.myProperty)
+            if (!this.gameOver)
             {
-                case GameControl.ShiftCarLeft:
-                    {
-                        if (this.carPosition == CarPosition.Right && gameRunning)
+                switch (args.myProperty)
+                {
+                    case GameControl.ShiftCarLeft:
                         {
-                            this.car.Shift(CarPosition.Left);
-                            this.carPosition = CarPosition.Left;
-                            this.printer.UpdateCar(this.car.Coordinates);
+                            if (this.carPosition == CarPosition.Right && gameRunning)
+                            {
+                                this.car.Shift(CarPosition.Left);
+                                this.carPosition = CarPosition.Left;
+                                this.printer.UpdateCar(this.car.Coordinates);
+                            }
                         }
-                    }
-                    break;
-                case GameControl.ShiftCarRight:
-                    {
-                        if (this.carPosition == CarPosition.Left && gameRunning)
+                        break;
+                    case GameControl.ShiftCarRight:
                         {
-                            this.car.Shift(CarPosition.Right);
-                            this.carPosition = CarPosition.Right;
-                            this.printer.UpdateCar(this.car.Coordinates);
+                            if (this.carPosition == CarPosition.Left && gameRunning)
+                            {
+                                this.car.Shift(CarPosition.Right);
+                                this.carPosition = CarPosition.Right;
+                                this.printer.UpdateCar(this.car.Coordinates);
+                            }
                         }
-                    }
-                    break;
-                case GameControl.GainSpeed:
-                    {
+                        break;
+                    case GameControl.GainSpeed:
+                        {
 
-                    }
-                    break;
-                case GameControl.Pause:
-                    {
-                        this.gameRunning = !gameRunning;
-                    }
-                    break;
-                case GameControl.Quit:
-                    break;
-                default:
-                    break;
+                        }
+                        break;
+                    case GameControl.Pause:
+                        {
+                            this.gameRunning = !gameRunning;
+                        }
+                        break;
+                    case GameControl.Quit:
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -75,7 +80,7 @@ namespace HomeWork
             Random rnd = new Random();
             while (!this.gameOver)
             {
-                if (this.rivals.Count <4)
+                if (this.rivals.Count < 4)
                 {
                     Thread.Sleep(rnd.Next(1500, 2000));
                     this.rivals.Enqueue(new OncomingCar((CarPosition)rnd.Next(0, 2)));
@@ -88,7 +93,6 @@ namespace HomeWork
             bool dequeue = false;
             while (!this.gameOver)
             {
-                Thread.Sleep(200);
                 if (this.gameRunning)
                 {
                     foreach (var rival in this.rivals)
@@ -116,7 +120,7 @@ namespace HomeWork
                     }
                     this.printer.UpdateRivals(temp);
                 }
-
+                Thread.Sleep(200);
             }
         }
 
@@ -141,6 +145,13 @@ namespace HomeWork
 
             while (true)
             {
+                if (this.rivals?.Count > 0)
+                {
+                    if(this.carCrash.Check(this.car, this.rivals))
+                    {
+                        this.gameOver = true;
+                    }
+                }
             }
         }
 

@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Car.cs" />
+    <Compile Include="CarCrash.cs" />
     <Compile Include="GameField.cs" />
     <Compile Include="GamepadHandler.cs" />
     <Compile Include="Enums\CarPosition.cs" />
