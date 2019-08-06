@@ -20,8 +20,6 @@ namespace HomeWork
 
         private GameField field = new GameField();
 
-        private CarCrash carCrash = new CarCrash();
-
         private ButtonPressEventRaiser eventRaiser = new ButtonPressEventRaiser();
 
         private ConcurrentQueue<Rival> rivals = new ConcurrentQueue<Rival>();
@@ -82,6 +80,24 @@ namespace HomeWork
                     this.rivals.Enqueue(new Rival((CarPosition)rnd.Next(0, 2)));
                 }
             }
+        }
+
+        private bool CheckCrash(Car car, IEnumerable<Rival> rivals)
+        {
+            foreach (var rival in rivals)
+            {
+                foreach (var carPoint in car.Coordinates)
+                {
+                    foreach (var rivalPoint in rival.Coordinates)
+                    {
+                        if (rivalPoint.Item1 == carPoint.Item1 && rivalPoint.Item2 == carPoint.Item2)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         private void MoveRivals()
@@ -145,7 +161,7 @@ namespace HomeWork
                 if (this.rivals?.Count > 0)
                 {
                     Rival[] tempArr = this.rivals.ToArray();
-                    if (this.carCrash.Check(this.car, tempArr))
+                    if (this.CheckCrash(this.car, tempArr))
                     {
                         this.gameOver = true;
                     }

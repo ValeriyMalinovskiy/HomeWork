@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Controls\ButtonPressEventRaiser.cs" />
     <Compile Include="Car.cs" />
-    <Compile Include="CarCrash.cs" />
     <Compile Include="GameField.cs" />
     <Compile Include="Controls\GamepadEventArgs.cs" />
     <Compile Include="Enums\CarPosition.cs" />
@@ -57,6 +56,7 @@
     <Compile Include="Controls\AccelerationControl.cs" />
     <Compile Include="Printer.cs" />
     <Compile Include="GameLogic.cs" />
+    <Compile Include="RacingGameObject.cs" />
     <Compile Include="Rival.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
