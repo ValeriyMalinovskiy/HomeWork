@@ -53,6 +53,7 @@
     <Compile Include="GamepadHandler.cs" />
     <Compile Include="Enums\CarPosition.cs" />
     <Compile Include="Enums\GameControl.cs" />
+    <Compile Include="AccelerationControl.cs" />
     <Compile Include="Printer.cs" />
     <Compile Include="GameLogic.cs" />
     <Compile Include="OncomingCar.cs" />

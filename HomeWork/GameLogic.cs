@@ -60,11 +60,11 @@ namespace HomeWork
                             }
                         }
                         break;
-                    case GameControl.GainSpeed:
-                        {
-                            this.speedIncreased = args.IsKeyPressed;
-                        }
-                        break;
+                    //case GameControl.GainSpeed:
+                    //    {
+                    //        this.speedIncreased = args.IsKeyPressed;
+                    //    }
+                    //    break;
                     case GameControl.Pause:
                         {
                             this.gameRunning = !gameRunning;
@@ -151,6 +151,7 @@ namespace HomeWork
 
             while (true)
             {
+                speedIncreased = AccelerationControl.IsKeyDown(38);
                 if (this.rivals?.Count > 0)
                 {
                     OncomingCar[] tempArr = this.rivals.ToArray();
@@ -170,7 +171,7 @@ namespace HomeWork
                 {
                     curb.Move();
                     printer.UpdateCurb(curb.Coordinates);
-                    Thread.Sleep(speedIncreased? 10:100);
+                    Thread.Sleep(speedIncreased? 30:110);
                 }
             }
         }

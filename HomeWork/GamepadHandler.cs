@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace HomeWork
 {
@@ -48,12 +49,12 @@ namespace HomeWork
                             this.OnControlPressed(GameControl.Pause);
                         }
                         break;
-                    case ConsoleKey.UpArrow:
-                        {
-                            this.IsKeyPressed = !this.IsKeyPressed;
-                            this.OnControlPressed(GameControl.GainSpeed);
-                        }
-                        break;
+                    //case ConsoleKey.UpArrow:
+                    //    {
+                    //        this.IsKeyPressed = !this.IsKeyPressed;
+                    //        this.OnControlPressed(GameControl.GainSpeed);
+                    //    }
+                    //    break;
                 }
             }
         }
