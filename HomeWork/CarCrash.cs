@@ -8,7 +8,7 @@ namespace HomeWork
 {
     class CarCrash
     {
-        public bool Check(Car car, IEnumerable<OncomingCar> rivals)
+        public bool Check(Car car, IEnumerable<Rival> rivals)
         {
             foreach (var rival in rivals)
             {

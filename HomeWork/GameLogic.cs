@@ -8,7 +8,7 @@ using System.Collections.Concurrent;
 
 namespace HomeWork
 {
-    internal delegate void ControlDelegate(GamepadHandlerEventArgs args);
+    internal delegate void ControlDelegate(GamepadEventArgs args);
 
     internal class GameLogic
     {
@@ -22,9 +22,9 @@ namespace HomeWork
 
         private CarCrash carCrash = new CarCrash();
 
-        private GamepadHandlerEventArgs gamepad = new GamepadHandlerEventArgs();
+        private ButtonPressEventRaiser eventRaiser = new ButtonPressEventRaiser();
 
-        private ConcurrentQueue<OncomingCar> rivals = new ConcurrentQueue<OncomingCar>();
+        private ConcurrentQueue<Rival> rivals = new ConcurrentQueue<Rival>();
 
         private CarPosition carPosition = CarPosition.Left;
 
@@ -34,11 +34,11 @@ namespace HomeWork
 
         private bool speedIncreased = false;
 
-        private void ProcessControl(GamepadHandlerEventArgs args)
+        private void ProcessControl(GamepadEventArgs args)
         {
             if (!this.gameOver)
             {
-                switch (args.myProperty)
+                switch (args.control)
                 {
                     case GameControl.ShiftCarLeft:
                         {
@@ -60,22 +60,12 @@ namespace HomeWork
                             }
                         }
                         break;
-                    //case GameControl.GainSpeed:
-                    //    {
-                    //        this.speedIncreased = args.IsKeyPressed;
-                    //    }
-                    //    break;
                     case GameControl.Pause:
                         {
                             this.gameRunning = !gameRunning;
                         }
                         break;
                     case GameControl.Quit:
-                        break;
-                    default:
-                        {
-                            this.speedIncreased = false;
-                        }
                         break;
                 }
             }
@@ -89,7 +79,7 @@ namespace HomeWork
                 if (this.rivals.Count < 4)
                 {
                     Thread.Sleep(rnd.Next(1500, 2000));
-                    this.rivals.Enqueue(new OncomingCar((CarPosition)rnd.Next(0, 2)));
+                    this.rivals.Enqueue(new Rival((CarPosition)rnd.Next(0, 2)));
                 }
             }
         }
@@ -111,7 +101,7 @@ namespace HomeWork
                     }
                     if (dequeue)
                     {
-                        this.rivals.TryDequeue(out OncomingCar result);
+                        this.rivals.TryDequeue(out Rival result);
                         dequeue = false;
                     }
                     (int, int)[] temp = new (int, int)[28];
@@ -135,7 +125,7 @@ namespace HomeWork
             Task printTask = new Task(() => printer.PrintEverything());
             printTask.Start();
 
-            Task controlTask = new Task(() => gamepad.ProcessButtonPressed());
+            Task controlTask = new Task(() => eventRaiser.Watch());
             controlTask.Start();
 
             Task curbTask = new Task(() => this.MoveCurb());
@@ -147,14 +137,14 @@ namespace HomeWork
             Task generateRivals = new Task(() => this.GenerateOncomingCar());
             generateRivals.Start();
 
-            gamepad.ControlPressed += this.ProcessControl;
+            eventRaiser.ControlPressed += this.ProcessControl;
 
             while (true)
             {
                 speedIncreased = AccelerationControl.IsKeyDown(38);
                 if (this.rivals?.Count > 0)
                 {
-                    OncomingCar[] tempArr = this.rivals.ToArray();
+                    Rival[] tempArr = this.rivals.ToArray();
                     if (this.carCrash.Check(this.car, tempArr))
                     {
                         this.gameOver = true;
@@ -171,7 +161,7 @@ namespace HomeWork
                 {
                     curb.Move();
                     printer.UpdateCurb(curb.Coordinates);
-                    Thread.Sleep(speedIncreased? 30:110);
+                    Thread.Sleep(speedIncreased? 40:100);
                 }
             }
         }

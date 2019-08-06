@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace HomeWork
 {
-    internal class OncomingCar
+    internal class Rival
     {
         public (int, int)[] Coordinates { get; private set; }
 
-        public OncomingCar(CarPosition carPosition)
+        public Rival(CarPosition carPosition)
         {
             switch (carPosition)
             {

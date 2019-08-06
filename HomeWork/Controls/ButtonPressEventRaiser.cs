@@ -3,26 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace HomeWork
 {
-    class GamepadHandlerEventArgs : EventArgs
+    class ButtonPressEventRaiser
     {
-        public GameControl myProperty { get; set; }
-
-        public bool IsKeyPressed { get; set; }
+        private GamepadEventArgs gamepad = new GamepadEventArgs();
 
         public event ControlDelegate ControlPressed;
 
         public virtual void OnControlPressed(GameControl control)
         {
-            this.myProperty = control;
-            ControlPressed(this);
+            this.gamepad.control = control;
+            ControlPressed(this.gamepad);
         }
-        public void ProcessButtonPressed()
+
+        public void Watch()
         {
             while (true)
             {
@@ -49,15 +45,8 @@ namespace HomeWork
                             this.OnControlPressed(GameControl.Pause);
                         }
                         break;
-                    //case ConsoleKey.UpArrow:
-                    //    {
-                    //        this.IsKeyPressed = !this.IsKeyPressed;
-                    //        this.OnControlPressed(GameControl.GainSpeed);
-                    //    }
-                    //    break;
                 }
             }
         }
-
     }
 }
