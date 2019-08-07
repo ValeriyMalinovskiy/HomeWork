@@ -44,7 +44,7 @@ namespace HomeWork
                             {
                                 this.car.Shift(CarPosition.Left);
                                 this.carPosition = CarPosition.Left;
-                                this.printer.UpdateCar(this.car.Coordinates);
+                                this.printer.UpdateCar(this.car.Nodes);
                             }
                         }
                         break;
@@ -54,7 +54,7 @@ namespace HomeWork
                             {
                                 this.car.Shift(CarPosition.Right);
                                 this.carPosition = CarPosition.Right;
-                                this.printer.UpdateCar(this.car.Coordinates);
+                                this.printer.UpdateCar(this.car.Nodes);
                             }
                         }
                         break;
@@ -82,23 +82,23 @@ namespace HomeWork
             }
         }
 
-        private bool CheckCrash(Car car, IEnumerable<Rival> rivals)
-        {
-            foreach (var rival in rivals)
-            {
-                foreach (var carPoint in car.Coordinates)
-                {
-                    foreach (var rivalPoint in rival.Coordinates)
-                    {
-                        if (rivalPoint.Item1 == carPoint.Item1 && rivalPoint.Item2 == carPoint.Item2)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
+        //private bool CheckCrash(Car car, IEnumerable<Rival> rivals)
+        //{
+        //    foreach (var rival in rivals)
+        //    {
+        //        foreach (var carPoint in car.Nodes)
+        //        {
+        //            foreach (var rivalPoint in rival.Coordinates)
+        //            {
+        //                if (rivalPoint.Item1 == carPoint.Item1 && rivalPoint.Item2 == carPoint.Item2)
+        //                {
+        //                    return true;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return false;
+        //}
 
         private void MoveRivals()
         {
@@ -161,10 +161,10 @@ namespace HomeWork
                 if (this.rivals?.Count > 0)
                 {
                     Rival[] tempArr = this.rivals.ToArray();
-                    if (this.CheckCrash(this.car, tempArr))
-                    {
-                        this.gameOver = true;
-                    }
+                    //if (this.CheckCrash(this.car, tempArr))
+                    //{
+                    //    this.gameOver = true;
+                    //}
                 }
             }
         }

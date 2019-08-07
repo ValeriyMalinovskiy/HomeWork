@@ -9,9 +9,9 @@ namespace HomeWork
 {
     class Printer
     {
-        private Car car;
+        private Node[] car;
 
-        private Car tempCar;
+        private Node[] tempCar;
 
         private Node[] curb;
 
@@ -25,8 +25,8 @@ namespace HomeWork
 
         public Printer()
         {
-            this.car = new Car();
-            this.tempCar = new Car();
+            this.car = new Node[12];
+            this.tempCar = new Node[12];
             this.curb = new Node[40];
             this.rivals = new (int, int)[28];
             this.tempRivals = new (int, int)[28];
@@ -34,17 +34,22 @@ namespace HomeWork
             {
                 this.curb[i] = new Node();
             }
+            for (int i = 0; i < this.car.Length; i++)
+            {
+                this.car[i] = new Node();
+            }
         }
 
-        public void UpdateCar((int, int)[] car)
+        public void UpdateCar(Node[] car)
         {
-            for (int i = 0; i < this.car.Coordinates.Length; i++)
-            {
-                this.tempCar.Coordinates[i].Item1 = this.car.Coordinates[i].Item1;
-                this.tempCar.Coordinates[i].Item2 = this.car.Coordinates[i].Item2;
-                this.car.Coordinates[i].Item1 = car[i].Item1;
-                this.car.Coordinates[i].Item2 = car[i].Item2;
-            }
+            this.car = car;
+            //for (int i = 0; i < this.car.Nodes.Length; i++)
+            //{
+            //    this.tempCar.Coordinates[i].Item1 = this.car.Coordinates[i].Item1;
+            //    this.tempCar.Coordinates[i].Item2 = this.car.Coordinates[i].Item2;
+            //    this.car.Coordinates[i].Item1 = car[i].Item1;
+            //    this.car.Coordinates[i].Item2 = car[i].Item2;
+            //}
             this.MoveDirectionChanged = true;
         }
 
@@ -93,19 +98,19 @@ namespace HomeWork
                 //
                 //Car
                 //
-                if (this.MoveDirectionChanged)
+                //if (this.MoveDirectionChanged)
+                //{
+                //    foreach (var point in this.tempCar)
+                //    {
+                //        Console.SetCursorPosition(point.X, point.Y);
+                //        Console.Write(" ");
+                //    }
+                //    this.MoveDirectionChanged = false;
+                //}
+                foreach (var point in this.car)
                 {
-                    foreach (var point in this.tempCar.Coordinates)
-                    {
-                        Console.SetCursorPosition(point.Item1, point.Item2);
-                        Console.Write(" ");
-                    }
-                    this.MoveDirectionChanged = false;
-                }
-                foreach (var point in this.car.Coordinates)
-                {
-                    Console.SetCursorPosition(point.Item1, point.Item2);
-                    Console.Write("#");
+                    Console.SetCursorPosition(point.X, point.Y);
+                    Console.Write(point.IsVisible ? "#" : " ");
                 }
                 //
                 //Rivals
