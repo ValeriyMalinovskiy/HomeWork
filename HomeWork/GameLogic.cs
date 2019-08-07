@@ -176,7 +176,7 @@ namespace HomeWork
                 if (this.gameRunning)
                 {
                     curb.Move();
-                    printer.UpdateCurb(curb.Coordinates);
+                    printer.UpdateCurb(curb.Nodes);
                     Thread.Sleep(speedIncreased? 40:100);
                 }
             }

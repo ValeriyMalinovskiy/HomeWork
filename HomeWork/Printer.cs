@@ -13,13 +13,13 @@ namespace HomeWork
 
         private Car tempCar;
 
-        private (int, int, bool)[] curb;
+        private Node[] curb;
 
         private (int, int)[] rivals;
 
         private (int, int)[] tempRivals;
 
-        private bool carPositionChanged;
+        private bool MoveDirectionChanged;
 
         private bool rivalsPositionChanged;
 
@@ -27,9 +27,13 @@ namespace HomeWork
         {
             this.car = new Car();
             this.tempCar = new Car();
-            this.curb = new (int, int, bool)[40];
+            this.curb = new Node[40];
             this.rivals = new (int, int)[28];
             this.tempRivals = new (int, int)[28];
+            for (int i = 0; i < this.curb.Length; i++)
+            {
+                this.curb[i] = new Node();
+            }
         }
 
         public void UpdateCar((int, int)[] car)
@@ -41,7 +45,7 @@ namespace HomeWork
                 this.car.Coordinates[i].Item1 = car[i].Item1;
                 this.car.Coordinates[i].Item2 = car[i].Item2;
             }
-            this.carPositionChanged = true;
+            this.MoveDirectionChanged = true;
         }
 
         public void UpdateRivals((int, int)[] rivals)
@@ -56,13 +60,13 @@ namespace HomeWork
             this.rivalsPositionChanged = true;
         }
 
-        public void UpdateCurb((int, int, bool)[] curb)
+        public void UpdateCurb(Node[] curb)
         {
             for (int i = 0; i < this.curb.Length; i++)
             {
-                this.curb[i].Item1 = curb[i].Item1;
-                this.curb[i].Item2 = curb[i].Item2;
-                this.curb[i].Item3 = curb[i].Item3;
+                this.curb[i].X = curb[i].X;
+                this.curb[i].Y = curb[i].Y;
+                this.curb[i].IsVisible = curb[i].IsVisible;
             }
         }
 
@@ -76,8 +80,8 @@ namespace HomeWork
                 //
                 foreach (var point in curb)
                 {
-                    Console.SetCursorPosition(point.Item1, point.Item2);
-                    if (point.Item3)
+                    Console.SetCursorPosition(point.X, point.Y);
+                    if (point.IsVisible)
                     {
                         Console.Write("#");
                     }
@@ -89,14 +93,14 @@ namespace HomeWork
                 //
                 //Car
                 //
-                if (this.carPositionChanged)
+                if (this.MoveDirectionChanged)
                 {
                     foreach (var point in this.tempCar.Coordinates)
                     {
                         Console.SetCursorPosition(point.Item1, point.Item2);
                         Console.Write(" ");
                     }
-                    this.carPositionChanged = false;
+                    this.MoveDirectionChanged = false;
                 }
                 foreach (var point in this.car.Coordinates)
                 {

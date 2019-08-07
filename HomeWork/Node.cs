@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace HomeWork
 {
-    internal enum CarPosition
+    class Node
     {
-        Left,
-        Right,
-        Down
+        public int X { get; set; }
+
+        public int Y { get; set; }
+
+        public bool IsVisible { get; set; }
     }
 }

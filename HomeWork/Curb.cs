@@ -8,42 +8,91 @@ namespace HomeWork
 {
     internal class Curb
     {
-        public (int, int, bool)[] Coordinates { get; private set; }
+        //public (int, int, bool)[] Coordinates { get; private set; }
+        public Node[] Nodes { get; protected set; }
 
         public Curb()
         {
-            this.Coordinates = new (int, int, bool)[40];
-            for (int i = 0, j = 0; i < this.Coordinates.Length; i++)
+            this.Nodes = new Node[40];
+            for (int i = 0; i < this.Nodes.Length; i++)
+            {
+                Nodes[i] = new Node();
+            }
+            for (int i = 0, j = 0; i < this.Nodes.Length; i++)
             {
                 if (i < 20)
                 {
-                    this.Coordinates[i].Item1 = 0;
-                    this.Coordinates[i].Item2 = i;
+                    this.Nodes[i].X = 0;
+                    this.Nodes[i].Y = i;
                 }
                 else
                 {
-                    this.Coordinates[i].Item1 = 9;
-                    this.Coordinates[i].Item2 = j;
+                    this.Nodes[i].X = 9;
+                    this.Nodes[i].Y = j;
                     j++;
                 }
-                this.Coordinates[i].Item3 = (i % 4 == 0)? (false) : (true);
+                this.Nodes[i].IsVisible = (i % 4 == 0) ? (false) : (true);
             }
         }
 
-        public void Move()
+        public void Move(CarPosition direction = CarPosition.Down)
         {
-            for (int i = 0; i < this.Coordinates.Length; i++)
+            for (int i = 0; i < this.Nodes.Length; i++)
             {
-                if (this.Coordinates[i].Item2 == 19)
+                if (this.Nodes[i].Y == 19)
                 {
-                    this.Coordinates[i].Item2 = 0;
+                    this.Nodes[i].Y = 0;
                 }
                 else
                 {
-                    this.Coordinates[i].Item2++;
+                    this.Nodes[i].Y++;
                 }
             }
         }
     }
+    //internal class Curb : RacingGameObject
+    //{
+    //    //public (int, int, bool)[] Coordinates { get; private set; }
+    //    public override Node[] Nodes { get; protected set; }
+
+    //    public Curb()
+    //    {
+    //        this.Nodes = new Node[40];
+    //        for (int i = 0; i < this.Nodes.Length; i++)
+    //        {
+    //            Nodes[i] = new Node();
+    //        }
+    //        for (int i = 0, j = 0; i < this.Nodes.Length; i++)
+    //        {
+    //            if (i < 20)
+    //            {
+    //                this.Nodes[i].X = 0;
+    //                this.Nodes[i].Y = i;
+    //            }
+    //            else
+    //            {
+    //                this.Nodes[i].X = 9;
+    //                this.Nodes[i].Y = j;
+    //                j++;
+    //            }
+    //            this.Nodes[i].IsVisible = (i % 4 == 0) ? (false) : (true);
+    //        }
+    //    }
+
+    //    public override void Move(CarPosition direction = CarPosition.Down)
+    //    {
+    //        for (int i = 0; i < this.Nodes.Length; i++)
+    //        {
+    //            if (this.Nodes[i].Y == 19)
+    //            {
+    //                this.Nodes[i].Y = 0;
+    //            }
+    //            else
+    //            {
+    //                this.Nodes[i].Y++;
+    //            }
+    //        }
+    //    }
+    //}
 }
 

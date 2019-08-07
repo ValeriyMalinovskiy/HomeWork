@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace HomeWork
 {
-    internal abstract class RacingGameObject
-    {
+    //internal abstract class RacingGameObject
+    //{
+    //    public ConsoleColor Color { get; protected set; }
 
-        public virtual bool Move(Func<, bool>) { }
-    }
+    //    public Char Character { get; protected set; }
+
+    //    public abstract Node[] Nodes { get; protected set; }
+
+    //    public abstract void Move(CarPosition direction);
+    //}
 }
