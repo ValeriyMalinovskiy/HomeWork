@@ -18,11 +18,11 @@ namespace HomeWork
             this.Height = height;
         }
 
-        public bool CheckIsOnField((int, int)[] car)
+        public bool CheckIsOnField(RacingGameObject gameObject)
         {
-            foreach (var point in car)
+            foreach (var point in gameObject.Nodes)
 	        {
-                    if (point.Item1 <= this.Width && point.Item1>=0 && point.Item2 <= this.Height && point.Item2 >=0)
+                    if (point.X <= this.Width && point.X>=0 && point.Y <= this.Height && point.Y >=0)
 	                {
                         return true;
 	                }

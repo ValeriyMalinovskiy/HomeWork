@@ -7,14 +7,14 @@ using System.Drawing;
 
 namespace HomeWork
 {
-    //internal abstract class RacingGameObject
-    //{
-    //    public ConsoleColor Color { get; protected set; }
+    internal abstract class RacingGameObject
+    {
+        public ConsoleColor Color { get; protected set; }
 
-    //    public Char Character { get; protected set; }
+        public Char Character { get; protected set; }
 
-    //    public abstract Node[] Nodes { get; protected set; }
+        public Node[] Nodes { get; protected set; }
 
-    //    public abstract void Move(CarPosition direction);
-    //}
+        public abstract void Move(Position position);
+    }
 }

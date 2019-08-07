@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HomeWork
 {
-    class Car
+    internal class Car : RacingGameObject
     {
-        public Node[] Nodes { get; private set; }
+        public char Symbol { get; set; }
 
         public Car()
         {
@@ -55,20 +55,20 @@ namespace HomeWork
             this.Nodes[11].IsVisible = false;
         }
 
-        public void Shift(CarPosition carPosition)
+        public override void Move(Position position)
         {
-            switch (carPosition)
+            switch (position)
             {
-                case CarPosition.Left:
-                    foreach (var node in this.Nodes)
+                case Position.Left:
+                    for (int i = 0; i < this.Nodes.Length; i++)
                     {
-                        node.X -= 3;
+                        this.Nodes[i].X -= 3;
                     }
                     break;
-                case CarPosition.Right:
-                    foreach (var node in this.Nodes)
+                case Position.Right:
+                    for (int i = 0; i < this.Nodes.Length; i++)
                     {
-                        node.X += 3;
+                        this.Nodes[i].X += 3;
                     }
                     break;
             }

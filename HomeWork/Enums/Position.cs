@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeWork
 {
-    internal enum CarPosition
+    internal enum Position
     {
         Left,
         Right,

@@ -52,11 +52,11 @@
     <Compile Include="Car.cs" />
     <Compile Include="GameField.cs" />
     <Compile Include="Controls\GamepadEventArgs.cs" />
-    <Compile Include="Enums\CarPosition.cs" />
+    <Compile Include="Enums\Position.cs" />
     <Compile Include="Enums\GameControl.cs" />
     <Compile Include="Controls\AccelerationControl.cs" />
     <Compile Include="Node.cs" />
-    <Compile Include="Printer.cs" />
+    <Compile Include="Renderer.cs" />
     <Compile Include="GameLogic.cs" />
     <Compile Include="RacingGameObject.cs" />
     <Compile Include="Rival.cs" />

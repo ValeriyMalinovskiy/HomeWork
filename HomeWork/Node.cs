@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeWork
 {
-    class Node
+    internal class Node
     {
         public int X { get; set; }
 

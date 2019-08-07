@@ -16,7 +16,7 @@ namespace HomeWork
 
         private Car car = new Car();
 
-        private Printer printer = new Printer();
+        private Renderer renderer = new Renderer();
 
         private GameField field = new GameField();
 
@@ -24,7 +24,7 @@ namespace HomeWork
 
         private ConcurrentQueue<Rival> rivals = new ConcurrentQueue<Rival>();
 
-        private CarPosition carPosition = CarPosition.Left;
+        private Position Position = Position.Left;
 
         private bool gameRunning = true;
 
@@ -40,21 +40,21 @@ namespace HomeWork
                 {
                     case GameControl.ShiftCarLeft:
                         {
-                            if (this.carPosition == CarPosition.Right && gameRunning)
+                            if (this.Position == Position.Right && gameRunning)
                             {
-                                this.car.Shift(CarPosition.Left);
-                                this.carPosition = CarPosition.Left;
-                                this.printer.UpdateCar(this.car.Nodes);
+                                this.car.Move(Position.Left);
+                                this.Position = Position.Left;
+                                this.renderer.UpdateCar(this.car);
                             }
                         }
                         break;
                     case GameControl.ShiftCarRight:
                         {
-                            if (this.carPosition == CarPosition.Left && gameRunning)
+                            if (this.Position == Position.Left && gameRunning)
                             {
-                                this.car.Shift(CarPosition.Right);
-                                this.carPosition = CarPosition.Right;
-                                this.printer.UpdateCar(this.car.Nodes);
+                                this.car.Move(Position.Right);
+                                this.Position = Position.Right;
+                                this.renderer.UpdateCar(this.car);
                             }
                         }
                         break;
@@ -77,7 +77,7 @@ namespace HomeWork
                 if (this.rivals.Count < 4)
                 {
                     Thread.Sleep(rnd.Next(1500, 2000));
-                    this.rivals.Enqueue(new Rival((CarPosition)rnd.Next(0, 2)));
+                    this.rivals.Enqueue(new Rival((Position)rnd.Next(0, 2)));
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace HomeWork
         //        {
         //            foreach (var rivalPoint in rival.Coordinates)
         //            {
-        //                if (rivalPoint.Item1 == carPoint.Item1 && rivalPoint.Item2 == carPoint.Item2)
+        //                if (rivalPoint.X == carPoint.X && rivalPoint.Y == carPoint.Y)
         //                {
         //                    return true;
         //                }
@@ -110,7 +110,7 @@ namespace HomeWork
                     foreach (var rival in this.rivals)
                     {
                         rival.Move();
-                        if (!this.field.CheckIsOnField(rival.Coordinates))
+                        if (!this.field.CheckIsOnField(rival))
                         {
                             dequeue = true;
                         }
@@ -120,17 +120,7 @@ namespace HomeWork
                         this.rivals.TryDequeue(out Rival result);
                         dequeue = false;
                     }
-                    (int, int)[] temp = new (int, int)[28];
-                    for (int i = 0, k = 0; i < this.rivals.Count; i++)
-                    {
-                        for (int j = 0; j < this.rivals.ElementAt(i).Coordinates.Length; j++)
-                        {
-                            temp[k].Item1 = this.rivals.ElementAt(i).Coordinates[j].Item1;
-                            temp[k].Item2 = this.rivals.ElementAt(i).Coordinates[j].Item2;
-                            k++;
-                        }
-                    }
-                    this.printer.UpdateRivals(temp);
+                    this.renderer.UpdateRivals(this.rivals.ToArray());
                 }
                 Thread.Sleep(200);
             }
@@ -138,7 +128,7 @@ namespace HomeWork
 
         internal void StartGame()
         {
-            Task printTask = new Task(() => printer.PrintEverything());
+            Task printTask = new Task(() => renderer.PrintEverything());
             printTask.Start();
 
             Task controlTask = new Task(() => eventRaiser.Watch());
@@ -154,6 +144,8 @@ namespace HomeWork
             generateRivals.Start();
 
             eventRaiser.ControlPressed += this.ProcessControl;
+
+            this.renderer.UpdateCar(this.car);
 
             while (true)
             {
@@ -176,7 +168,7 @@ namespace HomeWork
                 if (this.gameRunning)
                 {
                     curb.Move();
-                    printer.UpdateCurb(curb.Nodes);
+                    renderer.UpdateCurb(this.curb);
                     Thread.Sleep(speedIncreased? 40:100);
                 }
             }
