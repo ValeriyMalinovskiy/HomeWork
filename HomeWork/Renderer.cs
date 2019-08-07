@@ -130,17 +130,6 @@ namespace HomeWork
                 //
                 //Rivals
                 //
-                foreach (var rival in this.rivals)
-                {
-                    foreach (var node in rival.Nodes)
-                    {
-                        if (node.Y >= 0 && node.Y < 20)
-                        {
-                            Console.SetCursorPosition(node.X, node.Y);
-                            Console.Write("#");
-                        }
-                    }
-                }
                 if (this.rivalsPositionChanged)
                 {
                     foreach (var rival in this.tempRivals)
@@ -155,6 +144,17 @@ namespace HomeWork
                         }
                     }
                     this.rivalsPositionChanged = false;
+                }
+                foreach (var rival in this.rivals)
+                {
+                    foreach (var node in rival.Nodes)
+                    {
+                        if (node.Y >= 0 && node.Y < 20)
+                        {
+                            Console.SetCursorPosition(node.X, node.Y);
+                            Console.Write("#");
+                        }
+                    }
                 }
             }
         }

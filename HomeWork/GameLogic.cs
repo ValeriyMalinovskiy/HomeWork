@@ -74,10 +74,13 @@ namespace HomeWork
             Random rnd = new Random();
             while (!this.gameOver)
             {
-                if (this.rivals.Count < 4)
-                {
-                    Thread.Sleep(rnd.Next(1500, 2000));
-                    this.rivals.Enqueue(new Rival((Position)rnd.Next(0, 2)));
+                    if (this.gameRunning && this.rivals.Count < 4)
+                    {
+                        Thread.Sleep(rnd.Next(1600, 2100));
+                    if (this.gameRunning)
+                    {
+                        this.rivals.Enqueue(new Rival((Position)rnd.Next(0, 2)));
+                    }
                 }
             }
         }
@@ -169,7 +172,7 @@ namespace HomeWork
                 {
                     curb.Move();
                     renderer.UpdateCurb(this.curb);
-                    Thread.Sleep(speedIncreased? 40:100);
+                    Thread.Sleep(speedIncreased ? 40 : 100);
                 }
             }
         }
