@@ -120,7 +120,7 @@ namespace HomeWork
                         this.rivals.TryDequeue(out Rival result);
                         dequeue = false;
                     }
-                    this.renderer.UpdateRivals(this.rivals.Select( car => car.Nodes).ToArray());
+                    this.renderer.UpdateRivals(this.rivals.SelectMany(item => item.Nodes).Distinct().ToArray());
                 }
                 Thread.Sleep(200);
             }

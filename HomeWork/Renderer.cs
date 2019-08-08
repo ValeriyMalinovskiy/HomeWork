@@ -15,11 +15,11 @@ namespace HomeWork
 
         private Curb curb;
 
-        private List<Node[]> rivals;
+        private Node[] rivals;
 
-        private List<Node[]> tempRivals;
+        private Node[] tempRivals;
 
-        private bool MoveDirectionChanged;
+        private bool carPositionChanged;
 
         private bool rivalsPositionChanged;
 
@@ -28,8 +28,8 @@ namespace HomeWork
             this.car = new Car();
             this.tempCar = new Car();
             this.curb = new Curb();
-            this.rivals = new List<Node[]>();
-            //this.tempRivals = new List<Node[]>();
+            //this.rivals = new Node[];
+            //this.tempRivals = new List<Rival>();
             for (int i = 0; i < this.curb.Nodes.Length; i++)
             {
                 this.curb.Nodes[i] = new Node();
@@ -45,28 +45,17 @@ namespace HomeWork
                 this.car.Nodes[i].X = car.Nodes[i].X;
                 this.car.Nodes[i].Y = car.Nodes[i].Y;
             }
-            this.MoveDirectionChanged = true;
+            this.carPositionChanged = true;
         }
 
-        public void UpdateRivals(IEnumerable<Node[]> rivals)
+        public void UpdateRivals(Node[] rivals)
         {
-            for (int i = 0; i < this.rivals.Count; i++)
+            if (this.rivals!=null)
             {
-                for (int j = 0; j < this.rivals[i].Length; j++)
-                {
-                    this.rivals[i][j].ChangeVisibility();
-                }
+                this.tempRivals = this.rivals;
             }
-            //this.rivalsPositionChanged = true;
-            //if (this.rivals.Count>0)
-            //{
-            //    while (this.rivalsPositionChanged)
-            //    {
-            //        Thread.Sleep(1);
-            //    }
-            //}
-            Thread.Sleep(5);
-            this.rivals = rivals.ToList();
+            this.rivals = rivals;
+            this.rivalsPositionChanged = true;
         }
 
         public void UpdateCurb(Curb curb)
@@ -81,6 +70,7 @@ namespace HomeWork
 
         public void PrintEverything()
         {
+            Thread.Sleep(100);
             Console.CursorVisible = false;
             while (true)
             {
@@ -103,14 +93,14 @@ namespace HomeWork
                 //
                 //Car
                 //
-                if (this.MoveDirectionChanged)
+                if (this.carPositionChanged)
                 {
                     foreach (var point in this.tempCar.Nodes)
                     {
                         Console.SetCursorPosition(point.X, point.Y);
                         Console.Write(" ");
                     }
-                    this.MoveDirectionChanged = false;
+                    this.carPositionChanged = false;
                 }
                 foreach (var point in this.car.Nodes)
                 {
@@ -120,31 +110,27 @@ namespace HomeWork
                 //
                 //Rivals
                 //
-                foreach (var rival in this.rivals)
+                if (this.rivalsPositionChanged)
                 {
-                    foreach (var node in rival)
+                    foreach (var node in this.tempRivals)
                     {
-                        if (node.Y >= 0 && node.Y < 20 && !node.Invisible)
+                        if (node.Y >= 0 && node.Y < 20)
                         {
                             Console.SetCursorPosition(node.X, node.Y);
-                            Console.Write("#");
+                            Console.Write(" ");
                         }
                     }
+                    this.rivalsPositionChanged = false;
                 }
-                //if (this.rivalsPositionChanged)
                 {
-                    foreach (var rival in this.rivals)
+                    foreach (var node in this.rivals)
                     {
-                        foreach (var node in rival)
+                        if (node.Y >= 0 && node.Y < 20)
                         {
-                            if (node.Y >= 0 && node.Y < 20 && node.Invisible)
-                            {
-                                Console.SetCursorPosition(node.X, node.Y);
-                                Console.Write(" ");
-                            }
+                            Console.SetCursorPosition(node.X, node.Y);
+                            Console.Write("6");
                         }
                     }
-                    //this.rivalsPositionChanged = false;
                 }
             }
         }
