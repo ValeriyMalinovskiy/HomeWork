@@ -69,18 +69,18 @@ namespace HomeWork
             }
         }
 
-        private void GenerateOncomingCar()
-        {
-            Random rnd = new Random();
-            while (!this.gameOver)
-            {
-                if (this.rivals.Count < 4)
-                {
-                    Thread.Sleep(rnd.Next(1600, 2100));
-                    this.rivals.Enqueue(new Rival((Position)rnd.Next(0, 2)));
-                }
-            }
-        }
+        //private void GenerateOncomingCar()
+        //{
+        //    Random rnd = new Random();
+        //    while (!this.gameOver)
+        //    {
+        //        if (this.rivals.Count < 4)
+        //        {
+        //            Thread.Sleep(rnd.Next(1600, 2100));
+        //            this.rivals.Enqueue(new Rival((Position)rnd.Next(0, 2)));
+        //        }
+        //    }
+        //}
 
         //private bool CheckCrash(Car car, IEnumerable<Rival> rivals)
         //{
@@ -100,31 +100,31 @@ namespace HomeWork
         //    return false;
         //}
 
-        private void MoveRivals()
-        {
-            bool dequeue = false;
-            while (!this.gameOver)
-            {
-                if (this.gameRunning)
-                {
-                    foreach (var rival in this.rivals)
-                    {
-                        rival.Move();
-                        if (!this.field.CheckIsOnField(rival))
-                        {
-                            dequeue = true;
-                        }
-                    }
-                    if (dequeue)
-                    {
-                        this.rivals.TryDequeue(out Rival result);
-                        dequeue = false;
-                    }
-                    this.renderer.UpdateRivals(this.rivals.SelectMany(item => item.Nodes).Distinct().ToArray());
-                }
-                Thread.Sleep(200);
-            }
-        }
+        //private void MoveRivals()
+        //{
+        //    bool dequeue = false;
+        //    while (!this.gameOver)
+        //    {
+        //        if (this.gameRunning)
+        //        {
+        //            foreach (var rival in this.rivals)
+        //            {
+        //                rival.Move();
+        //                if (!this.field.CheckIsOnField(rival))
+        //                {
+        //                    dequeue = true;
+        //                }
+        //            }
+        //            if (dequeue)
+        //            {
+        //                this.rivals.TryDequeue(out Rival result);
+        //                dequeue = false;
+        //            }
+        //            this.renderer.UpdateRivals(this.rivals.SelectMany(item => item.Nodes).Distinct().ToArray());
+        //        }
+        //        Thread.Sleep(200);
+        //    }
+        //}
 
         internal void StartGame()
         {
@@ -137,11 +137,11 @@ namespace HomeWork
             Task curbTask = new Task(() => this.MoveCurb());
             curbTask.Start();
 
-            Task rivalsTask = new Task(() => this.MoveRivals());
-            rivalsTask.Start();
+            //Task rivalsTask = new Task(() => this.MoveRivals());
+            //rivalsTask.Start();
 
-            Task generateRivals = new Task(() => this.GenerateOncomingCar());
-            generateRivals.Start();
+            //Task generateRivals = new Task(() => this.GenerateOncomingCar());
+            //generateRivals.Start();
 
             eventRaiser.ControlPressed += this.ProcessControl;
 
@@ -149,15 +149,7 @@ namespace HomeWork
 
             while (true)
             {
-                speedIncreased = AccelerationControl.IsKeyDown(38);
-                if (this.rivals?.Count > 0)
-                {
-                    Rival[] tempArr = this.rivals.ToArray();
-                    //if (this.CheckCrash(this.car, tempArr))
-                    //{
-                    //    this.gameOver = true;
-                    //}
-                }
+                //speedIncreased = AccelerationControl.IsKeyDown(38);
             }
         }
 
