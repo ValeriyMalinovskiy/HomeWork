@@ -17,7 +17,7 @@ namespace HomeWork
 
         private Node[] rivals;
 
-        private (int,int)[] tempRivals;
+        private Node[] tempRivals;
 
         private bool carPositionChanged;
 
@@ -28,12 +28,12 @@ namespace HomeWork
             this.car = new Car();
             this.tempCar = new Car();
             this.curb = new Curb();
-            //this.rivals = new Node[];
-            //this.tempRivals = new List<Rival>();
-            for (int i = 0; i < this.curb.Nodes.Length; i++)
-            {
-                this.curb.Nodes[i] = new Node();
-            }
+            this.rivals = new Node[28];
+            this.tempRivals = new Node[28];
+            //for (int i = 0; i < this.curb.Nodes.Length; i++)
+            //{
+            //    this.curb.Nodes[i] = new Node();
+            //}
         }
 
         public void UpdateCar(Car car)
@@ -50,17 +50,11 @@ namespace HomeWork
 
         public void UpdateRivals(Node[] rivals)
         {
-            //if (this.tempRivals != null)
+            //for (int i = 0; i < this.rivals.Length; i++)
             //{
-            //    tempRivals = new (int, int)[this.rivals.Length];
-            //}
-            //for (int i=0;i< this.rivals.Length; i++)
-            //{
-            //    tempRivals[i].Item1 = this.rivals[i].X;
-            //    tempRivals[i].Item2 = this.rivals[i].Y;
+
             //}
             //this.rivalsPositionChanged = true;
-            this.rivals = rivals;
         }
 
         public void UpdateCurb(Curb curb)
@@ -78,7 +72,7 @@ namespace HomeWork
             Console.CursorVisible = false;
             while (true)
             {
-                Console.Clear();
+                //Console.Clear();
                 //
                 //curb
                 //
@@ -114,16 +108,16 @@ namespace HomeWork
                 //
                 //Rivals
                 //
-                {
-                    foreach (var node in this.rivals)
-                    {
-                        if (node.Y >= 0 && node.Y < 20)
-                        {
-                            Console.SetCursorPosition(node.X, node.Y);
-                            Console.Write("6");
-                        }
-                    }
-                }
+                //{
+                //    foreach (var node in this.rivals)
+                //    {
+                //        if (node.Y >= 0 && node.Y < 20)
+                //        {
+                //            Console.SetCursorPosition(node.X, node.Y);
+                //            Console.Write("X");
+                //        }
+                //    }
+                //}
                 //if(this.rivalsPositionChanged)
                 //{
                 //    foreach (var node in this.tempRivals)
