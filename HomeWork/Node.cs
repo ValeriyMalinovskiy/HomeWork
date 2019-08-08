@@ -12,6 +12,18 @@ namespace HomeWork
 
         public int Y { get; set; }
 
-        public bool IsVisible { get; set; }
+        public bool Invisible { get; set; }
+
+        public Node()
+        {
+            this.X = -1;
+            this.Y = -1;
+            this.Invisible = false;
+        }
+
+        public void ChangeVisibility()
+        {
+            this.Invisible = !this.Invisible;
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace HomeWork
                     this.Nodes[i].Y = j;
                     j++;
                 }
-                this.Nodes[i].IsVisible = (i % 4 == 0) ? false : true;
+                this.Nodes[i].Invisible = (i % 4 == 0) ? true : false;
             }
         }
 
