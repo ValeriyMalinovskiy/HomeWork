@@ -32,6 +32,8 @@ namespace HomeWork
 
         private bool speedIncreased = false;
 
+        object locker = new object();
+
         private void ProcessControl(GamepadEventArgs args)
         {
             //ThreadStart threadDelegate = new ThreadStart(this.RivalSpawner);
@@ -86,33 +88,36 @@ namespace HomeWork
             Random rnd = new Random();
             while (!this.gameOver)
             {
-                if (this.rivals.Count < 4)
+                //if (this.rivals.Count < 4)
                 {
-                    Thread.Sleep(rnd.Next(1600, 2100));
                     this.rivals.Enqueue(new Rival((Position)rnd.Next(0, 2)));
+                    Thread.Sleep(rnd.Next(1600, 2100));
                 }
             }
         }
 
-        private bool CheckCrash(Car car, IEnumerable<Node> rivals)
-        {
-            foreach (var rivalNode in rivals)
-            {
-                foreach (var carNode in car.Nodes)
-                {
-                    if (rivalNode.X == carNode.X && rivalNode.Y == carNode.Y)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
+        //private bool CheckCrash()
+        //{
+        //    foreach (var rival in this.rivals)
+        //    {
+        //        foreach (var rivalNode in rival.Nodes)
+        //        {
+        //            foreach (var carNode in this.car.Nodes)
+        //            {
+        //                if (rivalNode.X == carNode.X && rivalNode.Y == carNode.Y)
+        //                {
+        //                    return true;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return false;
+        //}
 
         private void MoveRivals()
         {
             bool dequeue = false;
-            while (!this.gameOver)
+            while (true)
             {
                 if (this.gameRunning)
                 {
@@ -129,28 +134,32 @@ namespace HomeWork
                         this.rivals.TryDequeue(out Rival result);
                         dequeue = false;
                     }
-                    this.renderer.UpdateRivals(this.rivals.SelectMany(item => item.Nodes).Distinct().ToArray());
                 }
-                Thread.Sleep(200);
+                //lock (locker)
+                //{
+                //    Node[] tempArr = this.rivals.SelectMany(item => item.Nodes).Distinct().ToArray();
+                //    this.renderer.UpdateRivals(tempArr);
+                //}
+                //Thread.Sleep(200);
             }
         }
 
         internal void StartGame()
         {
-            Task printTask = new Task(() => renderer.PrintEverything());
-            printTask.Start();
+            //Task printTask = new Task(() => renderer.PrintEverything());
+            //printTask.Start();
 
-            Task controlTask = new Task(() => eventRaiser.Watch());
-            controlTask.Start();
+            //Task controlTask = new Task(() => eventRaiser.Watch());
+            //controlTask.Start();
 
-            Task curbTask = new Task(() => this.MoveCurb());
-            curbTask.Start();
+            //Task curbTask = new Task(() => this.MoveCurb());
+            //curbTask.Start();
 
-            Task rivalsTask = new Task(() => this.MoveRivals());
-            rivalsTask.Start();
+            Task generateRivals = new Task(() => this.RivalSpawner());
+            generateRivals.Start();
 
-            //Task generateRivals = new Task(() => this.GenerateOncomingCar());
-            //generateRivals.Start();
+            //Task rivalsTask = new Task(() => this.MoveRivals());
+            //rivalsTask.Start();
 
             eventRaiser.ControlPressed += this.ProcessControl;
 
@@ -158,11 +167,28 @@ namespace HomeWork
 
             while (true)
             {
-                this.speedIncreased = AccelerationControl.IsKeyDown(38);
-                //if (this.CheckCrash(this.car, this.rivals.SelectMany(item => item.Nodes).Distinct()))
+                //this.speedIncreased = AccelerationControl.IsKeyDown(38);
+                //if (this.CheckCrash())
                 //{
                 //    this.gameOver = true;
                 //}
+                foreach (var rival in this.rivals)
+                {
+                    rival.Move();
+                }
+                Thread.Sleep(300);
+                Console.Clear();
+                foreach (var rival in this.rivals.ToArray())
+                {
+                    foreach (var item in rival.Nodes)
+                    {
+                        if (item.Y >= 0 && item.Y < 20)
+                        {
+                            Console.SetCursorPosition(item.X, item.Y);
+                            Console.Write("0");
+                        }
+                    }
+                }
             }
         }
 
