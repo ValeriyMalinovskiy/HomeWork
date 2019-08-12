@@ -136,30 +136,29 @@ namespace HomeWork
                     }
                 }
                 //lock (locker)
-                //{
-                //    Node[] tempArr = this.rivals.SelectMany(item => item.Nodes).Distinct().ToArray();
-                //    this.renderer.UpdateRivals(tempArr);
-                //}
-                //Thread.Sleep(200);
+                {
+                    this.renderer.UpdateRivals(this.rivals.ToArray());
+                }
+                Thread.Sleep(200);
             }
         }
 
         internal void StartGame()
         {
-            //Task printTask = new Task(() => renderer.PrintEverything());
-            //printTask.Start();
+            Task printTask = new Task(() => renderer.PrintEverything());
+            printTask.Start();
 
-            //Task controlTask = new Task(() => eventRaiser.Watch());
-            //controlTask.Start();
+            Task controlTask = new Task(() => eventRaiser.Watch());
+            controlTask.Start();
 
-            //Task curbTask = new Task(() => this.MoveCurb());
-            //curbTask.Start();
+            Task curbTask = new Task(() => this.MoveCurb());
+            curbTask.Start();
 
             Task generateRivals = new Task(() => this.RivalSpawner());
             generateRivals.Start();
 
-            //Task rivalsTask = new Task(() => this.MoveRivals());
-            //rivalsTask.Start();
+            Task rivalsTask = new Task(() => this.MoveRivals());
+            rivalsTask.Start();
 
             eventRaiser.ControlPressed += this.ProcessControl;
 
@@ -172,23 +171,6 @@ namespace HomeWork
                 //{
                 //    this.gameOver = true;
                 //}
-                foreach (var rival in this.rivals)
-                {
-                    rival.Move();
-                }
-                Thread.Sleep(300);
-                Console.Clear();
-                foreach (var rival in this.rivals.ToArray())
-                {
-                    foreach (var item in rival.Nodes)
-                    {
-                        if (item.Y >= 0 && item.Y < 20)
-                        {
-                            Console.SetCursorPosition(item.X, item.Y);
-                            Console.Write("0");
-                        }
-                    }
-                }
             }
         }
 

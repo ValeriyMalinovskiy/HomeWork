@@ -15,9 +15,9 @@ namespace HomeWork
 
         private Curb curb;
 
-        private Node[] rivals;
+        private Rival[] rivals;
 
-        private Node[] tempRivals;
+        private Rival[] tempRivals;
 
         private bool carPositionChanged;
 
@@ -28,8 +28,13 @@ namespace HomeWork
             this.car = new Car();
             this.tempCar = new Car();
             this.curb = new Curb();
-            this.rivals = new Node[28];
-            this.tempRivals = new Node[28];
+            this.rivals = new Rival[4];
+            this.tempRivals = new Rival[4];
+            for (int i = 0; i < this.rivals.Length; i++)
+            {
+                this.rivals[i] = new Rival();
+                this.tempRivals[i] = new Rival();
+            }
         }
 
         public void UpdateCar(Car car)
@@ -44,30 +49,16 @@ namespace HomeWork
             this.carPositionChanged = true;
         }
 
-        public void UpdateRivals(Node[] rivals)
+        public void UpdateRivals(Rival[] rivals)
         {
-            int rivalArrLength = rivals.Length;
-            //if (tempRivals!=null)
-            //{
-            //    for (int i = 0; i < this.tempRivals.Length; i++)
-            //    {
-            //        this.tempRivals[i].X = this.rivals[i].X;
-            //        this.tempRivals[i].Y = this.rivals[i].Y;
-            //        this.tempRivals[i].Invisible = this.rivals[i].Invisible;
-            //    }
-            //}
-
-            for (int i = 0; i < this.rivals.Length; i++)
+            for (int i = 0; i < rivals.Length; i++)
             {
-                if (i < rivalArrLength)
+                for (int j = 0; j < rivals[i].Nodes.Length; j++)
                 {
-                    this.rivals[i].X = rivals[i].X;
-                    this.rivals[i].Y = rivals[i].Y;
-                    this.rivals[i].Invisible = rivals[i].Invisible;
-                }
-                else
-                {
-                    this.rivals[i].Invisible = true;
+                    this.tempRivals[i].Nodes[j].X = this.rivals[i].Nodes[j].X;
+                    this.tempRivals[i].Nodes[j].Y = this.rivals[i].Nodes[j].Y;
+                    this.rivals[i].Nodes[j].X = rivals[i].Nodes[j].X;
+                    this.rivals[i].Nodes[j].Y = rivals[i].Nodes[j].Y;
                 }
             }
             this.rivalsPositionChanged = true;
@@ -124,18 +115,34 @@ namespace HomeWork
                 //
                 //Rivals
                 //
-                //if (this.rivalsPositionChanged)
-                //{
-                //    for (int i = 0; i < 28; i++)
-                //    {
-                //        if (this.rivals[i].Y >= 0 && this.rivals[i].Y < 20)
-                //        {
-                //            Console.SetCursorPosition(this.rivals[i].X, this.rivals[i].Y);
-                //            Console.Write("0");
-                //        }
-                //    }
-                //    this.rivalsPositionChanged = false;
-                //}
+                {
+                    for (int i = 0; i < this.rivals.Length; i++)
+                    {
+                        for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
+                        {
+                            if (this.rivals[i].Nodes[j].Y >= 0 && this.rivals[i].Nodes[j].Y < 20)
+                            {
+                                Console.SetCursorPosition(this.rivals[i].Nodes[j].X, this.rivals[i].Nodes[j].Y);
+                                Console.Write("0");
+                            }
+                        }
+                    }
+                }
+                if (this.rivalsPositionChanged)
+                {
+                    for (int i = 0; i < this.tempRivals.Length; i++)
+                    {
+                        for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
+                        {
+                            if (this.tempRivals[i].Nodes[j].Y >= 0 && this.tempRivals[i].Nodes[j].Y < 20)
+                            {
+                                Console.SetCursorPosition(this.tempRivals[i].Nodes[j].X, this.tempRivals[i].Nodes[j].Y);
+                                Console.Write("0");
+                            }
+                        }
+                    }
+                    this.rivalsPositionChanged = false;
+                }
             }
         }
     }
