@@ -28,8 +28,8 @@ namespace HomeWork
             this.car = new Car();
             this.tempCar = new Car();
             this.curb = new Curb();
-            this.rivals = new Rival[3];
-            this.tempRivals = new Rival[3];
+            this.rivals = new Rival[4];
+            this.tempRivals = new Rival[4];
             for (int i = 0; i < this.rivals.Length; i++)
             {
                 this.rivals[i] = new Rival();
@@ -81,7 +81,7 @@ namespace HomeWork
             Console.CursorVisible = false;
             while (true)
             {
-                //Console.Clear();
+               
                 //
                 //curb
                 //
@@ -117,19 +117,19 @@ namespace HomeWork
                 //
                 //Rivals
                 //
-                {
-                    for (int i = 0; i < this.rivals.Length; i++)
-                    {
-                        for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
-                        {
-                            if (this.rivals[i].Nodes[j].Y >= 0 && this.rivals[i].Nodes[j].Y < 20)
-                            {
-                                Console.SetCursorPosition(this.rivals[i].Nodes[j].X, this.rivals[i].Nodes[j].Y);
-                                Console.Write(this.rivals[i].Character);
-                            }
-                        }
-                    }
-                }
+                //{
+                //    for (int i = 0; i < this.rivals.Length; i++)
+                //    {
+                //        for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
+                //        {
+                //if (this.rivals[i].Nodes[j].Y >= 0 && this.rivals[i].Nodes[j].Y < 20)
+                //{
+                //    Console.SetCursorPosition(this.rivals[i].Nodes[j].X, this.rivals[i].Nodes[j].Y);
+                //    Console.Write(this.rivals[i].Character);
+                //}
+                //        }
+                //    }
+                //}
                 if (this.rivalsPositionChanged)
                 {
                     for (int i = 0; i < this.tempRivals.Length; i++)
@@ -140,6 +140,11 @@ namespace HomeWork
                             {
                                 Console.SetCursorPosition(this.tempRivals[i].Nodes[j].X, this.tempRivals[i].Nodes[j].Y);
                                 Console.Write(" ");
+                            }
+                            if (this.rivals[i].Nodes[j].Y >= 0 && this.rivals[i].Nodes[j].Y < 20)
+                            {
+                                Console.SetCursorPosition(this.rivals[i].Nodes[j].X, this.rivals[i].Nodes[j].Y);
+                                Console.Write(this.rivals[i].Character);
                             }
                         }
                     }

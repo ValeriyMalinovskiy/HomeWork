@@ -36,10 +36,6 @@ namespace HomeWork
 
         private void ProcessControl(GamepadEventArgs args)
         {
-            //ThreadStart threadDelegate = new ThreadStart(this.RivalSpawner);
-            //Thread rivalSpawner = new Thread(threadDelegate);
-            //rivalSpawner.Start();
-
             if (!this.gameOver)
             {
                 switch (args.control)
@@ -66,14 +62,6 @@ namespace HomeWork
                         break;
                     case GameControl.Pause:
                         {
-                            //if (this.gameRunning)
-                            //{
-                            //    rivalSpawner.Suspend();
-                            //}
-                            //else
-                            //{
-                            //    rivalSpawner.Resume();
-                            //}
                             this.gameRunning = !this.gameRunning;
                         }
                         break;
@@ -89,14 +77,12 @@ namespace HomeWork
             Random rnd = new Random();
             while (!this.gameOver)
             {
-                if (this.rivals.Count <= 3)
+                Thread.Sleep(2000);
+                if (this.rivals.Count <= 4)
                 {
-                    lock (locker)
-                    {
-                        this.rivals.Enqueue(new Rival((char)counter, (Position)rnd.Next(0, 2)));
-                    }
+                        this.rivals.Enqueue(new Rival(counter.ToString().ToCharArray()[0], (Position)rnd.Next(0, 2)));
                 }
-                Thread.Sleep(rnd.Next(2000, 3000));
+                //Thread.Sleep(rnd.Next(2000, 3000));
                 counter++;
             }
         }
@@ -126,22 +112,22 @@ namespace HomeWork
             {
                 if (this.gameRunning)
                 {
-                    foreach (var rival in this.rivals)
+                    lock (locker)
                     {
-                        rival.Move();
-                        if (!this.field.CheckIsOnField(rival))
+                        foreach (var rival in this.rivals)
                         {
-                            dequeue = true;
+                            rival.Move();
+                            if (!this.field.CheckIsOnField(rival))
+                            {
+                                dequeue = true;
+                            }
+                        }
+                        if (dequeue)
+                        {
+                            this.rivals.TryDequeue(out Rival result);
+                            dequeue = false;
                         }
                     }
-                    if (dequeue)
-                    {
-                        this.rivals.TryDequeue(out Rival result);
-                        dequeue = false;
-                    }
-                }
-                lock (locker)
-                {
                     this.renderer.UpdateRivals(this.rivals.ToArray());
                 }
                 Thread.Sleep(200);
@@ -150,11 +136,11 @@ namespace HomeWork
 
         internal void StartGame()
         {
-            Task printTask = new Task(() => renderer.PrintEverything());
-            printTask.Start();
-
             Task controlTask = new Task(() => eventRaiser.Watch());
             controlTask.Start();
+
+            Task printTask = new Task(() => renderer.PrintEverything());
+            printTask.Start();
 
             Task curbTask = new Task(() => this.MoveCurb());
             curbTask.Start();
@@ -165,9 +151,9 @@ namespace HomeWork
             Task rivalsTask = new Task(() => this.MoveRivals());
             rivalsTask.Start();
 
-            eventRaiser.ControlPressed += this.ProcessControl;
-
             this.renderer.UpdateCar(this.car);
+
+            eventRaiser.ControlPressed += this.ProcessControl;
 
             while (true)
             {
