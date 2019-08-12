@@ -11,10 +11,15 @@ namespace HomeWork
     {
         public ConsoleColor Color { get; protected set; }
 
-        public Char Character { get; protected set; }
+        public Char Character { get; set; }
 
         public Node[] Nodes { get; protected set; }
 
         public abstract void Move(Position position);
+
+        public RacingGameObject(Char character)
+        {
+            this.Character = character;
+        }
     }
 }

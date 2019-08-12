@@ -85,14 +85,19 @@ namespace HomeWork
 
         private void RivalSpawner()
         {
+            int counter = 0;
             Random rnd = new Random();
             while (!this.gameOver)
             {
-                //if (this.rivals.Count < 4)
+                if (this.rivals.Count <= 3)
                 {
-                    this.rivals.Enqueue(new Rival((Position)rnd.Next(0, 2)));
-                    Thread.Sleep(rnd.Next(1600, 2100));
+                    lock (locker)
+                    {
+                        this.rivals.Enqueue(new Rival((char)counter, (Position)rnd.Next(0, 2)));
+                    }
                 }
+                Thread.Sleep(rnd.Next(2000, 3000));
+                counter++;
             }
         }
 
@@ -135,7 +140,7 @@ namespace HomeWork
                         dequeue = false;
                     }
                 }
-                //lock (locker)
+                lock (locker)
                 {
                     this.renderer.UpdateRivals(this.rivals.ToArray());
                 }
@@ -166,7 +171,7 @@ namespace HomeWork
 
             while (true)
             {
-                //this.speedIncreased = AccelerationControl.IsKeyDown(38);
+                this.speedIncreased = AccelerationControl.IsKeyDown(38);
                 //if (this.CheckCrash())
                 //{
                 //    this.gameOver = true;

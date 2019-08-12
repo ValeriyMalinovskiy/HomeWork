@@ -10,7 +10,7 @@ namespace HomeWork
     {
         public char Symbol { get; set; }
 
-        public Car()
+        public Car(Char character = '0', Position position = Position.Left) : base(character)
         {
             this.Nodes = new Node[12];
             for (int i = 0; i < this.Nodes.Length; i++)

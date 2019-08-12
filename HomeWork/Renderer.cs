@@ -28,8 +28,8 @@ namespace HomeWork
             this.car = new Car();
             this.tempCar = new Car();
             this.curb = new Curb();
-            this.rivals = new Rival[4];
-            this.tempRivals = new Rival[4];
+            this.rivals = new Rival[3];
+            this.tempRivals = new Rival[3];
             for (int i = 0; i < this.rivals.Length; i++)
             {
                 this.rivals[i] = new Rival();
@@ -53,6 +53,8 @@ namespace HomeWork
         {
             for (int i = 0; i < rivals.Length; i++)
             {
+                this.tempRivals[i].Character = this.rivals[i].Character;
+                this.rivals[i].Character = rivals[i].Character;
                 for (int j = 0; j < rivals[i].Nodes.Length; j++)
                 {
                     this.tempRivals[i].Nodes[j].X = this.rivals[i].Nodes[j].X;
@@ -92,7 +94,7 @@ namespace HomeWork
                     }
                     else
                     {
-                        Console.Write("~");
+                        Console.Write(curb.Character);
                     }
                 }
                 //
@@ -110,7 +112,7 @@ namespace HomeWork
                 foreach (var point in this.car.Nodes)
                 {
                     Console.SetCursorPosition(point.X, point.Y);
-                    Console.Write(point.Invisible ? " " : "0");
+                    Console.Write(point.Invisible ? ' ' : car.Character);
                 }
                 //
                 //Rivals
@@ -123,7 +125,7 @@ namespace HomeWork
                             if (this.rivals[i].Nodes[j].Y >= 0 && this.rivals[i].Nodes[j].Y < 20)
                             {
                                 Console.SetCursorPosition(this.rivals[i].Nodes[j].X, this.rivals[i].Nodes[j].Y);
-                                Console.Write("0");
+                                Console.Write(this.rivals[i].Character);
                             }
                         }
                     }
@@ -137,7 +139,7 @@ namespace HomeWork
                             if (this.tempRivals[i].Nodes[j].Y >= 0 && this.tempRivals[i].Nodes[j].Y < 20)
                             {
                                 Console.SetCursorPosition(this.tempRivals[i].Nodes[j].X, this.tempRivals[i].Nodes[j].Y);
-                                Console.Write("0");
+                                Console.Write(" ");
                             }
                         }
                     }
