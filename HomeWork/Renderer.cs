@@ -15,9 +15,9 @@ namespace HomeWork
 
         private Curb curb;
 
-        private Rival[] rivals;
+        private Queue<Rival> rivals;
 
-        private Rival[] tempRivals;
+        private Queue<Rival> tempRivals;
 
         private bool carPositionChanged;
 
@@ -28,13 +28,13 @@ namespace HomeWork
             this.car = new Car();
             this.tempCar = new Car();
             this.curb = new Curb();
-            this.rivals = new Rival[3];
-            this.tempRivals = new Rival[3];
-            for (int i = 0; i < this.rivals.Length; i++)
-            {
-                this.rivals[i] = new Rival();
-                this.tempRivals[i] = new Rival();
-            }
+            //this.rivals = new Rival[3];
+            //this.tempRivals = new Rival[3];
+            //for (int i = 0; i < this.rivals.Length; i++)
+            //{
+            //    this.rivals[i] = new Rival();
+            //    this.tempRivals[i] = new Rival();
+            //}
         }
 
         public void UpdateCar(Car car)
@@ -49,20 +49,22 @@ namespace HomeWork
             this.carPositionChanged = true;
         }
 
-        public void UpdateRivals(Rival[] rivals)
+        public void UpdateRivals(Queue<Rival> rivals)
         {
-            for (int i = 0; i < rivals.Length; i++)
-            {
-                this.tempRivals[i].Character = this.rivals[i].Character;
-                this.rivals[i].Character = rivals[i].Character;
-                for (int j = 0; j < rivals[i].Nodes.Length; j++)
-                {
-                    this.tempRivals[i].Nodes[j].X = this.rivals[i].Nodes[j].X;
-                    this.tempRivals[i].Nodes[j].Y = this.rivals[i].Nodes[j].Y;
-                    this.rivals[i].Nodes[j].X = rivals[i].Nodes[j].X;
-                    this.rivals[i].Nodes[j].Y = rivals[i].Nodes[j].Y;
-                }
-            }
+            this.tempRivals = this.rivals;
+            this.rivals = rivals;
+            //for (int i = 0; i < rivals.Length; i++)
+            //{
+            //    this.tempRivals[i].Character = this.rivals[i].Character;
+            //    this.rivals[i].Character = rivals[i].Character;
+            //    for (int j = 0; j < rivals[i].Nodes.Length; j++)
+            //    {
+            //        this.tempRivals[i].Nodes[j].X = this.rivals[i].Nodes[j].X;
+            //        this.tempRivals[i].Nodes[j].Y = this.rivals[i].Nodes[j].Y;
+            //        this.rivals[i].Nodes[j].X = rivals[i].Nodes[j].X;
+            //        this.rivals[i].Nodes[j].Y = rivals[i].Nodes[j].Y;
+            //    }
+            //}
             this.rivalsPositionChanged = true;
         }
 
@@ -131,20 +133,47 @@ namespace HomeWork
                 //    }
                 //}
                 if (this.rivalsPositionChanged)
+                //{
+                //    for (int i = 0; i < this.tempRivals.Length; i++)
+                //    {
+                //        for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
+                //        {
+                //            if (this.tempRivals[i].Nodes[j].Y >= 0 && this.tempRivals[i].Nodes[j].Y < 20)
+                //            {
+                //                Console.SetCursorPosition(this.tempRivals[i].Nodes[j].X, this.tempRivals[i].Nodes[j].Y);
+                //                Console.Write(" ");
+                //            }
+                //            if (this.rivals[i].Nodes[j].Y >= 0 && this.rivals[i].Nodes[j].Y < 20)
+                //            {
+                //                Console.SetCursorPosition(this.rivals[i].Nodes[j].X, this.rivals[i].Nodes[j].Y);
+                //                Console.Write(this.rivals[i].Character);
+                //            }
+                //        }
+                //    }
+                //    this.rivalsPositionChanged = false;
+                //}
                 {
-                    for (int i = 0; i < this.tempRivals.Length; i++)
+                    foreach (var rival in this.tempRivals)
                     {
-                        for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
+                        foreach (var node in rival.Nodes)
                         {
-                            if (this.tempRivals[i].Nodes[j].Y >= 0 && this.tempRivals[i].Nodes[j].Y < 20)
+                            if (node.Y >= 0 && node.Y < 20)
                             {
-                                Console.SetCursorPosition(this.tempRivals[i].Nodes[j].X, this.tempRivals[i].Nodes[j].Y);
+                                Console.SetCursorPosition(node.X, node.Y);
                                 Console.Write(" ");
                             }
-                            if (this.rivals[i].Nodes[j].Y >= 0 && this.rivals[i].Nodes[j].Y < 20)
+                        }
+                    }
+                }
+                { 
+                    foreach (var rival in this.rivals)
+                    {
+                        foreach (var node in rival.Nodes)
+                        {
+                            if (node.Y >= 0 && node.Y < 20)
                             {
-                                Console.SetCursorPosition(this.rivals[i].Nodes[j].X, this.rivals[i].Nodes[j].Y);
-                                Console.Write(this.rivals[i].Character);
+                                Console.SetCursorPosition(node.X, node.Y);
+                                Console.Write(rival.Character);
                             }
                         }
                     }

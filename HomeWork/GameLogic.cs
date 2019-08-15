@@ -129,7 +129,8 @@ namespace HomeWork
                             this.rivals.TryDequeue(out Rival result);
                             dequeue = false;
                         }
-                        this.renderer.UpdateRivals(this.rivals.ToArray());
+
+                        this.renderer.UpdateRivals(new Queue<Rival>(rivals));
                     }
                 }
                 Thread.Sleep(200);
@@ -147,8 +148,8 @@ namespace HomeWork
             Task curbTask = new Task(() => this.MoveCurb());
             curbTask.Start();
 
-            Task generateRivals = new Task(() => this.RivalSpawner());
-            generateRivals.Start();
+            //Task generateRivals = new Task(() => this.RivalSpawner());
+            //generateRivals.Start();
 
             Task rivalsTask = new Task(() => this.MoveRivals());
             rivalsTask.Start();
