@@ -80,7 +80,7 @@ namespace HomeWork
                 Thread.Sleep(rnd.Next(1500, 2500));
                 lock (locker)
                 {
-                    if (this.rivals.Count <= 4)
+                    if (this.rivals.Count <= 3)
                     {
                         this.rivals.Enqueue(new Rival(counter.ToString().ToCharArray()[0], (Position)rnd.Next(0, 2)));
                     }
