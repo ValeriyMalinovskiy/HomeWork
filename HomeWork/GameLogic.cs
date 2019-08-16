@@ -32,7 +32,7 @@ namespace HomeWork
 
         private bool speedIncreased = false;
 
-        object locker = new object();
+        object rivalLocker = new object();
 
         private void ProcessControl(GamepadEventArgs args)
         {
@@ -77,12 +77,12 @@ namespace HomeWork
             Random rnd = new Random();
             while (!this.gameOver)
             {
-                Thread.Sleep(rnd.Next(1500, 2500));
-                lock (locker)
+                Thread.Sleep(rnd.Next(3500, 5000));
+                lock (rivalLocker)
                 {
                     if (this.rivals.Count <= 3)
                     {
-                        this.rivals.Enqueue(new Rival(counter.ToString().ToCharArray()[0], (Position)rnd.Next(0, 2)));
+                        this.rivals.Enqueue(new Rival('0', (Position)rnd.Next(0, 2)));
                     }
                 }
                 counter++;
@@ -114,7 +114,7 @@ namespace HomeWork
             {
                 if (this.gameRunning)
                 {
-                    lock (locker)
+                    lock (rivalLocker)
                     {
                         foreach (var rival in this.rivals)
                         {
@@ -129,11 +129,10 @@ namespace HomeWork
                             this.rivals.TryDequeue(out Rival result);
                             dequeue = false;
                         }
-
                         this.renderer.UpdateRivals(this.rivals.ToArray());
                     }
                 }
-                Thread.Sleep(200);
+                Thread.Sleep(500);
             }
         }
 
