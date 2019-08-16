@@ -15,9 +15,9 @@ namespace HomeWork
 
         private Curb curb;
 
-        private Queue<Rival> rivals;
+        private Rival[] rivals;
 
-        private Queue<Rival> tempRivals;
+        private Rival[] tempRivals;
 
         private bool carPositionChanged;
 
@@ -28,13 +28,18 @@ namespace HomeWork
             this.car = new Car();
             this.tempCar = new Car();
             this.curb = new Curb();
-            //this.rivals = new Rival[3];
-            //this.tempRivals = new Rival[3];
-            //for (int i = 0; i < this.rivals.Length; i++)
-            //{
-            //    this.rivals[i] = new Rival();
-            //    this.tempRivals[i] = new Rival();
-            //}
+            this.rivals = new Rival[3];
+            this.tempRivals = new Rival[3];
+            for (int i = 0; i < this.rivals.Length; i++)
+            {
+                this.rivals[i] = new Rival();
+                this.tempRivals[i] = new Rival();
+                for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
+                {
+                    this.rivals[i].Nodes[j].Invisible = true;
+                    this.tempRivals[i].Nodes[j].Invisible = true;
+                }
+            }
         }
 
         public void UpdateCar(Car car)
@@ -49,22 +54,30 @@ namespace HomeWork
             this.carPositionChanged = true;
         }
 
-        public void UpdateRivals(Queue<Rival> rivals)
+        public void UpdateRivals(Rival[] rivals)
         {
-            this.tempRivals = this.rivals;
-            this.rivals = rivals;
-            //for (int i = 0; i < rivals.Length; i++)
-            //{
-            //    this.tempRivals[i].Character = this.rivals[i].Character;
-            //    this.rivals[i].Character = rivals[i].Character;
-            //    for (int j = 0; j < rivals[i].Nodes.Length; j++)
-            //    {
-            //        this.tempRivals[i].Nodes[j].X = this.rivals[i].Nodes[j].X;
-            //        this.tempRivals[i].Nodes[j].Y = this.rivals[i].Nodes[j].Y;
-            //        this.rivals[i].Nodes[j].X = rivals[i].Nodes[j].X;
-            //        this.rivals[i].Nodes[j].Y = rivals[i].Nodes[j].Y;
-            //    }
-            //}
+            foreach (var rival in this.rivals)
+            {
+                foreach (var node in rival.Nodes)
+                {
+                    node.Invisible = true;
+                }
+            }
+
+            for (int i = 0; i < rivals.Length; i++)
+            {
+                this.tempRivals[i].Character = this.rivals[i].Character;
+                this.rivals[i].Character = rivals[i].Character;
+                for (int j = 0; j < rivals[i].Nodes.Length; j++)
+                {
+                    this.tempRivals[i].Nodes[j].X = this.rivals[i].Nodes[j].X;
+                    this.tempRivals[i].Nodes[j].Y = this.rivals[i].Nodes[j].Y;
+                    this.tempRivals[i].Nodes[j].Invisible = this.rivals[i].Nodes[j].Invisible;
+                    this.rivals[i].Nodes[j].X = rivals[i].Nodes[j].X;
+                    this.rivals[i].Nodes[j].Y = rivals[i].Nodes[j].Y;
+                    this.rivals[i].Nodes[j].Invisible = rivals[i].Nodes[j].Invisible;
+                }
+            }
             this.rivalsPositionChanged = true;
         }
 
@@ -83,7 +96,7 @@ namespace HomeWork
             Console.CursorVisible = false;
             while (true)
             {
-               
+
                 //
                 //curb
                 //
@@ -119,39 +132,7 @@ namespace HomeWork
                 //
                 //Rivals
                 //
-                //{
-                //    for (int i = 0; i < this.rivals.Length; i++)
-                //    {
-                //        for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
-                //        {
-                //if (this.rivals[i].Nodes[j].Y >= 0 && this.rivals[i].Nodes[j].Y < 20)
-                //{
-                //    Console.SetCursorPosition(this.rivals[i].Nodes[j].X, this.rivals[i].Nodes[j].Y);
-                //    Console.Write(this.rivals[i].Character);
-                //}
-                //        }
-                //    }
-                //}
                 if (this.rivalsPositionChanged)
-                //{
-                //    for (int i = 0; i < this.tempRivals.Length; i++)
-                //    {
-                //        for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
-                //        {
-                //            if (this.tempRivals[i].Nodes[j].Y >= 0 && this.tempRivals[i].Nodes[j].Y < 20)
-                //            {
-                //                Console.SetCursorPosition(this.tempRivals[i].Nodes[j].X, this.tempRivals[i].Nodes[j].Y);
-                //                Console.Write(" ");
-                //            }
-                //            if (this.rivals[i].Nodes[j].Y >= 0 && this.rivals[i].Nodes[j].Y < 20)
-                //            {
-                //                Console.SetCursorPosition(this.rivals[i].Nodes[j].X, this.rivals[i].Nodes[j].Y);
-                //                Console.Write(this.rivals[i].Character);
-                //            }
-                //        }
-                //    }
-                //    this.rivalsPositionChanged = false;
-                //}
                 {
                     foreach (var rival in this.tempRivals)
                     {
@@ -164,8 +145,6 @@ namespace HomeWork
                             }
                         }
                     }
-                }
-                { 
                     foreach (var rival in this.rivals)
                     {
                         foreach (var node in rival.Nodes)
@@ -173,7 +152,7 @@ namespace HomeWork
                             if (node.Y >= 0 && node.Y < 20)
                             {
                                 Console.SetCursorPosition(node.X, node.Y);
-                                Console.Write(rival.Character);
+                                Console.Write(node.Invisible ? ' ' : rival.Character);
                             }
                         }
                     }
