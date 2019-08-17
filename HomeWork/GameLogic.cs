@@ -188,6 +188,7 @@ namespace HomeWork
                 this.speedIncreased = AccelerationControl.IsKeyDown(38);
                 if (this.CheckCrash())
                 {
+                    this.renderer.CarCrashNotifier();
                     this.gameOver = true;
                 }
             }

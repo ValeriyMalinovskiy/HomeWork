@@ -25,11 +25,17 @@ namespace HomeWork
 
         private bool curbPositionChanged;
 
+        private bool carCrashed;
+
+        private bool gameOver;
+
         public Renderer()
         {
             this.car = new Car();
             this.tempCar = new Car();
             this.curb = new Curb();
+            this.carCrashed = false;
+            this.gameOver = false;
             this.rivals = new Rival[5];
             this.tempRivals = new Rival[5];
             for (int i = 0; i < this.rivals.Length; i++)
@@ -92,23 +98,27 @@ namespace HomeWork
             this.curbPositionChanged = true;
         }
 
+        public void CarCrashNotifier()
+        {
+            this.carCrashed = true;
+        }
+
         public void PrintEverything()
         {
             Console.CursorVisible = false;
-            while (true)
+            while(!this.gameOver)
             {
                 //
                 //curb
                 //
                 if (this.curbPositionChanged)
                 {
-
-                }
-                foreach (var curbNode in curb.Nodes)
-                {
-                    Console.SetCursorPosition(curbNode.X, curbNode.Y);
-                    Console.Write(curbNode.Invisible ? ' ' : curb.Character);
-                    this.curbPositionChanged = false;
+                    foreach (var curbNode in curb.Nodes)
+                    {
+                        Console.SetCursorPosition(curbNode.X, curbNode.Y);
+                        Console.Write(curbNode.Invisible ? ' ' : curb.Character);
+                        this.curbPositionChanged = false;
+                    }
                 }
                 //
                 //Car
@@ -127,6 +137,30 @@ namespace HomeWork
                     Console.SetCursorPosition(carNode.X, carNode.Y);
                     Console.Write(carNode.Invisible ? ' ' : car.Character);
                 }
+                if (this.carCrashed)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.SetCursorPosition(this.car.Nodes[4].X, this.car.Nodes[4].Y);
+                    Console.Write('X');
+                    Console.SetCursorPosition(this.car.Nodes[4].X - 1, this.car.Nodes[4].Y - 1);
+                    Console.Write('X');
+                    Console.SetCursorPosition(this.car.Nodes[4].X - 2, this.car.Nodes[4].Y - 2);
+                    Console.Write('X');
+                    Console.SetCursorPosition(this.car.Nodes[4].X + 1, this.car.Nodes[4].Y + 1);
+                    Console.Write('X');
+                    Console.SetCursorPosition(this.car.Nodes[4].X + 2, this.car.Nodes[4].Y + 2);
+                    Console.Write('X');
+                    Console.SetCursorPosition(this.car.Nodes[4].X - 1, this.car.Nodes[4].Y + 1);
+                    Console.Write('X');
+                    Console.SetCursorPosition(this.car.Nodes[4].X - 2, this.car.Nodes[4].Y + 2);
+                    Console.Write('X');
+                    Console.SetCursorPosition(this.car.Nodes[4].X + 1, this.car.Nodes[4].Y - 1);
+                    Console.Write('X');
+                    Console.SetCursorPosition(this.car.Nodes[4].X + 2, this.car.Nodes[4].Y - 2);
+                    Console.Write('X');
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    this.gameOver = true;
+                }
                 //
                 //Rivals
                 //
@@ -143,18 +177,18 @@ namespace HomeWork
                             }
                         }
                     }
-                    this.rivalsPositionChanged = false;
-                }
-                foreach (var rival in this.rivals)
-                {
-                    foreach (var node in rival.Nodes)
+                    foreach (var rival in this.rivals)
                     {
-                        if (node.Y >= 0 && node.Y < 20)
+                        foreach (var node in rival.Nodes)
                         {
-                            Console.SetCursorPosition(node.X, node.Y);
-                            Console.Write(node.Invisible ? ' ' : rival.Character);
+                            if (node.Y >= 0 && node.Y < 20)
+                            {
+                                Console.SetCursorPosition(node.X, node.Y);
+                                Console.Write(node.Invisible ? ' ' : rival.Character);
+                            }
                         }
                     }
+                    this.rivalsPositionChanged = false;
                 }
             }
         }
