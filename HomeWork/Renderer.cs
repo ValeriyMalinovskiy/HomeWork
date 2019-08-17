@@ -58,20 +58,6 @@ namespace HomeWork
 
         public void UpdateRivals(Rival[] rivals)
         {
-            //foreach (var rival in this.rivals)
-            //{
-            //    foreach (var node in rival.Nodes)
-            //    {
-            //        node.Invisible = true;
-            //    }
-            //}
-            //foreach (var rival in this.tempRivals)
-            //{
-            //    foreach (var node in rival.Nodes)
-            //    {
-            //        node.Invisible = true;
-            //    }
-            //}
             for (int i = 0; i < this.rivals.Length; i++)
             {
                 this.tempRivals[i].Character = this.rivals[i].Character;

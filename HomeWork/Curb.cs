@@ -8,7 +8,7 @@ namespace HomeWork
 {
     internal class Curb : RacingGameObject
     {
-        public Curb(Char character = '~', Position position = Position.Left) : base(character)
+        public Curb(Char character = '#', Position position = Position.Left) : base(character)
         {
             this.Nodes = new Node[40];
             for (int i = 0; i < this.Nodes.Length; i++)

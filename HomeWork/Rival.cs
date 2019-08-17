@@ -20,37 +20,37 @@ namespace HomeWork
                 case Position.Left:
                     {
                         this.Nodes[0].X = 2;
-                        this.Nodes[0].Y = -6;
+                        this.Nodes[0].Y = -4;
                         this.Nodes[1].X = 4;
-                        this.Nodes[1].Y = -6;
+                        this.Nodes[1].Y = -4;
                         this.Nodes[2].X = 3;
-                        this.Nodes[2].Y = -7;
+                        this.Nodes[2].Y = -5;
                         this.Nodes[3].X = 2;
-                        this.Nodes[3].Y = -8;
+                        this.Nodes[3].Y = -6;
                         this.Nodes[4].X = 3;
-                        this.Nodes[4].Y = -8;
+                        this.Nodes[4].Y = -6;
                         this.Nodes[5].X = 4;
-                        this.Nodes[5].Y = -8;
+                        this.Nodes[5].Y = -6;
                         this.Nodes[6].X = 3;
-                        this.Nodes[6].Y = -9;
+                        this.Nodes[6].Y = -7;
                     }
                     break;
                 case Position.Right:
                     {
                         this.Nodes[0].X = 5;
-                        this.Nodes[0].Y = -6;
+                        this.Nodes[0].Y = -4;
                         this.Nodes[1].X = 7;
-                        this.Nodes[1].Y = -6;
+                        this.Nodes[1].Y = -4;
                         this.Nodes[2].X = 6;
-                        this.Nodes[2].Y = -7;
+                        this.Nodes[2].Y = -5;
                         this.Nodes[3].X = 5;
-                        this.Nodes[3].Y = -8;
+                        this.Nodes[3].Y = -6;
                         this.Nodes[4].X = 6;
-                        this.Nodes[4].Y = -8;
+                        this.Nodes[4].Y = -6;
                         this.Nodes[5].X = 7;
-                        this.Nodes[5].Y = -8;
+                        this.Nodes[5].Y = -6;
                         this.Nodes[6].X = 6;
-                        this.Nodes[6].Y = -9;
+                        this.Nodes[6].Y = -7;
                     }
                     break;
             }

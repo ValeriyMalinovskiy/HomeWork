@@ -76,12 +76,43 @@ namespace HomeWork
             Random rnd = new Random();
             while (!this.gameOver)
             {
-                Thread.Sleep(rnd.Next(3500, 5000));
                 if (this.rivals.Count <= 5)
                 {
+                    switch (this.speedIncreased)
+                    {
+                        case true:
+                            {
+                                Thread.Sleep(rnd.Next(700, 800));
+                            }
+                            break;
+                        case false:
+                            {
+                                Thread.Sleep(rnd.Next(1200, 1500));
+                            }
+                            break;
+                    }
+                    while (!this.CheckSafeDistance())
+                    {
+                    }
                     this.rivals.Enqueue(new Rival('0', (Position)rnd.Next(0, 2)));
                 }
             }
+        }
+
+        private bool CheckSafeDistance()
+        {
+            bool safeDistance = true;
+            foreach (var rival in this.rivals)
+            {
+                foreach (var rivalNode in rival.Nodes)
+                {
+                    if (rivalNode.Y < 1)
+                    {
+                        safeDistance = false;
+                    }
+                }
+            }
+            return safeDistance;
         }
 
         //private bool CheckCrash()
@@ -112,7 +143,7 @@ namespace HomeWork
                     foreach (var rival in this.rivals)
                     {
                         rival.Move();
-                        if (this.rivals.Count == 6)
+                        if (this.rivals.Count == 5)
                         {
                             dequeue = true;
                         }
@@ -124,7 +155,7 @@ namespace HomeWork
                     }
                     this.renderer.UpdateRivals(this.rivals.ToArray());
                 }
-                Thread.Sleep(500);
+                Thread.Sleep(speedIncreased ? 80 : 160);
             }
         }
 
@@ -167,7 +198,7 @@ namespace HomeWork
                 {
                     curb.Move();
                     renderer.UpdateCurb(this.curb);
-                    Thread.Sleep(speedIncreased ? 40 : 100);
+                    Thread.Sleep(this.speedIncreased ? 40 : 100);
                 }
             }
         }
