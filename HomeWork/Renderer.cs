@@ -52,6 +52,7 @@ namespace HomeWork
 
         public void UpdateCar(Car car)
         {
+            this.car.Character = car.Character;
             for (int i = 0; i < this.car.Nodes.Length; i++)
             {
                 this.tempCar.Nodes[i].X = this.car.Nodes[i].X;
@@ -89,6 +90,7 @@ namespace HomeWork
 
         public void UpdateCurb(Curb curb)
         {
+            this.curb.Character = curb.Character;
             for (int i = 0; i < this.curb.Nodes.Length; i++)
             {
                 this.curb.Nodes[i].X = curb.Nodes[i].X;
@@ -123,6 +125,11 @@ namespace HomeWork
                 //
                 //Car
                 //
+                foreach (var carNode in this.car.Nodes)
+                {
+                    Console.SetCursorPosition(carNode.X, carNode.Y);
+                    Console.Write(carNode.Invisible ? ' ' : car.Character);
+                }
                 if (this.carPositionChanged)
                 {
                     foreach (var carNode in this.tempCar.Nodes)
@@ -131,11 +138,6 @@ namespace HomeWork
                         Console.Write(" ");
                     }
                     this.carPositionChanged = false;
-                }
-                foreach (var carNode in this.car.Nodes)
-                {
-                    Console.SetCursorPosition(carNode.X, carNode.Y);
-                    Console.Write(carNode.Invisible ? ' ' : car.Character);
                 }
                 if (this.carCrashed)
                 {

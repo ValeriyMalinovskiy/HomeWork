@@ -12,9 +12,9 @@ namespace HomeWork
 
     internal class GameLogic
     {
-        private Curb curb = new Curb();
+        private Curb curb = new Curb('|');
 
-        private Car car = new Car();
+        private Car car = new Car('*');
 
         private Renderer renderer = new Renderer();
 
@@ -96,7 +96,7 @@ namespace HomeWork
                         while (!this.CheckSafeDistance())
                         {
                         }
-                        this.rivals.Enqueue(new Rival('0', (Position)rnd.Next(0, 2)));
+                        this.rivals.Enqueue(new Rival('8', (Position)rnd.Next(0, 2)));
                     }
                 }
             }
