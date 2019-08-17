@@ -25,15 +25,13 @@ namespace HomeWork
 
         private bool curbPositionChanged;
 
-        object rivalLocker = new object();
-
         public Renderer()
         {
             this.car = new Car();
             this.tempCar = new Car();
             this.curb = new Curb();
-            this.rivals = new Rival[4];
-            this.tempRivals = new Rival[4];
+            this.rivals = new Rival[5];
+            this.tempRivals = new Rival[5];
             for (int i = 0; i < this.rivals.Length; i++)
             {
                 this.rivals[i] = new Rival();
@@ -60,44 +58,41 @@ namespace HomeWork
 
         public void UpdateRivals(Rival[] rivals)
         {
-            lock (rivalLocker)
+            //foreach (var rival in this.rivals)
+            //{
+            //    foreach (var node in rival.Nodes)
+            //    {
+            //        node.Invisible = true;
+            //    }
+            //}
+            //foreach (var rival in this.tempRivals)
+            //{
+            //    foreach (var node in rival.Nodes)
+            //    {
+            //        node.Invisible = true;
+            //    }
+            //}
+            for (int i = 0; i < this.rivals.Length; i++)
             {
-                foreach (var rival in this.rivals)
+                this.tempRivals[i].Character = this.rivals[i].Character;
+                for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
                 {
-                    foreach (var node in rival.Nodes)
-                    {
-                        node.Invisible = true;
-                    }
+                    this.tempRivals[i].Nodes[j].X = this.rivals[i].Nodes[j].X;
+                    this.tempRivals[i].Nodes[j].Y = this.rivals[i].Nodes[j].Y;
+                    this.tempRivals[i].Nodes[j].Invisible = this.rivals[i].Nodes[j].Invisible;
                 }
-                foreach (var rival in this.tempRivals)
-                {
-                    foreach (var node in rival.Nodes)
-                    {
-                        node.Invisible = true;
-                    }
-                }
-                for (int i = 0; i < this.rivals.Length; i++)
-                {
-                    this.tempRivals[i].Character = this.rivals[i].Character;
-                    for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
-                    {
-                        this.tempRivals[i].Nodes[j].X = this.rivals[i].Nodes[j].X;
-                        this.tempRivals[i].Nodes[j].Y = this.rivals[i].Nodes[j].Y;
-                        this.tempRivals[i].Nodes[j].Invisible = this.rivals[i].Nodes[j].Invisible;
-                    }
-                }
-                for (int i = 0; i < rivals.Length; i++)
-                {
-                    this.rivals[i].Character = rivals[i].Character;
-                    for (int j = 0; j < rivals[i].Nodes.Length; j++)
-                    {
-                        this.rivals[i].Nodes[j].X = rivals[i].Nodes[j].X;
-                        this.rivals[i].Nodes[j].Y = rivals[i].Nodes[j].Y;
-                        this.rivals[i].Nodes[j].Invisible = rivals[i].Nodes[j].Invisible;
-                    }
-                }
-                this.rivalsPositionChanged = true;
             }
+            for (int i = 0; i < rivals.Length; i++)
+            {
+                this.rivals[i].Character = rivals[i].Character;
+                for (int j = 0; j < rivals[i].Nodes.Length; j++)
+                {
+                    this.rivals[i].Nodes[j].X = rivals[i].Nodes[j].X;
+                    this.rivals[i].Nodes[j].Y = rivals[i].Nodes[j].Y;
+                    this.rivals[i].Nodes[j].Invisible = rivals[i].Nodes[j].Invisible;
+                }
+            }
+            this.rivalsPositionChanged = true;
         }
 
         public void UpdateCurb(Curb curb)
@@ -116,7 +111,6 @@ namespace HomeWork
             Console.CursorVisible = false;
             while (true)
             {
-
                 //
                 //curb
                 //
@@ -150,34 +144,31 @@ namespace HomeWork
                 //
                 //Rivals
                 //
-                lock (rivalLocker)
+                if (this.rivalsPositionChanged)
                 {
-                    if (this.rivalsPositionChanged)
+                    foreach (var rival in this.tempRivals)
                     {
-                        foreach (var rival in this.tempRivals)
+                        foreach (var node in rival.Nodes)
                         {
-                            foreach (var node in rival.Nodes)
+                            if (node.Y >= 0 && node.Y < 20)
                             {
-                                if (node.Y >= 0 && node.Y < 20)
-                                {
-                                    Console.SetCursorPosition(node.X, node.Y);
-                                    Console.Write(" ");
-                                }
+                                Console.SetCursorPosition(node.X, node.Y);
+                                Console.Write(" ");
                             }
                         }
-                        foreach (var rival in this.rivals)
-                        {
-                            foreach (var node in rival.Nodes)
-                            {
-                                if (node.Y >= 0 && node.Y < 20)
-                                {
-                                    Console.SetCursorPosition(node.X, node.Y);
-                                    Console.Write(node.Invisible ? ' ' : rival.Character);
-                                }
-                            }
-                        }
-                        this.rivalsPositionChanged = false;
                     }
+                    foreach (var rival in this.rivals)
+                    {
+                        foreach (var node in rival.Nodes)
+                        {
+                            if (node.Y >= 0 && node.Y < 20)
+                            {
+                                Console.SetCursorPosition(node.X, node.Y);
+                                Console.Write(node.Invisible ? ' ' : rival.Character);
+                            }
+                        }
+                    }
+                    this.rivalsPositionChanged = false;
                 }
             }
         }
