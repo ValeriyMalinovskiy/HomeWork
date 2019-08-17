@@ -76,25 +76,28 @@ namespace HomeWork
             Random rnd = new Random();
             while (!this.gameOver)
             {
-                if (this.rivals.Count <= 5)
+                if (this.gameRunning)
                 {
-                    switch (this.speedIncreased)
+                    if (this.rivals.Count <= 5)
                     {
-                        case true:
-                            {
-                                Thread.Sleep(rnd.Next(700, 800));
-                            }
-                            break;
-                        case false:
-                            {
-                                Thread.Sleep(rnd.Next(1200, 1500));
-                            }
-                            break;
+                        switch (this.speedIncreased)
+                        {
+                            case true:
+                                {
+                                    Thread.Sleep(rnd.Next(500, 900));
+                                }
+                                break;
+                            case false:
+                                {
+                                    Thread.Sleep(rnd.Next(1000, 1500));
+                                }
+                                break;
+                        }
+                        while (!this.CheckSafeDistance())
+                        {
+                        }
+                        this.rivals.Enqueue(new Rival('0', (Position)rnd.Next(0, 2)));
                     }
-                    while (!this.CheckSafeDistance())
-                    {
-                    }
-                    this.rivals.Enqueue(new Rival('0', (Position)rnd.Next(0, 2)));
                 }
             }
         }
@@ -106,7 +109,7 @@ namespace HomeWork
             {
                 foreach (var rivalNode in rival.Nodes)
                 {
-                    if (rivalNode.Y < 1)
+                    if (rivalNode.Y < 0)
                     {
                         safeDistance = false;
                     }
