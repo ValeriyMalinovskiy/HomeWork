@@ -118,28 +118,28 @@ namespace HomeWork
             return safeDistance;
         }
 
-        //private bool CheckCrash()
-        //{
-        //    foreach (var rival in this.rivals)
-        //    {
-        //        foreach (var rivalNode in rival.Nodes)
-        //        {
-        //            foreach (var carNode in this.car.Nodes)
-        //            {
-        //                if (rivalNode.X == carNode.X && rivalNode.Y == carNode.Y)
-        //                {
-        //                    return true;
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return false;
-        //}
+        private bool CheckCrash()
+        {
+            foreach (var rival in this.rivals)
+            {
+                foreach (var rivalNode in rival.Nodes)
+                {
+                    foreach (var carNode in this.car.Nodes)
+                    {
+                        if (rivalNode.X == carNode.X && rivalNode.Y == carNode.Y)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
 
         private void MoveRivals()
         {
             bool dequeue = false;
-            while (true)
+            while (!this.gameOver)
             {
                 if (this.gameRunning)
                 {
@@ -186,10 +186,10 @@ namespace HomeWork
             while (true)
             {
                 this.speedIncreased = AccelerationControl.IsKeyDown(38);
-                //if (this.CheckCrash())
-                //{
-                //    this.gameOver = true;
-                //}
+                if (this.CheckCrash())
+                {
+                    this.gameOver = true;
+                }
             }
         }
 

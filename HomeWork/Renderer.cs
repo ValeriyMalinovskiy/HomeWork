@@ -143,18 +143,18 @@ namespace HomeWork
                             }
                         }
                     }
-                    foreach (var rival in this.rivals)
+                    this.rivalsPositionChanged = false;
+                }
+                foreach (var rival in this.rivals)
+                {
+                    foreach (var node in rival.Nodes)
                     {
-                        foreach (var node in rival.Nodes)
+                        if (node.Y >= 0 && node.Y < 20)
                         {
-                            if (node.Y >= 0 && node.Y < 20)
-                            {
-                                Console.SetCursorPosition(node.X, node.Y);
-                                Console.Write(node.Invisible ? ' ' : rival.Character);
-                            }
+                            Console.SetCursorPosition(node.X, node.Y);
+                            Console.Write(node.Invisible ? ' ' : rival.Character);
                         }
                     }
-                    this.rivalsPositionChanged = false;
                 }
             }
         }
