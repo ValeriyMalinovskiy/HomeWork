@@ -20,10 +20,5 @@ namespace HomeWork
             this.Y = -1;
             this.Invisible = false;
         }
-
-        public void ChangeVisibility()
-        {
-            this.Invisible = !this.Invisible;
-        }
     }
 }

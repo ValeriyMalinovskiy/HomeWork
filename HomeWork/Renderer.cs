@@ -42,11 +42,6 @@ namespace HomeWork
             {
                 this.rivals[i] = new Rival();
                 this.tempRivals[i] = new Rival();
-                for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
-                {
-                    this.rivals[i].Nodes[j].Invisible = true;
-                    this.tempRivals[i].Nodes[j].Invisible = true;
-                }
             }
         }
 
@@ -72,7 +67,6 @@ namespace HomeWork
                 {
                     this.tempRivals[i].Nodes[j].X = this.rivals[i].Nodes[j].X;
                     this.tempRivals[i].Nodes[j].Y = this.rivals[i].Nodes[j].Y;
-                    this.tempRivals[i].Nodes[j].Invisible = this.rivals[i].Nodes[j].Invisible;
                 }
             }
             for (int i = 0; i < rivals.Length; i++)
@@ -82,7 +76,6 @@ namespace HomeWork
                 {
                     this.rivals[i].Nodes[j].X = rivals[i].Nodes[j].X;
                     this.rivals[i].Nodes[j].Y = rivals[i].Nodes[j].Y;
-                    this.rivals[i].Nodes[j].Invisible = rivals[i].Nodes[j].Invisible;
                 }
             }
             this.rivalsPositionChanged = true;
@@ -186,7 +179,7 @@ namespace HomeWork
                             if (node.Y >= 0 && node.Y < 20)
                             {
                                 Console.SetCursorPosition(node.X, node.Y);
-                                Console.Write(node.Invisible ? ' ' : rival.Character);
+                                Console.Write(rival.Character);
                             }
                         }
                     }

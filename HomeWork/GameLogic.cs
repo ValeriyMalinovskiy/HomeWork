@@ -126,15 +126,18 @@ namespace HomeWork
 
         private bool CheckCrash()
         {
-            foreach (var rival in this.rivals)
+            lock (this.rivalLocker)
             {
-                foreach (var rivalNode in rival.Nodes)
+                foreach (var rival in this.rivals)
                 {
-                    foreach (var carNode in this.car.Nodes)
+                    foreach (var rivalNode in rival.Nodes)
                     {
-                        if (rivalNode.X == carNode.X && rivalNode.Y == carNode.Y)
+                        foreach (var carNode in this.car.Nodes)
                         {
-                            return true;
+                            if (rivalNode.X == carNode.X && rivalNode.Y == carNode.Y)
+                            {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -144,7 +147,6 @@ namespace HomeWork
 
         private void MoveRivals()
         {
-            bool dequeue = false;
             while (!this.gameOver)
             {
                 if (this.gameRunning)
@@ -153,16 +155,7 @@ namespace HomeWork
                         foreach (var rival in this.rivals)
                         {
                             rival.Move();
-                            //    if (this.rivals.Count == 5)
-                            //    {
-                            //        dequeue = true;
-                            //    }
                         }
-                        //if (dequeue)
-                        //{
-                        //    this.rivals.Dequeue();
-                        //    dequeue = false;
-                        //}
                         this.renderer.UpdateRivals(this.rivals.ToArray());
                     }
                 Thread.Sleep(speedIncreased ? 80 : 160);
@@ -216,11 +209,11 @@ namespace HomeWork
             while (true)
             {
                 this.speedIncreased = AccelerationControl.IsKeyDown(38);
-                //if (this.CheckCrash())
-                //{
-                //    this.renderer.CarCrashNotifier();
-                //    this.gameOver = true;
-                //}
+                if (this.CheckCrash())
+                {
+                    this.renderer.CarCrashNotifier();
+                    this.gameOver = true;
+                }
             }
         }
 
