@@ -22,7 +22,7 @@ namespace HomeWork
 
         private ButtonPressEventRaiser eventRaiser = new ButtonPressEventRaiser();
 
-        private ConcurrentQueue<Rival> rivals = new ConcurrentQueue<Rival>();
+        private Queue<Rival> rivals = new Queue<Rival>();
 
         private Position Position = Position.Left;
 
@@ -78,7 +78,7 @@ namespace HomeWork
             {
                 if (this.gameRunning)
                 {
-                    if (this.rivals.Count <= 5)
+                    if (this.rivals.Count <= 10)
                     {
                         switch (this.speedIncreased)
                         {
@@ -96,7 +96,10 @@ namespace HomeWork
                         while (!this.CheckSafeDistance())
                         {
                         }
-                        this.rivals.Enqueue(new Rival('8', (Position)rnd.Next(0, 2)));
+                        lock (this.rivalLocker)
+                        {
+                            this.rivals.Enqueue(new Rival('8', (Position)rnd.Next(0, 2)));
+                        }
                     }
                 }
             }
@@ -105,13 +108,16 @@ namespace HomeWork
         private bool CheckSafeDistance()
         {
             bool safeDistance = true;
-            foreach (var rival in this.rivals)
+            lock (this.rivalLocker)
             {
-                foreach (var rivalNode in rival.Nodes)
+                foreach (var rival in this.rivals)
                 {
-                    if (rivalNode.Y < 0)
+                    foreach (var rivalNode in rival.Nodes)
                     {
-                        safeDistance = false;
+                        if (rivalNode.Y < 0)
+                        {
+                            safeDistance = false;
+                        }
                     }
                 }
             }
@@ -142,33 +148,46 @@ namespace HomeWork
             while (!this.gameOver)
             {
                 if (this.gameRunning)
-                {
-                    foreach (var rival in this.rivals)
+                    lock (this.rivalLocker)
                     {
-                        rival.Move();
-                        if (this.rivals.Count == 5)
+                        foreach (var rival in this.rivals)
                         {
-                            dequeue = true;
+                            rival.Move();
+                            //    if (this.rivals.Count == 5)
+                            //    {
+                            //        dequeue = true;
+                            //    }
                         }
+                        //if (dequeue)
+                        //{
+                        //    this.rivals.Dequeue();
+                        //    dequeue = false;
+                        //}
+                        this.renderer.UpdateRivals(this.rivals.ToArray());
                     }
-                    if (dequeue)
-                    {
-                        this.rivals.TryDequeue(out Rival result);
-                        dequeue = false;
-                    }
-                    this.renderer.UpdateRivals(this.rivals.ToArray());
-                }
                 Thread.Sleep(speedIncreased ? 80 : 160);
             }
         }
 
-        //private void RivalQueueCountController()
-        //{
-        //    if (this.field.CheckIsOnField(this.rivals.)))
-        //    {
-
-        //    }
-        //}
+        private void RivalQueueCountController()
+        {
+            while (!this.gameOver)
+            {
+                if (this.gameRunning)
+                {
+                    if (this.rivals.Count > 5)
+                    {
+                        lock (this.rivalLocker)
+                        {
+                            if (!this.field.CheckIsOnField(this.rivals.Peek()))
+                            {
+                                this.rivals.Dequeue();
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         internal void StartGame()
         {
@@ -186,6 +205,9 @@ namespace HomeWork
 
             Task rivalsTask = new Task(() => this.MoveRivals());
             rivalsTask.Start();
+
+            Task dequeueTask = new Task(() => this.RivalQueueCountController());
+            dequeueTask.Start();
 
             this.renderer.UpdateCar(this.car);
 

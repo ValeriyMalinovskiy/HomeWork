@@ -36,8 +36,8 @@ namespace HomeWork
             this.curb = new Curb();
             this.carCrashed = false;
             this.gameOver = false;
-            this.rivals = new Rival[5];
-            this.tempRivals = new Rival[5];
+            this.rivals = new Rival[10];
+            this.tempRivals = new Rival[10];
             for (int i = 0; i < this.rivals.Length; i++)
             {
                 this.rivals[i] = new Rival();
