@@ -131,31 +131,7 @@ namespace HomeWork
                         Console.Write(" ");
                     }
                     this.carPositionChanged = false;
-                }
-                if (this.carCrashed)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.SetCursorPosition(this.car.Nodes[4].X, this.car.Nodes[4].Y);
-                    Console.Write('X');
-                    Console.SetCursorPosition(this.car.Nodes[4].X - 1, this.car.Nodes[4].Y - 1);
-                    Console.Write('X');
-                    Console.SetCursorPosition(this.car.Nodes[4].X - 2, this.car.Nodes[4].Y - 2);
-                    Console.Write('X');
-                    Console.SetCursorPosition(this.car.Nodes[4].X + 1, this.car.Nodes[4].Y + 1);
-                    Console.Write('X');
-                    Console.SetCursorPosition(this.car.Nodes[4].X + 2, this.car.Nodes[4].Y + 2);
-                    Console.Write('X');
-                    Console.SetCursorPosition(this.car.Nodes[4].X - 1, this.car.Nodes[4].Y + 1);
-                    Console.Write('X');
-                    Console.SetCursorPosition(this.car.Nodes[4].X - 2, this.car.Nodes[4].Y + 2);
-                    Console.Write('X');
-                    Console.SetCursorPosition(this.car.Nodes[4].X + 1, this.car.Nodes[4].Y - 1);
-                    Console.Write('X');
-                    Console.SetCursorPosition(this.car.Nodes[4].X + 2, this.car.Nodes[4].Y - 2);
-                    Console.Write('X');
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    this.gameOver = true;
-                }
+                }                
                 //
                 //Rivals
                 //
@@ -184,6 +160,24 @@ namespace HomeWork
                         }
                     }
                     this.rivalsPositionChanged = false;
+                }
+                if (this.carCrashed)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    for (int i = 0, j = 0; i < 3; i++, j++)
+                    {
+                        Console.SetCursorPosition(this.car.Nodes[4].X + i, this.car.Nodes[4].Y + j);
+                        Console.Write('X');
+                        Console.SetCursorPosition(this.car.Nodes[4].X - i, this.car.Nodes[4].Y + j);
+                        Console.Write('X');
+                        Console.SetCursorPosition(this.car.Nodes[4].X - i, this.car.Nodes[4].Y - j);
+                        Console.Write('X');
+                        Console.SetCursorPosition(this.car.Nodes[4].X - i, this.car.Nodes[4].Y - j);
+                        Console.Write('X');
+
+                    }
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    this.gameOver = true;
                 }
             }
         }
