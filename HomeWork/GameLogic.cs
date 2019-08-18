@@ -162,6 +162,14 @@ namespace HomeWork
             }
         }
 
+        //private void RivalQueueCountController()
+        //{
+        //    if (this.field.CheckIsOnField(this.rivals.)))
+        //    {
+
+        //    }
+        //}
+
         internal void StartGame()
         {
             Task controlTask = new Task(() => eventRaiser.Watch());
@@ -186,11 +194,11 @@ namespace HomeWork
             while (true)
             {
                 this.speedIncreased = AccelerationControl.IsKeyDown(38);
-                if (this.CheckCrash())
-                {
-                    this.renderer.CarCrashNotifier();
-                    this.gameOver = true;
-                }
+                //if (this.CheckCrash())
+                //{
+                //    this.renderer.CarCrashNotifier();
+                //    this.gameOver = true;
+                //}
             }
         }
 
