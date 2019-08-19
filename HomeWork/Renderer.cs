@@ -35,6 +35,8 @@ namespace HomeWork
 
         private bool levelChanged;
 
+        private bool livesLeftChanged;
+
         public Renderer()
         {
             this.car = new Car();
@@ -109,6 +111,12 @@ namespace HomeWork
         {
             this.level = level;
             this.levelChanged = true;
+        }
+
+        public void UpdateLives(int livesLeft)
+        {
+            this.livesLeft = livesLeft;
+            this.livesLeftChanged = true;
         }
 
         public void PrintEverything()
@@ -187,9 +195,18 @@ namespace HomeWork
                         Console.Write('X');
                         Console.SetCursorPosition(this.car.Nodes[4].X + i, this.car.Nodes[4].Y - j);
                         Console.Write('X');
+                        Thread.Sleep(100);
+                        Console.SetCursorPosition(this.car.Nodes[4].X + i, this.car.Nodes[4].Y + j);
+                        Console.Write(' ');
+                        Console.SetCursorPosition(this.car.Nodes[4].X - i, this.car.Nodes[4].Y + j);
+                        Console.Write(' ');
+                        Console.SetCursorPosition(this.car.Nodes[4].X - i, this.car.Nodes[4].Y - j);
+                        Console.Write(' ');
+                        Console.SetCursorPosition(this.car.Nodes[4].X + i, this.car.Nodes[4].Y - j);
+                        Console.Write(' ');
                     }
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    this.gameOver = true;
+                    this.carCrashed = false;
                 }
                 //
                 //Level
@@ -199,6 +216,14 @@ namespace HomeWork
                     Console.SetCursorPosition(15, 10);
                     Console.Write("Level:" + this.level);
                     this.levelChanged = false;
+                }
+                if (this.livesLeftChanged)
+                {
+                    Console.SetCursorPosition(15, 12);
+                    Console.Write("Lives:  ");
+                    Console.SetCursorPosition(15, 12);
+                    Console.Write("Lives:" + this.livesLeft);
+                    this.livesLeftChanged = false;
                 }
             }
         }

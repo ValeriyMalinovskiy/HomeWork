@@ -36,6 +36,8 @@ namespace HomeWork
 
         private double level = 1.0;
 
+        private int livesLeft = 10;
+
         private void ProcessControl(GamepadEventArgs args)
         {
             if (!this.gameOver)
@@ -137,17 +139,29 @@ namespace HomeWork
                 {
                     foreach (var rivalNode in rival.Nodes)
                     {
-                        foreach (var carNode in this.car.Nodes)
+                        if (!rivalNode.Invisible)
                         {
-                            if (rivalNode.X == carNode.X && rivalNode.Y == carNode.Y)
+                            foreach (var carNode in this.car.Nodes)
                             {
-                                return true;
+                                if (rivalNode.X == carNode.X && rivalNode.Y == carNode.Y)
+                                {
+                                    this.DisableCrashedRival(rival);
+                                    return true;
+                                }
                             }
                         }
                     }
                 }
             }
             return false;
+        }
+
+        private void DisableCrashedRival(Rival rival)
+        {
+            foreach (var rivalNode in rival.Nodes)
+            {
+                rivalNode.Invisible = true;
+            }
         }
 
         private void MoveRivals()
@@ -211,17 +225,22 @@ namespace HomeWork
 
             this.renderer.UpdateCar(this.car);
             this.renderer.UpdateLevel((int)((this.level - 1) * 100));
+            this.renderer.UpdateLives(this.livesLeft);
 
             eventRaiser.ControlPressed += this.ProcessControl;
 
             while (true)
             {
                 this.speedIncreased = AccelerationControl.IsKeyDown(38);
-                //if (this.CheckCrash())
-                //{
-                //    this.renderer.CarCrashNotifier();
-                //    this.gameOver = true;
-                //}
+                if (this.CheckCrash())
+                {
+                    this.renderer.CarCrashNotifier();
+                    this.livesLeft--;
+                    this.renderer.UpdateLives(this.livesLeft);
+                    this.gameRunning = false;
+                    Thread.Sleep(1000);
+                    this.gameRunning = true;
+                }
             }
         }
 
