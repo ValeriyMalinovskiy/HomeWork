@@ -29,6 +29,12 @@ namespace HomeWork
 
         private bool gameOver;
 
+        private int level;
+
+        private int livesLeft;
+
+        private bool levelChanged;
+
         public Renderer()
         {
             this.car = new Car();
@@ -36,6 +42,7 @@ namespace HomeWork
             this.curb = new Curb();
             this.carCrashed = false;
             this.gameOver = false;
+            this.levelChanged = false;
             this.rivals = new Rival[10];
             this.tempRivals = new Rival[10];
             for (int i = 0; i < this.rivals.Length; i++)
@@ -96,6 +103,12 @@ namespace HomeWork
         public void CarCrashNotifier()
         {
             this.carCrashed = true;
+        }
+
+        public void UpdateLevel(int level)
+        {
+            this.level = level;
+            this.levelChanged = true;
         }
 
         public void PrintEverything()
@@ -172,12 +185,20 @@ namespace HomeWork
                         Console.Write('X');
                         Console.SetCursorPosition(this.car.Nodes[4].X - i, this.car.Nodes[4].Y - j);
                         Console.Write('X');
-                        Console.SetCursorPosition(this.car.Nodes[4].X - i, this.car.Nodes[4].Y - j);
+                        Console.SetCursorPosition(this.car.Nodes[4].X + i, this.car.Nodes[4].Y - j);
                         Console.Write('X');
-
                     }
                     Console.ForegroundColor = ConsoleColor.Gray;
                     this.gameOver = true;
+                }
+                //
+                //Level
+                //
+                if (this.levelChanged)
+                {
+                    Console.SetCursorPosition(15, 10);
+                    Console.Write("Level:" + this.level);
+                    this.levelChanged = false;
                 }
             }
         }

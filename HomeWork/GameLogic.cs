@@ -14,7 +14,7 @@ namespace HomeWork
     {
         private Curb curb = new Curb('|');
 
-        private Car car = new Car('*');
+        private Car car = new Car('0');
 
         private Renderer renderer = new Renderer();
 
@@ -32,7 +32,9 @@ namespace HomeWork
 
         private bool speedIncreased = false;
 
-        object rivalLocker = new object();
+        private object rivalLocker = new object();
+
+        private double level = 1.0;
 
         private void ProcessControl(GamepadEventArgs args)
         {
@@ -66,6 +68,9 @@ namespace HomeWork
                         }
                         break;
                     case GameControl.Quit:
+                        {
+                            this.gameOver = true;
+                        }
                         break;
                 }
             }
@@ -84,12 +89,12 @@ namespace HomeWork
                         {
                             case true:
                                 {
-                                    Thread.Sleep(rnd.Next(500, 900));
+                                    Thread.Sleep((int)(rnd.Next(500, 900) / this.level));
                                 }
                                 break;
                             case false:
                                 {
-                                    Thread.Sleep(rnd.Next(1000, 1500));
+                                    Thread.Sleep((int)(rnd.Next(1000, 1500) / this.level));
                                 }
                                 break;
                         }
@@ -158,7 +163,7 @@ namespace HomeWork
                         }
                         this.renderer.UpdateRivals(this.rivals.ToArray());
                     }
-                Thread.Sleep(speedIncreased ? 80 : 160);
+                Thread.Sleep((int)((speedIncreased ? 80 : 160) / this.level));
             }
         }
 
@@ -175,6 +180,8 @@ namespace HomeWork
                             if (!this.field.CheckIsOnField(this.rivals.Peek()))
                             {
                                 this.rivals.Dequeue();
+                                this.level += 0.01;
+                                this.renderer.UpdateLevel((int)((this.level-1)*100));
                             }
                         }
                     }
@@ -203,17 +210,18 @@ namespace HomeWork
             dequeueTask.Start();
 
             this.renderer.UpdateCar(this.car);
+            this.renderer.UpdateLevel((int)((this.level - 1) * 100));
 
             eventRaiser.ControlPressed += this.ProcessControl;
 
             while (true)
             {
                 this.speedIncreased = AccelerationControl.IsKeyDown(38);
-                if (this.CheckCrash())
-                {
-                    this.renderer.CarCrashNotifier();
-                    this.gameOver = true;
-                }
+                //if (this.CheckCrash())
+                //{
+                //    this.renderer.CarCrashNotifier();
+                //    this.gameOver = true;
+                //}
             }
         }
 
@@ -225,7 +233,7 @@ namespace HomeWork
                 {
                     curb.Move();
                     renderer.UpdateCurb(this.curb);
-                    Thread.Sleep(this.speedIncreased ? 40 : 100);
+                    Thread.Sleep((int)((this.speedIncreased ? 40 : 100) / this.level));
                 }
             }
         }
