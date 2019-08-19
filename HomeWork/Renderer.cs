@@ -97,7 +97,7 @@ namespace HomeWork
             {
                 this.curb.Nodes[i].X = curb.Nodes[i].X;
                 this.curb.Nodes[i].Y = curb.Nodes[i].Y;
-                this.curb.Nodes[i].Invisible = curb.Nodes[i].Invisible;
+                this.curb.Nodes[i].Disabled = curb.Nodes[i].Disabled;
             }
             this.curbPositionChanged = true;
         }
@@ -137,7 +137,7 @@ namespace HomeWork
                     foreach (var curbNode in curb.Nodes)
                     {
                         Console.SetCursorPosition(curbNode.X, curbNode.Y);
-                        Console.Write(curbNode.Invisible ? ' ' : curb.Character);
+                        Console.Write(curbNode.Disabled ? ' ' : curb.Character);
                         this.curbPositionChanged = false;
                     }
                 }
@@ -147,7 +147,7 @@ namespace HomeWork
                 foreach (var carNode in this.car.Nodes)
                 {
                     Console.SetCursorPosition(carNode.X, carNode.Y);
-                    Console.Write(carNode.Invisible ? ' ' : car.Character);
+                    Console.Write(carNode.Disabled ? ' ' : car.Character);
                 }
                 if (this.carPositionChanged)
                 {

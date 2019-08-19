@@ -33,19 +33,19 @@ namespace HomeWork
             this.Nodes[6].Y = 16;
             this.Nodes[7].X = 3;
             this.Nodes[7].Y = 19;
-            this.Nodes[7].Invisible = true;
+            this.Nodes[7].Disabled = true;
             this.Nodes[8].X = 2;
             this.Nodes[8].Y = 18;
-            this.Nodes[8].Invisible = true;
+            this.Nodes[8].Disabled = true;
             this.Nodes[9].X = 4;
             this.Nodes[9].Y = 18;
-            this.Nodes[9].Invisible = true;
+            this.Nodes[9].Disabled = true;
             this.Nodes[10].X = 2;
             this.Nodes[10].Y = 16;
-            this.Nodes[10].Invisible = true;
+            this.Nodes[10].Disabled = true;
             this.Nodes[11].X = 4;
             this.Nodes[11].Y = 16;
-            this.Nodes[11].Invisible = true;
+            this.Nodes[11].Disabled = true;
         }
 
         public override void Move(Position position)

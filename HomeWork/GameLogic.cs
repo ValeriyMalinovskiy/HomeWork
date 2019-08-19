@@ -139,7 +139,7 @@ namespace HomeWork
                 {
                     foreach (var rivalNode in rival.Nodes)
                     {
-                        if (!rivalNode.Invisible)
+                        if (!rivalNode.Disabled)
                         {
                             foreach (var carNode in this.car.Nodes)
                             {
@@ -160,7 +160,7 @@ namespace HomeWork
         {
             foreach (var rivalNode in rival.Nodes)
             {
-                rivalNode.Invisible = true;
+                rivalNode.Disabled = true;
             }
         }
 

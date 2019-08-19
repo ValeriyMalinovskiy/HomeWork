@@ -12,13 +12,13 @@ namespace HomeWork
 
         public int Y { get; set; }
 
-        public bool Invisible { get; set; }
+        public bool Disabled { get; set; }
 
         public Node()
         {
             this.X = -1;
             this.Y = -1;
-            this.Invisible = false;
+            this.Disabled = false;
         }
     }
 }
