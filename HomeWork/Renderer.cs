@@ -119,10 +119,15 @@ namespace HomeWork
             this.livesLeftChanged = true;
         }
 
+        public void NotifyGameOver()
+        {
+            this.gameOver = true;
+        }
+
         public void PrintEverything()
         {
             Console.CursorVisible = false;
-            while(!this.gameOver)
+            while(true)
             {
                 //
                 //curb
@@ -196,14 +201,17 @@ namespace HomeWork
                         Console.SetCursorPosition(this.car.Nodes[4].X + i, this.car.Nodes[4].Y - j);
                         Console.Write('X');
                         Thread.Sleep(100);
-                        Console.SetCursorPosition(this.car.Nodes[4].X + i, this.car.Nodes[4].Y + j);
-                        Console.Write(' ');
-                        Console.SetCursorPosition(this.car.Nodes[4].X - i, this.car.Nodes[4].Y + j);
-                        Console.Write(' ');
-                        Console.SetCursorPosition(this.car.Nodes[4].X - i, this.car.Nodes[4].Y - j);
-                        Console.Write(' ');
-                        Console.SetCursorPosition(this.car.Nodes[4].X + i, this.car.Nodes[4].Y - j);
-                        Console.Write(' ');
+                        if (!this.gameOver)
+                        {
+                            Console.SetCursorPosition(this.car.Nodes[4].X + i, this.car.Nodes[4].Y + j);
+                            Console.Write(' ');
+                            Console.SetCursorPosition(this.car.Nodes[4].X - i, this.car.Nodes[4].Y + j);
+                            Console.Write(' ');
+                            Console.SetCursorPosition(this.car.Nodes[4].X - i, this.car.Nodes[4].Y - j);
+                            Console.Write(' ');
+                            Console.SetCursorPosition(this.car.Nodes[4].X + i, this.car.Nodes[4].Y - j);
+                            Console.Write(' ');
+                        }
                     }
                     Console.ForegroundColor = ConsoleColor.Gray;
                     this.carCrashed = false;
@@ -213,17 +221,25 @@ namespace HomeWork
                 //
                 if (this.levelChanged)
                 {
-                    Console.SetCursorPosition(15, 10);
+                    Console.SetCursorPosition(15, 9);
                     Console.Write("Level:" + this.level);
                     this.levelChanged = false;
                 }
                 if (this.livesLeftChanged)
                 {
-                    Console.SetCursorPosition(15, 12);
+                    Console.SetCursorPosition(15, 11);
                     Console.Write("Lives:  ");
-                    Console.SetCursorPosition(15, 12);
+                    Console.SetCursorPosition(15, 11);
                     Console.Write("Lives:" + this.livesLeft);
                     this.livesLeftChanged = false;
+                }
+                //
+                //GameOver
+                //
+                if (this.gameOver)
+                {
+                    Console.SetCursorPosition(15, 11);
+                    Console.Write("< Game Over >");
                 }
             }
         }

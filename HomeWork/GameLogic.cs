@@ -229,7 +229,7 @@ namespace HomeWork
 
             eventRaiser.ControlPressed += this.ProcessControl;
 
-            while (true)
+            while (!this.gameOver)
             {
                 this.speedIncreased = AccelerationControl.IsKeyDown(38);
                 if (this.CheckCrash())
@@ -238,6 +238,12 @@ namespace HomeWork
                     this.livesLeft--;
                     this.renderer.UpdateLives(this.livesLeft);
                     this.gameRunning = false;
+                    if (this.livesLeft<0)
+                    {
+                        this.renderer.NotifyGameOver();
+                        Thread.Sleep(3000);
+                        this.gameOver = true;
+                    }
                     Thread.Sleep(1000);
                     this.gameRunning = true;
                 }
