@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HomeWork
+﻿namespace HomeWork
 {
-    class GameField
+    internal class GameField
     {
         public int Width { get; private set; }
 
@@ -20,12 +14,12 @@ namespace HomeWork
 
         public bool CheckIsOnField(RacingGameObject gameObject)
         {
-            foreach (var point in gameObject.Nodes)
-	        {
-                    if (point.X <= this.Width && point.X>=0 && point.Y <= this.Height && point.Y >=0)
-	                {
-                        return true;
-	                }
+            foreach (Node point in gameObject.Nodes)
+            {
+                if (point.X <= this.Width && point.X >= 0 && point.Y <= this.Height && point.Y >= 0)
+                {
+                    return true;
+                }
             }
             return false;
         }

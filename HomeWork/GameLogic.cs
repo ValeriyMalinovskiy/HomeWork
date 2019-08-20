@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
 namespace HomeWork
 {
@@ -24,7 +21,7 @@ namespace HomeWork
 
         private Queue<Rival> rivals = new Queue<Rival>();
 
-        private Position Position = Position.Left;
+        private Position carPosition = Position.Left;
 
         private bool gameRunning = true;
 
@@ -32,7 +29,7 @@ namespace HomeWork
 
         private bool speedIncreased = false;
 
-        private object rivalLocker = new object();
+        private readonly object rivalLocker = new object();
 
         private double level = 1.0;
 
@@ -46,20 +43,20 @@ namespace HomeWork
                 {
                     case GameControl.ShiftCarLeft:
                         {
-                            if (this.Position == Position.Right && gameRunning)
+                            if (this.carPosition == Position.Right && gameRunning)
                             {
                                 this.car.Move(Position.Left);
-                                this.Position = Position.Left;
+                                this.carPosition = Position.Left;
                                 this.renderer.UpdateCar(this.car);
                             }
                         }
                         break;
                     case GameControl.ShiftCarRight:
                         {
-                            if (this.Position == Position.Left && gameRunning)
+                            if (this.carPosition == Position.Left && gameRunning)
                             {
                                 this.car.Move(Position.Right);
-                                this.Position = Position.Right;
+                                this.carPosition = Position.Right;
                                 this.renderer.UpdateCar(this.car);
                             }
                         }
@@ -117,9 +114,9 @@ namespace HomeWork
             bool safeDistance = true;
             lock (this.rivalLocker)
             {
-                foreach (var rival in this.rivals)
+                foreach (Rival rival in this.rivals)
                 {
-                    foreach (var rivalNode in rival.Nodes)
+                    foreach (Node rivalNode in rival.Nodes)
                     {
                         if (rivalNode.Y < 0)
                         {
@@ -135,13 +132,13 @@ namespace HomeWork
         {
             lock (this.rivalLocker)
             {
-                foreach (var rival in this.rivals)
+                foreach (Rival rival in this.rivals)
                 {
-                    foreach (var rivalNode in rival.Nodes)
+                    foreach (Node rivalNode in rival.Nodes)
                     {
                         if (!rivalNode.IsDisabled)
                         {
-                            foreach (var carNode in this.car.Nodes)
+                            foreach (Node carNode in this.car.Nodes)
                             {
                                 if (rivalNode.X == carNode.X && rivalNode.Y == carNode.Y)
                                 {
@@ -158,7 +155,7 @@ namespace HomeWork
 
         private void DisableCrashedRival(Rival rival)
         {
-            foreach (var rivalNode in rival.Nodes)
+            foreach (Node rivalNode in rival.Nodes)
             {
                 rivalNode.IsDisabled = true;
             }
@@ -169,19 +166,22 @@ namespace HomeWork
             while (!this.gameOver)
             {
                 if (this.gameRunning)
+                {
                     lock (this.rivalLocker)
                     {
-                        foreach (var rival in this.rivals)
+                        foreach (Rival rival in this.rivals)
                         {
                             rival.Move();
                         }
                         this.renderer.UpdateRivals(this.rivals.ToArray());
                     }
+                }
+
                 Thread.Sleep((int)((speedIncreased ? 80 : 160) / this.level));
             }
         }
 
-        private void RivalQueueCountController()
+        private void RivalDequeueController()
         {
             while (!this.gameOver)
             {
@@ -203,6 +203,19 @@ namespace HomeWork
             }
         }
 
+        private void MoveCurb()
+        {
+            while (!this.gameOver)
+            {
+                if (this.gameRunning)
+                {
+                    curb.Move();
+                    renderer.UpdateCurb(this.curb);
+                    Thread.Sleep((int)((this.speedIncreased ? 40 : 100) / this.level));
+                }
+            }
+        }
+
         internal void StartGame()
         {
             Task controlTask = new Task(() => eventRaiser.Watch());
@@ -220,14 +233,15 @@ namespace HomeWork
             Task rivalsTask = new Task(() => this.MoveRivals());
             rivalsTask.Start();
 
-            Task dequeueTask = new Task(() => this.RivalQueueCountController());
+            Task dequeueTask = new Task(() => this.RivalDequeueController());
             dequeueTask.Start();
+
+            eventRaiser.ControlPressed += this.ProcessControl;
 
             this.renderer.UpdateCar(this.car);
             this.renderer.UpdateLevel((int)((this.level - 1) * 100));
             this.renderer.UpdateLives(this.livesLeft);
-
-            eventRaiser.ControlPressed += this.ProcessControl;
+            this.renderer.ShowHelp();
 
             while (!this.gameOver)
             {
@@ -246,19 +260,6 @@ namespace HomeWork
                     }
                     Thread.Sleep(1000);
                     this.gameRunning = true;
-                }
-            }
-        }
-
-        private void MoveCurb()
-        {
-            while (!this.gameOver)
-            {
-                if (this.gameRunning)
-                {
-                    curb.Move();
-                    renderer.UpdateCurb(this.curb);
-                    Thread.Sleep((int)((this.speedIncreased ? 40 : 100) / this.level));
                 }
             }
         }

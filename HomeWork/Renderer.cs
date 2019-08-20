@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 
 namespace HomeWork
 {
-    class Renderer
+    internal class Renderer
     {
         private Car car;
 
@@ -137,7 +133,7 @@ namespace HomeWork
                 if (this.curbPositionChanged)
                 {
                     Console.ForegroundColor = this.curb.Color;
-                    foreach (var curbNode in curb.Nodes)
+                    foreach (Node curbNode in curb.Nodes)
                     {
                         Console.SetCursorPosition(curbNode.X, curbNode.Y);
                         Console.Write(curbNode.IsDisabled ? ' ' : curb.Character);
@@ -148,14 +144,14 @@ namespace HomeWork
                 //Car
                 //
                 Console.ForegroundColor = this.car.Color;
-                foreach (var carNode in this.car.Nodes)
+                foreach (Node carNode in this.car.Nodes)
                 {
                     Console.SetCursorPosition(carNode.X, carNode.Y);
                     Console.Write(carNode.IsDisabled ? ' ' : car.Character);
                 }
                 if (this.carPositionChanged)
                 {
-                    foreach (var carNode in this.tempCar.Nodes)
+                    foreach (Node carNode in this.tempCar.Nodes)
                     {
                         Console.SetCursorPosition(carNode.X, carNode.Y);
                         Console.Write(" ");
@@ -167,10 +163,10 @@ namespace HomeWork
                 //
                 if (this.rivalsPositionChanged)
                 {
-                    foreach (var rival in this.tempRivals)
+                    foreach (Rival rival in this.tempRivals)
                     {
                         Console.ForegroundColor = rival.Color;
-                        foreach (var node in rival.Nodes)
+                        foreach (Node node in rival.Nodes)
                         {
                             if (node.Y >= 0 && node.Y < 20)
                             {
@@ -179,10 +175,10 @@ namespace HomeWork
                             }
                         }
                     }
-                    foreach (var rival in this.rivals)
+                    foreach (Rival rival in this.rivals)
                     {
                         Console.ForegroundColor = rival.Color;
-                        foreach (var node in rival.Nodes)
+                        foreach (Node node in rival.Nodes)
                         {
                             if (node.Y >= 0 && node.Y < 20)
                             {
@@ -251,9 +247,23 @@ namespace HomeWork
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.SetCursorPosition(15, 11);
-                    Console.Write("< Game Over >");
+                    Console.Write("Game Over");
                 }
             }
         }
+
+        public void ShowHelp()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.SetCursorPosition(75, 0);
+            Console.Write("Left/Right arrow - Turn");
+            Console.SetCursorPosition(75, 1);
+            Console.Write("Up arrow (hold) - Accelerate");
+            Console.SetCursorPosition(75, 2);
+            Console.Write("Space - Pause");
+            Console.SetCursorPosition(75, 3);
+            Console.Write("Esc - Quit");
+        }
+
     }
 }
