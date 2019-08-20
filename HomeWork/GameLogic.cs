@@ -218,6 +218,8 @@ namespace HomeWork
 
         internal void StartGame()
         {
+            this.renderer.ShowHelp();
+
             Task controlTask = new Task(() => eventRaiser.Watch());
             controlTask.Start();
 
@@ -241,7 +243,6 @@ namespace HomeWork
             this.renderer.UpdateCar(this.car);
             this.renderer.UpdateLevel((int)((this.level - 1) * 100));
             this.renderer.UpdateLives(this.livesLeft);
-            this.renderer.ShowHelp();
 
             while (!this.gameOver)
             {
