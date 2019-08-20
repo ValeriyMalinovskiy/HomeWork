@@ -8,7 +8,7 @@ namespace HomeWork
 {
     internal class Rival : RacingGameObject
     {
-        public Rival(Char character = '0', Position position = Position.Left) : base (character)
+        public Rival(Char character = '0', ConsoleColor color = ConsoleColor.DarkCyan, Position position = Position.Left) : base(character, color)
         {
             this.Nodes = new Node[7];
             for (int i = 0; i < this.Nodes.Length; i++)

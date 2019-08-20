@@ -42,7 +42,7 @@ namespace HomeWork
         {
             if (!this.gameOver)
             {
-                switch (args.control)
+                switch (args.Control)
                 {
                     case GameControl.ShiftCarLeft:
                         {
@@ -105,7 +105,7 @@ namespace HomeWork
                         }
                         lock (this.rivalLocker)
                         {
-                            this.rivals.Enqueue(new Rival('8', (Position)rnd.Next(0, 2)));
+                            this.rivals.Enqueue(new Rival('8', (ConsoleColor)rnd.Next(1, 16), (Position)rnd.Next(0, 2)));
                         }
                     }
                 }
@@ -139,7 +139,7 @@ namespace HomeWork
                 {
                     foreach (var rivalNode in rival.Nodes)
                     {
-                        if (!rivalNode.Disabled)
+                        if (!rivalNode.IsDisabled)
                         {
                             foreach (var carNode in this.car.Nodes)
                             {
@@ -160,7 +160,7 @@ namespace HomeWork
         {
             foreach (var rivalNode in rival.Nodes)
             {
-                rivalNode.Disabled = true;
+                rivalNode.IsDisabled = true;
             }
         }
 
@@ -195,7 +195,7 @@ namespace HomeWork
                             {
                                 this.rivals.Dequeue();
                                 this.level += 0.01;
-                                this.renderer.UpdateLevel((int)((this.level-1)*100));
+                                this.renderer.UpdateLevel((int)((this.level - 1) * 100));
                             }
                         }
                     }
@@ -208,7 +208,7 @@ namespace HomeWork
             Task controlTask = new Task(() => eventRaiser.Watch());
             controlTask.Start();
 
-            Task printTask = new Task(() => renderer.PrintEverything());
+            Task printTask = new Task(() => renderer.Render());
             printTask.Start();
 
             Task curbTask = new Task(() => this.MoveCurb());
@@ -231,14 +231,14 @@ namespace HomeWork
 
             while (!this.gameOver)
             {
-                this.speedIncreased = AccelerationControl.IsKeyDown(38);
+                this.speedIncreased = AccelerationControl.IsKeyDown();
                 if (this.CheckCrash())
                 {
-                    this.renderer.CarCrashNotifier();
+                    this.renderer.NotifyCarCrash();
                     this.livesLeft--;
                     this.renderer.UpdateLives(this.livesLeft);
                     this.gameRunning = false;
-                    if (this.livesLeft<0)
+                    if (this.livesLeft < 0)
                     {
                         this.renderer.NotifyGameOver();
                         Thread.Sleep(3000);

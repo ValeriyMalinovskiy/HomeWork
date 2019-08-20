@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HomeWork
+﻿namespace HomeWork
 {
     internal static class AccelerationControl
     {
         private const int KeyPressed = 0x8000;
 
-        public static bool IsKeyDown(int keyCode)
+        public static bool IsKeyDown(int keyCode = 38)
         {
             return (GetKeyState(keyCode) & KeyPressed) != 0;
         }

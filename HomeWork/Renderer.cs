@@ -72,6 +72,7 @@ namespace HomeWork
             for (int i = 0; i < this.rivals.Length; i++)
             {
                 this.tempRivals[i].Character = this.rivals[i].Character;
+                this.tempRivals[i].Color = this.rivals[i].Color;
                 for (int j = 0; j < this.rivals[i].Nodes.Length; j++)
                 {
                     this.tempRivals[i].Nodes[j].X = this.rivals[i].Nodes[j].X;
@@ -81,6 +82,7 @@ namespace HomeWork
             for (int i = 0; i < rivals.Length; i++)
             {
                 this.rivals[i].Character = rivals[i].Character;
+                this.rivals[i].Color = rivals[i].Color;
                 for (int j = 0; j < rivals[i].Nodes.Length; j++)
                 {
                     this.rivals[i].Nodes[j].X = rivals[i].Nodes[j].X;
@@ -97,14 +99,19 @@ namespace HomeWork
             {
                 this.curb.Nodes[i].X = curb.Nodes[i].X;
                 this.curb.Nodes[i].Y = curb.Nodes[i].Y;
-                this.curb.Nodes[i].Disabled = curb.Nodes[i].Disabled;
+                this.curb.Nodes[i].IsDisabled = curb.Nodes[i].IsDisabled;
             }
             this.curbPositionChanged = true;
         }
 
-        public void CarCrashNotifier()
+        public void NotifyCarCrash()
         {
             this.carCrashed = true;
+        }
+
+        public void NotifyGameOver()
+        {
+            this.gameOver = true;
         }
 
         public void UpdateLevel(int level)
@@ -119,35 +126,32 @@ namespace HomeWork
             this.livesLeftChanged = true;
         }
 
-        public void NotifyGameOver()
-        {
-            this.gameOver = true;
-        }
-
-        public void PrintEverything()
+        public void Render()
         {
             Console.CursorVisible = false;
-            while(true)
+            while (true)
             {
                 //
                 //curb
                 //
                 if (this.curbPositionChanged)
                 {
+                    Console.ForegroundColor = this.curb.Color;
                     foreach (var curbNode in curb.Nodes)
                     {
                         Console.SetCursorPosition(curbNode.X, curbNode.Y);
-                        Console.Write(curbNode.Disabled ? ' ' : curb.Character);
+                        Console.Write(curbNode.IsDisabled ? ' ' : curb.Character);
                         this.curbPositionChanged = false;
                     }
                 }
                 //
                 //Car
                 //
+                Console.ForegroundColor = this.car.Color;
                 foreach (var carNode in this.car.Nodes)
                 {
                     Console.SetCursorPosition(carNode.X, carNode.Y);
-                    Console.Write(carNode.Disabled ? ' ' : car.Character);
+                    Console.Write(carNode.IsDisabled ? ' ' : car.Character);
                 }
                 if (this.carPositionChanged)
                 {
@@ -157,7 +161,7 @@ namespace HomeWork
                         Console.Write(" ");
                     }
                     this.carPositionChanged = false;
-                }                
+                }
                 //
                 //Rivals
                 //
@@ -165,6 +169,7 @@ namespace HomeWork
                 {
                     foreach (var rival in this.tempRivals)
                     {
+                        Console.ForegroundColor = rival.Color;
                         foreach (var node in rival.Nodes)
                         {
                             if (node.Y >= 0 && node.Y < 20)
@@ -176,6 +181,7 @@ namespace HomeWork
                     }
                     foreach (var rival in this.rivals)
                     {
+                        Console.ForegroundColor = rival.Color;
                         foreach (var node in rival.Nodes)
                         {
                             if (node.Y >= 0 && node.Y < 20)
@@ -221,12 +227,17 @@ namespace HomeWork
                 //
                 if (this.levelChanged)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.SetCursorPosition(15, 9);
                     Console.Write("Level:" + this.level);
                     this.levelChanged = false;
                 }
+                //
+                //Lives
+                //
                 if (this.livesLeftChanged)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.SetCursorPosition(15, 11);
                     Console.Write("Lives:  ");
                     Console.SetCursorPosition(15, 11);
@@ -238,6 +249,7 @@ namespace HomeWork
                 //
                 if (this.gameOver)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.SetCursorPosition(15, 11);
                     Console.Write("< Game Over >");
                 }

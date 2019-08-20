@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HomeWork
 {
-    class ButtonPressEventRaiser
+    internal class ButtonPressEventRaiser
     {
-        private GamepadEventArgs gamepad = new GamepadEventArgs();
+        private readonly GamepadEventArgs gamepad = new GamepadEventArgs();
 
         public event ControlDelegate ControlPressed;
 
         public virtual void OnControlPressed(GameControl control)
         {
-            this.gamepad.control = control;
+            this.gamepad.Control = control;
             ControlPressed(this.gamepad);
         }
 

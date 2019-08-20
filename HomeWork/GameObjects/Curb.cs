@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HomeWork
 {
     internal class Curb : RacingGameObject
     {
-        public Curb(Char character = '#', Position position = Position.Left) : base(character)
+        public Curb(char character = '|', ConsoleColor color = ConsoleColor.White, Position position = Position.Left) : base(character, color)
         {
             this.Nodes = new Node[40];
             for (int i = 0; i < this.Nodes.Length; i++)
@@ -28,7 +24,7 @@ namespace HomeWork
                     this.Nodes[i].Y = j;
                     j++;
                 }
-                this.Nodes[i].Disabled = (i % 4 == 0) ? true : false;
+                this.Nodes[i].IsDisabled = (i % 4 == 0) ? true : false;
             }
         }
 
