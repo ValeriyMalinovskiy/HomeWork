@@ -118,7 +118,7 @@ namespace HomeWork
                 {
                     foreach (Node rivalNode in rival.Nodes)
                     {
-                        if (rivalNode.Y < 0)
+                        if (rivalNode.Y <= 0)
                         {
                             safeDistance = false;
                         }
