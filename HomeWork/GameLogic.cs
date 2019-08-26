@@ -11,7 +11,7 @@ namespace HomeWork
     {
         private Curb curb = new Curb('|');
 
-        private Car car = new Car('0');
+        private Car car = new Car('0', ConsoleColor.DarkCyan);
 
         private Renderer renderer = new Renderer();
 
@@ -88,7 +88,7 @@ namespace HomeWork
                         {
                             case true:
                                 {
-                                    Thread.Sleep((int)(rnd.Next(500, 900) / this.level));
+                                    Thread.Sleep((int)(rnd.Next(600, 900) / this.level));
                                 }
                                 break;
                             case false:
@@ -102,7 +102,7 @@ namespace HomeWork
                         }
                         lock (this.rivalLocker)
                         {
-                            this.rivals.Enqueue(new Rival('8', (ConsoleColor)rnd.Next(1, 16), (Position)rnd.Next(0, 2)));
+                            this.rivals.Enqueue(new Rival('8', (ConsoleColor)rnd.Next(6, 16), (Position)rnd.Next(0, 2)));
                         }
                     }
                 }
@@ -177,7 +177,6 @@ namespace HomeWork
                         this.renderer.UpdateRivals(this.rivals.ToArray());
                     }
                 }
-
                 Thread.Sleep((int)((speedIncreased ? 80 : 160) / this.level));
             }
         }

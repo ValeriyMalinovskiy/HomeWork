@@ -53,6 +53,7 @@ namespace HomeWork
         public void UpdateCar(Car car)
         {
             this.car.Character = car.Character;
+            this.car.Color = car.Color;
             for (int i = 0; i < this.car.Nodes.Length; i++)
             {
                 this.tempCar.Nodes[i].X = this.car.Nodes[i].X;
