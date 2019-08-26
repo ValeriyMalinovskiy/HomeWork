@@ -93,7 +93,7 @@ namespace HomeWork
                                 break;
                             case false:
                                 {
-                                    Thread.Sleep((int)(rnd.Next(1000, 1500) / this.level));
+                                    Thread.Sleep((int)(rnd.Next(1200, 1700) / this.level));
                                 }
                                 break;
                         }
