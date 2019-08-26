@@ -125,6 +125,7 @@ namespace HomeWork
                     }
                 }
             }
+            Thread.Sleep(16);
             return safeDistance;
         }
 
@@ -262,6 +263,7 @@ namespace HomeWork
                     Thread.Sleep(1000);
                     this.gameRunning = true;
                 }
+                Thread.Sleep(16);
             }
         }
     }

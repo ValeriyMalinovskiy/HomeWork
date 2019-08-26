@@ -249,6 +249,7 @@ namespace HomeWork
                     Console.SetCursorPosition(15, 11);
                     Console.Write("Game Over");
                 }
+                Thread.Sleep(16);
             }
         }
 
