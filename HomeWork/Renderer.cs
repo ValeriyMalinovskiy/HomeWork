@@ -84,6 +84,7 @@ namespace HomeWork
                 {
                     this.rivals[i].Nodes[j].X = rivals[i].Nodes[j].X;
                     this.rivals[i].Nodes[j].Y = rivals[i].Nodes[j].Y;
+                    this.rivals[i].Nodes[j].IsDisabled = rivals[i].Nodes[j].IsDisabled;
                 }
             }
             this.rivalsPositionChanged = true;
@@ -125,6 +126,8 @@ namespace HomeWork
 
         public void Render()
         {
+            Console.SetWindowSize(60, 20);
+            Console.SetBufferSize(60, 20);
             Console.CursorVisible = false;
             while (true)
             {
@@ -181,7 +184,7 @@ namespace HomeWork
                         Console.ForegroundColor = rival.Color;
                         foreach (Node node in rival.Nodes)
                         {
-                            if (node.Y >= 0 && node.Y < 20)
+                            if (node.Y >= 0 && node.Y < 20 && !node.IsDisabled)
                             {
                                 Console.SetCursorPosition(node.X, node.Y);
                                 Console.Write(rival.Character);
@@ -225,7 +228,7 @@ namespace HomeWork
                 if (this.levelChanged)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.SetCursorPosition(15, 9);
+                    Console.SetCursorPosition(12, 9);
                     Console.Write("Level:" + this.level);
                     this.levelChanged = false;
                 }
@@ -235,9 +238,9 @@ namespace HomeWork
                 if (this.livesLeftChanged)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.SetCursorPosition(15, 11);
+                    Console.SetCursorPosition(12, 11);
                     Console.Write("Lives:  ");
-                    Console.SetCursorPosition(15, 11);
+                    Console.SetCursorPosition(12, 11);
                     Console.Write("Lives:" + this.livesLeft);
                     this.livesLeftChanged = false;
                 }
@@ -247,7 +250,7 @@ namespace HomeWork
                 if (this.gameOver)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.SetCursorPosition(15, 11);
+                    Console.SetCursorPosition(12, 11);
                     Console.Write("Game Over");
                 }
                 Thread.Sleep(16);
@@ -257,13 +260,18 @@ namespace HomeWork
         public void ShowHelp()
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.SetCursorPosition(45, 0);
+            for (int i = 0; i < 20; i++)
+            {
+                Console.SetCursorPosition(22, i);
+                Console.Write("#");
+            }
+            Console.SetCursorPosition(30, 0);
             Console.Write("Left/Right arrow - Turn");
-            Console.SetCursorPosition(45, 1);
+            Console.SetCursorPosition(30, 1);
             Console.Write("Up arrow (hold) - Accelerate");
-            Console.SetCursorPosition(45, 2);
+            Console.SetCursorPosition(30, 2);
             Console.Write("Space - Pause");
-            Console.SetCursorPosition(45, 3);
+            Console.SetCursorPosition(30, 3);
             Console.Write("Esc - Quit");
         }
 

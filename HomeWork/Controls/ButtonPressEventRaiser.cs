@@ -9,7 +9,7 @@ namespace HomeWork
         public event ControlDelegate ControlPressed;
 
         public virtual void OnControlPressed(GameControl control)
-        {
+        { 
             this.gamepad.Control = control;
             ControlPressed(this.gamepad);
         }
