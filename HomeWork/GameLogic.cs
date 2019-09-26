@@ -253,7 +253,7 @@ namespace HomeWork
                     this.livesLeft--;
                     this.renderer.UpdateLives(this.livesLeft);
                     this.gameRunning = false;
-                    if (this.livesLeft < 0)
+                    if (this.livesLeft < 1)
                     {
                         this.renderer.NotifyGameOver();
                         Thread.Sleep(3000);
